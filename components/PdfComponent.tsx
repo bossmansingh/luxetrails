@@ -7,9 +7,9 @@ import {
   Playfair_Display,
   Poppins,
 } from "next/font/google";
-import { Page, StyleSheet } from "@react-pdf/renderer";
+import { StyleSheet } from "@react-pdf/renderer";
 import Image from "next/image";
-import CompanyLogo from "@/public/logo_gold.png";
+import CompanyLogo from "@/public/logo_gold.svg";
 import ReactModal from "react-modal";
 
 const aspectRatio = 0.7070707071;
@@ -185,19 +185,23 @@ const CoverPage: React.FC<{
         <Image
           style={{
             marginTop: 80,
-            width: "100%",
+            width: "auto",
             height: "auto",
-            paddingLeft: 60,
-            paddingRight: 60,
+            objectFit: "contain",
           }}
           src={CompanyLogo}
           alt="Company logo"
-          width={300}
+          width={600}
+          height={500}
+          objectFit="contain"
           priority
         />
         <p
           className={poppinsFont.className}
-          style={(poppinsFont.style, { fontSize: 25, letterSpacing: 15 })}
+          style={
+            (poppinsFont.style,
+            { marginTop: 30, fontSize: 25, letterSpacing: 15 })
+          }
         >
           ITINERARY
         </p>
@@ -252,7 +256,6 @@ const Highlights: React.FC<{ imageUrl: string; highlightText: string }> = ({
     >
       <Header title={"HIGHLIGHTS"} />
       <Image
-        id="highlight-image-target"
         style={{
           marginTop: 50,
           width: "100%",
@@ -369,11 +372,9 @@ const CreateHighlightContent: React.FC<{
     <>
       <h1>Enter Highlight Info</h1>
       <input
-        id="highlight-image-src"
         style={{
-          width: "100%",
+          width: "100px",
           height: "auto",
-          minHeight: "30px",
           marginTop: 20,
         }}
         placeholder="Highlight Image"
@@ -504,6 +505,7 @@ const pageTypes = [
   { label: "Terms & Conditions", value: PageType.TERMS },
 ];
 export default function PdfComponent() {
+  const [pageCount, setPageCount] = useState(0);
   const [isOpen, setOpen] = useState(false);
   const [pageContent, setPageContent] = useState<PageContent>({});
   const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
@@ -519,6 +521,8 @@ export default function PdfComponent() {
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {
           scale: 2,
+          width: 793.5,
+          height: 1122 * pageCount,
         },
         jsPDF: {
           unit: "px",
@@ -607,6 +611,7 @@ export default function PdfComponent() {
         currentPageType={currentPageType}
         isOpen={isOpen}
         onSaveCover={(title, pricePerPerson, numberOfNights) => {
+          setPageCount(pageCount + 1);
           setPageContent({
             coverPage: {
               pageTitle: title,
@@ -616,6 +621,7 @@ export default function PdfComponent() {
           });
         }}
         onSaveHighlight={(imageUrl, highlightText) => {
+          setPageCount(pageCount + 1);
           setPageContent({
             ...pageContent,
             highlight: {
