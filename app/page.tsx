@@ -3,7 +3,7 @@ import PdfComponent from "@/components/PdfComponent";
 export default function Home() {
   return (
     <div>
-      <main>
+      <main id="main">
         <PdfComponent />
         {/* <Image
           className={styles.logo}

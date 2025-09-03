@@ -1,20 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Cinzel,
   Cinzel_Decorative,
   Playfair_Display,
   Poppins,
 } from "next/font/google";
-import { StyleSheet } from "@react-pdf/renderer";
+import { Page, StyleSheet } from "@react-pdf/renderer";
 import Image from "next/image";
 import CompanyLogo from "@/public/logo_gold.png";
-import BeachImage from "@/public/beach.jpg";
+import ReactModal from "react-modal";
 
 const aspectRatio = 0.7070707071;
 const Domain = "www.theluxetrails.com";
 const BrandGreen = "#043C2B";
+
+enum PageType {
+  HIGHLIGHTS = "highlights",
+  ITINERARY = "itinerary",
+  HOTEL = "hotel",
+  DAYPLAN = "dayplan",
+  FLIGHT = "flight",
+  INCLUSION_EXCLUSION = "inclusion_exclusion",
+  TERMS = "terms",
+}
+
+type CoverPageContent = {
+  pageTitle: string;
+  ppCost: string;
+  duration: number;
+};
+
+type HighlightsContent = {
+  imageUrl: string;
+  highlightText: string;
+};
+
+type PageContent = {
+  coverPage?: CoverPageContent;
+  highlight?: HighlightsContent;
+};
 
 // const titleFont = Playfair_Display({
 //   weight: "600",
@@ -40,17 +66,16 @@ const poppinsFont = Poppins({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: "100vh",
+    height: "fit-content",
     alignContent: "center",
     display: "flex",
     flexDirection: "column",
   },
   page: {
     width: "100%",
-    height: "100%",
     flexDirection: "row",
     alignSelf: "center",
-    backgroundColor: "white",
+    backgroundColor: BrandGreen,
   },
   section: {
     width: "100%",
@@ -112,6 +137,22 @@ const styles = StyleSheet.create({
   },
 });
 
+const dialogStyle: ReactModal.Styles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    color: "black",
+    width: "90%",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+  },
+};
+
 const CoverPage: React.FC<{
   title: string;
   ppCost: string;
@@ -151,7 +192,7 @@ const CoverPage: React.FC<{
           }}
           src={CompanyLogo}
           alt="Company logo"
-          width={600}
+          width={300}
           priority
         />
         <p
@@ -197,7 +238,10 @@ const Header: React.FC<{ title: string }> = ({ title }) => {
     </div>
   );
 };
-const Highlights: React.FC = () => {
+const Highlights: React.FC<{ imageUrl: string; highlightText: string }> = ({
+  imageUrl,
+  highlightText,
+}) => {
   return (
     <div
       style={{
@@ -208,89 +252,380 @@ const Highlights: React.FC = () => {
     >
       <Header title={"HIGHLIGHTS"} />
       <Image
+        id="highlight-image-target"
         style={{
           marginTop: 50,
           width: "100%",
           height: "auto",
+          maxHeight: 320,
+          objectFit: "cover",
           borderRadius: 8,
         }}
-        src={BeachImage}
-        alt="Beach Image"
+        src={imageUrl}
+        alt="Highlight Image"
         width={200}
-        priority
+        height={200}
       />
-      <ul
+      <span
         className={poppinsFont.className}
         style={
           (poppinsFont.style,
           {
+            whiteSpace: "pre-wrap",
+            display: "block",
             fontWeight: "500",
             padding: 24,
             color: "black",
-            fontSize: 22,
+            fontSize: 18,
             lineHeight: 2,
           })
         }
       >
-        <li>Magical sunsets at Coconut Tree Hill & Galle Fort.</li>
-        <li>Whale watching in Mirissa's deep blue waters.</li>
-        <li>
-          Explore the charm of UNESCO-listed Galle Fort with boutiques &
-          cafés...
-        </li>
-        <li>Relax with a Madu River safari & turtle hatchery visit.</li>
-      </ul>
+        {highlightText}
+      </span>
     </div>
   );
 };
 
-export default function PdfComponent() {
-  const placeTitle = "Sri Lanka";
-  const ppCost = 125000;
-  const durationCount = 4;
-  const downloadPDF = async () => {
-    var element: HTMLElement | null = document.getElementById("pdf-document");
-    var html2pdf = await require("html2pdf.js");
-    var opt: html2pdf.Options = {
-      margin: 0,
-      filename: placeTitle,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 4,
-      },
-      jsPDF: {
-        unit: "px",
-        hotfixes: ["px_scaling"],
-        orientation: "portrait",
-      },
-    };
-    element && html2pdf(element, opt);
-  };
-  const createCoverAction = () => {
-    console.log("Create Cover Action");
-  };
+const CreateCoverContent: React.FC<{
+  onClose: () => void;
+  onSave: (
+    title: string,
+    pricePerPerson: number,
+    numberOfNights: number
+  ) => void;
+}> = ({ onClose, onSave }) => {
+  const [title, setTitle] = useState("");
+  const [pricePerPerson, setPricePerPerson] = useState(0);
+  const [numberOfNights, setNumberOfNights] = useState(0);
   return (
-    <div style={styles.container}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <button style={styles.createCoverButton} onClick={createCoverAction}>
-          Create Cover Page
-        </button>
-        <button style={styles.downloadButton} onClick={downloadPDF}>
-          Download PDF
-        </button>
+    <>
+      <h1>Enter Cover Page Info</h1>
+      <input
+        style={{ width: "100%", height: "30px", marginTop: 20 }}
+        placeholder="Enter title"
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <input
+        style={{ width: "100%", height: "30px", marginTop: 20 }}
+        placeholder="Price per person"
+        type="number"
+        value={pricePerPerson > 0 ? pricePerPerson : ""}
+        onChange={(e) => setPricePerPerson(Number(e.target.value))}
+      />
+      <input
+        style={{ width: "100%", height: "30px", marginTop: 20 }}
+        placeholder="Number of nights"
+        type="number"
+        value={numberOfNights > 0 ? numberOfNights : ""}
+        onChange={(e) => setNumberOfNights(Number(e.target.value))}
+      />
+      <button
+        style={{
+          width: "100%",
+          padding: 10,
+          backgroundColor: "#BE8724",
+          color: "black",
+          border: "none",
+          borderRadius: 5,
+          cursor: "pointer",
+          marginTop: 20,
+        }}
+        onClick={() => {
+          onSave(title, pricePerPerson, numberOfNights);
+          onClose();
+        }}
+      >
+        SAVE
+      </button>
+      <button
+        style={{
+          width: "100%",
+          padding: 10,
+          backgroundColor: "#BE8724",
+          color: "black",
+          border: "none",
+          borderRadius: 5,
+          cursor: "pointer",
+          marginTop: 20,
+        }}
+        onClick={onClose}
+      >
+        CLOSE
+      </button>
+    </>
+  );
+};
+
+const CreateHighlightContent: React.FC<{
+  onSave: (imageUrl: string, highlightText: string) => void;
+  onClose: () => void;
+}> = ({ onClose, onSave }) => {
+  const [imageUrl, setImageUrl] = useState("");
+  const [highlightText, setHighlightText] = useState("");
+  return (
+    <>
+      <h1>Enter Highlight Info</h1>
+      <input
+        id="highlight-image-src"
+        style={{
+          width: "100%",
+          height: "auto",
+          minHeight: "30px",
+          marginTop: 20,
+        }}
+        placeholder="Highlight Image"
+        type="file"
+        onChange={(e) => {
+          var result = e.target.files?.item(0);
+          result && setImageUrl(URL.createObjectURL(result));
+        }}
+      />
+      <textarea
+        style={{
+          width: "100%",
+          minHeight: "120px",
+          marginTop: 20,
+          fontSize: 14,
+          padding: 5,
+        }}
+        placeholder="Highlight Text"
+        value={highlightText}
+        onChange={(e) => setHighlightText(e.target.value)}
+      />
+      <button
+        style={{
+          width: "100%",
+          padding: 10,
+          backgroundColor: "#BE8724",
+          color: "black",
+          border: "none",
+          borderRadius: 5,
+          cursor: "pointer",
+          marginTop: 20,
+        }}
+        onClick={() => {
+          onSave(imageUrl, highlightText);
+          onClose();
+        }}
+      >
+        SAVE
+      </button>
+      <button
+        style={{
+          width: "100%",
+          padding: 10,
+          backgroundColor: "#BE8724",
+          color: "black",
+          border: "none",
+          borderRadius: 5,
+          cursor: "pointer",
+          marginTop: 20,
+        }}
+        onClick={onClose}
+      >
+        CLOSE
+      </button>
+    </>
+  );
+};
+
+const DialogComponent: React.FC<{
+  currentPageType: PageType | null;
+  isOpen: boolean;
+  onSaveCover: (
+    title: string,
+    pricePerPerson: number,
+    numberOfNights: number
+  ) => void;
+  onSaveHighlight: (imageUrl: string, highlightText: string) => void;
+  onClose: () => void;
+}> = ({ currentPageType, isOpen, onSaveCover, onSaveHighlight, onClose }) => {
+  let content;
+  switch (currentPageType) {
+    case PageType.HIGHLIGHTS:
+      content = (
+        <CreateHighlightContent onClose={onClose} onSave={onSaveHighlight} />
+      );
+      break;
+    case PageType.ITINERARY:
+      content = <div>Itinerary Content</div>;
+      break;
+    case PageType.HOTEL:
+      content = <div>Hotel Content</div>;
+      break;
+    case PageType.DAYPLAN:
+      content = <div>Day Plan Content</div>;
+      break;
+    case PageType.FLIGHT:
+      content = <div>Flight Content</div>;
+      break;
+    case PageType.INCLUSION_EXCLUSION:
+      content = <div>Inclusion/Exclusion Content</div>;
+      break;
+    case PageType.TERMS:
+      content = <div>Terms & Conditions Content</div>;
+      break;
+    default:
+      content = <CreateCoverContent onClose={onClose} onSave={onSaveCover} />;
+      break;
+  }
+  return (
+    <ReactModal
+      style={dialogStyle}
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Dialog Modal"
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        {content}
       </div>
-      <div id="pdf-document" style={styles.page}>
-        <div style={styles.section}>
-          <CoverPage
-            title={placeTitle}
-            ppCost={ppCost.toLocaleString("en-IN")}
-            duration={durationCount}
-          />
+    </ReactModal>
+  );
+};
+ReactModal.setAppElement("#main");
+
+const pageTypes = [
+  { label: "Highlights", value: PageType.HIGHLIGHTS },
+  { label: "Itinerary", value: PageType.ITINERARY },
+  { label: "Hotel", value: PageType.HOTEL },
+  { label: "Day Plan", value: PageType.DAYPLAN },
+  { label: "Flight", value: PageType.FLIGHT },
+  { label: "Inclusion/Exclusion", value: PageType.INCLUSION_EXCLUSION },
+  { label: "Terms & Conditions", value: PageType.TERMS },
+];
+export default function PdfComponent() {
+  const [isOpen, setOpen] = useState(false);
+  const [pageContent, setPageContent] = useState<PageContent>({});
+  const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
+
+  const downloadPDF =
+    pageContent &&
+    (async () => {
+      var element: HTMLElement | null = document.getElementById("pdf-document");
+      var html2pdf = await require("html2pdf.js");
+      var opt: html2pdf.Options = {
+        margin: 0.1,
+        filename: pageContent.coverPage?.pageTitle ?? "document.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+        },
+        jsPDF: {
+          unit: "px",
+          hotfixes: ["px_scaling"],
+          orientation: "portrait",
+        },
+      };
+      element && html2pdf(element, opt);
+    });
+  const showDilaog = () => setOpen(true);
+  useEffect(() => {
+    if (!currentPageType) return;
+    showDilaog();
+  }, [currentPageType]);
+  return (
+    <>
+      <div style={styles.container}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            backgroundColor: "rgb(0,0,0,0.25)",
+            position: "fixed",
+          }}
+        >
+          <div>
+            {pageContent.coverPage === undefined ? (
+              <button
+                className={poppinsFont.className}
+                style={(poppinsFont.style, styles.createCoverButton)}
+                onClick={showDilaog}
+              >
+                Add Cover Page
+              </button>
+            ) : (
+              <select
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  height: 36,
+                  marginLeft: 10,
+                  marginTop: 10,
+                  borderRadius: 5,
+                }}
+                onChange={(e) => setCurrentPageType(e.target.value as PageType)}
+              >
+                <option value="">--Add Page--</option>
+                {pageTypes.map((pageType) => (
+                  <option key={pageType.value} value={pageType.value}>
+                    {pageType.label}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+          <button
+            className={poppinsFont.className}
+            style={(poppinsFont.style, styles.downloadButton)}
+            onClick={downloadPDF}
+          >
+            Download PDF
+          </button>
         </div>
-        <div style={styles.section}>
-          <Highlights />
+        <div id="pdf-document" style={styles.page}>
+          {pageContent.coverPage && (
+            <div style={styles.section}>
+              <CoverPage
+                title={pageContent.coverPage.pageTitle}
+                ppCost={pageContent.coverPage.ppCost}
+                duration={pageContent.coverPage.duration}
+              />
+            </div>
+          )}
+          {pageContent?.highlight && (
+            <div style={styles.section}>
+              <Highlights
+                imageUrl={pageContent.highlight.imageUrl}
+                highlightText={pageContent.highlight.highlightText}
+              />
+            </div>
+          )}
         </div>
       </div>
-    </div>
+      <DialogComponent
+        currentPageType={currentPageType}
+        isOpen={isOpen}
+        onSaveCover={(title, pricePerPerson, numberOfNights) => {
+          setPageContent({
+            coverPage: {
+              pageTitle: title,
+              ppCost: pricePerPerson.toLocaleString("en-IN"),
+              duration: numberOfNights,
+            },
+          });
+        }}
+        onSaveHighlight={(imageUrl, highlightText) => {
+          setPageContent({
+            ...pageContent,
+            highlight: {
+              imageUrl: imageUrl,
+              highlightText: highlightText,
+            },
+          });
+        }}
+        onClose={() => setOpen(false)}
+      />
+    </>
   );
 }
