@@ -22,7 +22,7 @@ const BackgroundLayer: React.FC<{ addWatermark: boolean }> = ({
       {addWatermark && (
         <Image
           style={{
-            opacity: 0.1,
+            opacity: 0.05,
             position: "absolute",
             bottom: 16,
             left: 16,

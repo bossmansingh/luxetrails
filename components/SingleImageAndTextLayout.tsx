@@ -27,6 +27,7 @@ const SingleImageAndTextLayout: React.FC<{
             style={{
               marginTop: 50,
               width: "100%",
+              height: "auto",
               objectFit: "cover",
               borderRadius: 8,
             }}
