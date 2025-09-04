@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  CanvasHeight,
   PageContent,
   PageType,
   SingleImageAndTextContent,
@@ -72,8 +73,16 @@ const PdfComponent: React.FC = () => {
         onSave={(newContent: PageContent) => {
           setPageCount(pageCount + 1);
           setPageContent(newContent);
+          scrollTo({
+            behavior: "smooth",
+            left: 0,
+            top: CanvasHeight * pageCount,
+          });
         }}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setCurrentPageType(null);
+          setOpen(false);
+        }}
       />
     </>
   );

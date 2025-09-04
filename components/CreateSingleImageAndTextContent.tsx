@@ -12,17 +12,15 @@ const CreateSingleImageAndTextContent: React.FC<{
     <>
       <h1>Enter Page Info</h1>
       <input
-        style={{ width: "100%", height: "30px", marginTop: 20 }}
-        placeholder="Enter Page Title"
-        type="text"
-        value={pageTitle}
-        onChange={(e) => setPageTitle(e.target.value)}
-      />
-      <input
         style={{
-          width: "100px",
+          width: "100%",
           height: "auto",
           marginTop: 20,
+          padding: 10,
+          alignContent: "center",
+          justifyContent: "center",
+          color: "white",
+          backgroundColor: "black",
         }}
         placeholder="Highlight Image"
         type="file"
@@ -30,6 +28,13 @@ const CreateSingleImageAndTextContent: React.FC<{
           var result = e.target.files?.item(0);
           result && setImageUrl(URL.createObjectURL(result));
         }}
+      />
+      <input
+        style={{ width: "100%", height: "30px", marginTop: 20 }}
+        placeholder="Enter Page Title"
+        type="text"
+        value={pageTitle}
+        onChange={(e) => setPageTitle(e.target.value)}
       />
       <textarea
         style={{

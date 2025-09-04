@@ -8,6 +8,8 @@ import {
 
 const aspectRatio = 0.7070707071;
 
+export const CanvasWidth = 793.5;
+export const CanvasHeight = 1122;
 export const Domain = "www.theluxetrails.com";
 export const BrandGreen = "#043C2B";
 

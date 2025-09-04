@@ -1,4 +1,6 @@
 import {
+  CanvasHeight,
+  CanvasWidth,
   PageContent,
   PageType,
   pageTypes,
@@ -18,13 +20,12 @@ const MainContainerHeader: React.FC<{
       var element: HTMLElement | null = document.getElementById("pdf-document");
       var html2pdf = await require("html2pdf.js");
       var opt: html2pdf.Options = {
-        margin: 0.1,
         filename: pageContent.coverPage?.pageTitle ?? "document.pdf",
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {
           scale: 2,
-          width: 793.5,
-          height: 1122 * pageCount,
+          width: CanvasWidth,
+          height: CanvasHeight * pageCount,
         },
         jsPDF: {
           unit: "px",
@@ -65,7 +66,10 @@ const MainContainerHeader: React.FC<{
               marginTop: 10,
               borderRadius: 5,
             }}
-            onChange={(e) => setCurrentPageType(e.target.value as PageType)}
+            onChange={(e) => {
+              setCurrentPageType(e.target.value as PageType);
+              e.target.selectedIndex = 0; // Reset value after selection
+            }}
           >
             <option value="">--Add Page--</option>
             {pageTypes.map((pageType) => (
