@@ -1,6 +1,6 @@
-import { PageType } from "@/util/Constants";
+import { PageContent, PageType } from "@/util/Constants";
 import ReactModal from "react-modal";
-import CreateHighlightContent from "@/components/CreateHighlightContent";
+import CreateSingleImageAndTextContent from "@/components/CreateSingleImageAndTextContent";
 import CreateCoverContent from "@/components/CreateCoverContent";
 
 const dialogStyle: ReactModal.Styles = {
@@ -20,21 +20,33 @@ const dialogStyle: ReactModal.Styles = {
 };
 
 const DialogComponent: React.FC<{
+  pageContent: PageContent;
   currentPageType: PageType | null;
   isOpen: boolean;
-  onSaveCover: (
-    title: string,
-    pricePerPerson: number,
-    numberOfNights: number
-  ) => void;
-  onSaveHighlight: (imageUrl: string, highlightText: string) => void;
+  onSave: (pageContent: PageContent) => void;
   onClose: () => void;
-}> = ({ currentPageType, isOpen, onSaveCover, onSaveHighlight, onClose }) => {
+}> = ({ pageContent, currentPageType, isOpen, onSave, onClose }) => {
   let content;
   switch (currentPageType) {
     case PageType.HIGHLIGHTS:
       content = (
-        <CreateHighlightContent onClose={onClose} onSave={onSaveHighlight} />
+        <CreateSingleImageAndTextContent
+          onClose={onClose}
+          onSave={(
+            pageTitle: string,
+            imageUrl: string,
+            contentText: string
+          ) => {
+            onSave({
+              ...pageContent,
+              highlight: {
+                pageTitle: pageTitle,
+                imageUrl: imageUrl,
+                contentText: contentText,
+              },
+            });
+          }}
+        />
       );
       break;
     case PageType.ITINERARY:
@@ -44,7 +56,28 @@ const DialogComponent: React.FC<{
       content = <div>Hotel Content</div>;
       break;
     case PageType.DAYPLAN:
-      content = <div>Day Plan Content</div>;
+      content = (
+        <CreateSingleImageAndTextContent
+          onClose={onClose}
+          onSave={(
+            pageTitle: string,
+            imageUrl: string,
+            contentText: string
+          ) => {
+            onSave({
+              ...pageContent,
+              dayPlan: [
+                ...(pageContent.dayPlan ?? []),
+                {
+                  pageTitle: pageTitle,
+                  imageUrl: imageUrl,
+                  contentText: contentText,
+                },
+              ],
+            });
+          }}
+        />
+      );
       break;
     case PageType.FLIGHT:
       content = <div>Flight Content</div>;
@@ -56,7 +89,25 @@ const DialogComponent: React.FC<{
       content = <div>Terms & Conditions Content</div>;
       break;
     default:
-      content = <CreateCoverContent onClose={onClose} onSave={onSaveCover} />;
+      content = (
+        <CreateCoverContent
+          onClose={onClose}
+          onSave={(
+            title: string,
+            pricePerPerson: number,
+            numberOfNights: number
+          ) => {
+            onSave({
+              ...pageContent,
+              coverPage: {
+                pageTitle: title,
+                ppCost: pricePerPerson.toLocaleString("en-IN"),
+                duration: numberOfNights,
+              },
+            });
+          }}
+        />
+      );
       break;
   }
   return (

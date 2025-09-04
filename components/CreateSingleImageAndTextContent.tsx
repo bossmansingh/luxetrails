@@ -1,15 +1,23 @@
 import { styles } from "@/util/Constants";
 import { useState } from "react";
 
-const CreateHighlightContent: React.FC<{
-  onSave: (imageUrl: string, highlightText: string) => void;
+const CreateSingleImageAndTextContent: React.FC<{
+  onSave: (pageTitle: string, imageUrl: string, highlightText: string) => void;
   onClose: () => void;
 }> = ({ onClose, onSave }) => {
+  const [pageTitle, setPageTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [highlightText, setHighlightText] = useState("");
   return (
     <>
-      <h1>Enter Highlight Info</h1>
+      <h1>Enter Page Info</h1>
+      <input
+        style={{ width: "100%", height: "30px", marginTop: 20 }}
+        placeholder="Enter Page Title"
+        type="text"
+        value={pageTitle}
+        onChange={(e) => setPageTitle(e.target.value)}
+      />
       <input
         style={{
           width: "100px",
@@ -38,7 +46,7 @@ const CreateHighlightContent: React.FC<{
       <button
         style={styles.modalButton}
         onClick={() => {
-          onSave(imageUrl, highlightText);
+          onSave(pageTitle.toUpperCase(), imageUrl, highlightText);
           onClose();
         }}
       >
@@ -51,4 +59,4 @@ const CreateHighlightContent: React.FC<{
   );
 };
 
-export default CreateHighlightContent;
+export default CreateSingleImageAndTextContent;

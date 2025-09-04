@@ -3,10 +3,11 @@ import SectionPageHeadline from "@/components/SectionPageHeadline";
 import { poppinsFont, styles } from "@/util/Constants";
 import BackgroundLayer from "@/components/BackgroundLayer";
 
-const Highlights: React.FC<{ imageUrl: string; highlightText: string }> = ({
-  imageUrl,
-  highlightText,
-}) => {
+const SingleImageAndTextLayout: React.FC<{
+  pageTitle: string;
+  imageUrl: string;
+  highlightText: string;
+}> = ({ pageTitle, imageUrl, highlightText }) => {
   return (
     <>
       <div style={styles.sectionPage}>
@@ -15,10 +16,13 @@ const Highlights: React.FC<{ imageUrl: string; highlightText: string }> = ({
           style={{
             width: "100%",
             height: "100%",
-            padding: 80,
+            paddingLeft: 80,
+            paddingRight: 80,
+            paddingTop: 40,
+            paddingBottom: 40,
           }}
         >
-          <SectionPageHeadline title={"HIGHLIGHTS"} />
+          <SectionPageHeadline title={pageTitle} />
           <Image
             style={{
               marginTop: 50,
@@ -34,18 +38,16 @@ const Highlights: React.FC<{ imageUrl: string; highlightText: string }> = ({
           />
           <span
             className={poppinsFont.className}
-            style={
-              (poppinsFont.style,
-              {
-                whiteSpace: "pre-wrap",
-                display: "block",
-                fontWeight: "500",
-                padding: 24,
-                color: "black",
-                fontSize: 18,
-                lineHeight: 2,
-              })
-            }
+            style={{
+              ...poppinsFont.style,
+              whiteSpace: "pre-wrap",
+              display: "block",
+              fontWeight: "500",
+              padding: 24,
+              color: "black",
+              fontSize: 18,
+              lineHeight: 2,
+            }}
           >
             {highlightText}
           </span>
@@ -55,4 +57,4 @@ const Highlights: React.FC<{ imageUrl: string; highlightText: string }> = ({
   );
 };
 
-export default Highlights;
+export default SingleImageAndTextLayout;

@@ -1,10 +1,15 @@
 "use client";
 
-import { PageContent, PageType, styles } from "@/util/Constants";
+import {
+  PageContent,
+  PageType,
+  SingleImageAndTextContent,
+  styles,
+} from "@/util/Constants";
 import React, { useEffect, useState } from "react";
 import CoverPage from "@/components/CoverPage";
 import DialogComponent from "@/components/Modal";
-import Highlights from "@/components/Highlights";
+import SingleImageAndTextLayout from "@/components/SingleImageAndTextLayout";
 import MainContainerHeader from "@/components/MainContainerHeader";
 
 const PdfComponent: React.FC = () => {
@@ -39,36 +44,34 @@ const PdfComponent: React.FC = () => {
           )}
           {pageContent?.highlight && (
             <div style={styles.section}>
-              <Highlights
+              <SingleImageAndTextLayout
+                pageTitle={pageContent.highlight.pageTitle}
                 imageUrl={pageContent.highlight.imageUrl}
-                highlightText={pageContent.highlight.highlightText}
+                highlightText={pageContent.highlight.contentText}
               />
             </div>
           )}
+          {pageContent?.dayPlan &&
+            pageContent.dayPlan.map(
+              (value: SingleImageAndTextContent, index: number) => (
+                <div key={index} style={styles.section}>
+                  <SingleImageAndTextLayout
+                    pageTitle={value.pageTitle}
+                    imageUrl={value.imageUrl}
+                    highlightText={value.contentText}
+                  />
+                </div>
+              )
+            )}
         </div>
       </div>
       <DialogComponent
+        pageContent={pageContent}
         currentPageType={currentPageType}
         isOpen={isOpen}
-        onSaveCover={(title, pricePerPerson, numberOfNights) => {
+        onSave={(newContent: PageContent) => {
           setPageCount(pageCount + 1);
-          setPageContent({
-            coverPage: {
-              pageTitle: title,
-              ppCost: pricePerPerson.toLocaleString("en-IN"),
-              duration: numberOfNights,
-            },
-          });
-        }}
-        onSaveHighlight={(imageUrl, highlightText) => {
-          setPageCount(pageCount + 1);
-          setPageContent({
-            ...pageContent,
-            highlight: {
-              imageUrl: imageUrl,
-              highlightText: highlightText,
-            },
-          });
+          setPageContent(newContent);
         }}
         onClose={() => setOpen(false)}
       />

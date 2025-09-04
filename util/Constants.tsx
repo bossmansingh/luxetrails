@@ -11,6 +11,44 @@ const aspectRatio = 0.7070707071;
 export const Domain = "www.theluxetrails.com";
 export const BrandGreen = "#043C2B";
 
+export enum PageType {
+  HIGHLIGHTS = "highlights",
+  ITINERARY = "itinerary",
+  HOTEL = "hotel",
+  DAYPLAN = "dayplan",
+  FLIGHT = "flight",
+  INCLUSION_EXCLUSION = "inclusion_exclusion",
+  TERMS = "terms",
+}
+
+export type CoverPageContent = {
+  pageTitle: string;
+  ppCost: string;
+  duration: number;
+};
+
+export type SingleImageAndTextContent = {
+  pageTitle: string;
+  imageUrl: string;
+  contentText: string;
+};
+
+export type PageContent = {
+  coverPage?: CoverPageContent;
+  highlight?: SingleImageAndTextContent;
+  dayPlan?: SingleImageAndTextContent[];
+};
+
+export const pageTypes = [
+  { label: "Highlights", value: PageType.HIGHLIGHTS },
+  { label: "Itinerary", value: PageType.ITINERARY },
+  { label: "Hotel", value: PageType.HOTEL },
+  { label: "Day Plan", value: PageType.DAYPLAN },
+  { label: "Flight", value: PageType.FLIGHT },
+  { label: "Inclusion/Exclusion", value: PageType.INCLUSION_EXCLUSION },
+  { label: "Terms & Conditions", value: PageType.TERMS },
+];
+
 // Fonts
 export const titleFont = Playfair_Display({
   weight: "600",
@@ -32,42 +70,6 @@ export const poppinsFont = Poppins({
   preload: true,
   display: "swap",
 });
-
-export enum PageType {
-  HIGHLIGHTS = "highlights",
-  ITINERARY = "itinerary",
-  HOTEL = "hotel",
-  DAYPLAN = "dayplan",
-  FLIGHT = "flight",
-  INCLUSION_EXCLUSION = "inclusion_exclusion",
-  TERMS = "terms",
-}
-
-export type CoverPageContent = {
-  pageTitle: string;
-  ppCost: string;
-  duration: number;
-};
-
-export type HighlightsContent = {
-  imageUrl: string;
-  highlightText: string;
-};
-
-export type PageContent = {
-  coverPage?: CoverPageContent;
-  highlight?: HighlightsContent;
-};
-
-export const pageTypes = [
-  { label: "Highlights", value: PageType.HIGHLIGHTS },
-  { label: "Itinerary", value: PageType.ITINERARY },
-  { label: "Hotel", value: PageType.HOTEL },
-  { label: "Day Plan", value: PageType.DAYPLAN },
-  { label: "Flight", value: PageType.FLIGHT },
-  { label: "Inclusion/Exclusion", value: PageType.INCLUSION_EXCLUSION },
-  { label: "Terms & Conditions", value: PageType.TERMS },
-];
 
 // Styles
 export const styles = StyleSheet.create({
@@ -91,7 +93,6 @@ export const styles = StyleSheet.create({
   },
   sectionPage: {
     width: "100%",
-    height: "100%",
     backgroundColor: "white",
     position: "relative",
     display: "flex",
@@ -142,8 +143,8 @@ export const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 34,
     color: BrandGreen,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
   },
   domain: {
     fontSize: 20,

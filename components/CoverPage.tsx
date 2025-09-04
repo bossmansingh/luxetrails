@@ -23,16 +23,18 @@ const CoverPage: React.FC<{
         </h1>
         <p
           className={poppinsFont.className}
-          style={
-            (poppinsFont.style,
-            { fontWeight: "700", fontSize: 25, marginTop: 15 })
-          }
+          style={{
+            ...poppinsFont.style,
+            fontWeight: "700",
+            fontSize: 25,
+            marginTop: 15,
+          }}
         >
           {ppCost} Per Person
         </p>
         <p
           className={poppinsFont.className}
-          style={(poppinsFont.style, { fontSize: 20 })}
+          style={{ ...poppinsFont.style, fontSize: 20 }}
         >
           {duration} nights {duration + 1} days
         </p>
@@ -52,10 +54,12 @@ const CoverPage: React.FC<{
         />
         <p
           className={poppinsFont.className}
-          style={
-            (poppinsFont.style,
-            { marginTop: 30, fontSize: 25, letterSpacing: 15 })
-          }
+          style={{
+            ...poppinsFont.style,
+            marginTop: 30,
+            fontSize: 25,
+            letterSpacing: 15,
+          }}
         >
           ITINERARY
         </p>
