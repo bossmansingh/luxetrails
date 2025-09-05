@@ -2,6 +2,7 @@ import { PageContent, PageType } from "@/util/Constants";
 import ReactModal from "react-modal";
 import CreateSingleImageAndTextContent from "@/components/CreateSingleImageAndTextContent";
 import CreateCoverContent from "@/components/CreateCoverContent";
+import CreateItineraryContent from "@/components/CreateItineraryContent";
 
 const dialogStyle: ReactModal.Styles = {
   content: {
@@ -50,7 +51,21 @@ const DialogComponent: React.FC<{
       );
       break;
     case PageType.ITINERARY:
-      content = <div>Itinerary Content</div>;
+      content = (
+        <CreateItineraryContent
+          numberOfNights={pageContent.coverPage?.duration ?? 0}
+          onSave={(pageTitle: string, contentTexts: string[]) => {
+            onSave({
+              ...pageContent,
+              itinerary: {
+                pageTitle: pageTitle,
+                contentTexts: contentTexts,
+              },
+            });
+          }}
+          onClose={onClose}
+        />
+      );
       break;
     case PageType.HOTEL:
       content = <div>Hotel Content</div>;

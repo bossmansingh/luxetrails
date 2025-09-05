@@ -35,10 +35,16 @@ export type SingleImageAndTextContent = {
   contentText: string;
 };
 
+export type ItineraryContent = {
+  pageTitle: string;
+  contentTexts: string[];
+};
+
 export type PageContent = {
   coverPage?: CoverPageContent;
   highlight?: SingleImageAndTextContent;
   dayPlan?: SingleImageAndTextContent[];
+  itinerary?: ItineraryContent;
 };
 
 export const pageTypes = [
@@ -98,6 +104,14 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     position: "relative",
     display: "flex",
+  },
+  sectionPageContent: {
+    width: "100%",
+    height: "100%",
+    paddingLeft: 80,
+    paddingRight: 80,
+    paddingTop: 40,
+    paddingBottom: 40,
   },
   downloadButton: {
     justifySelf: "end",

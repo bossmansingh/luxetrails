@@ -12,16 +12,7 @@ const SingleImageAndTextLayout: React.FC<{
     <>
       <div style={styles.sectionPage}>
         <BackgroundLayer addWatermark />
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            paddingLeft: 80,
-            paddingRight: 80,
-            paddingTop: 40,
-            paddingBottom: 40,
-          }}
-        >
+        <div style={styles.sectionPageContent}>
           <SectionPageHeadline title={pageTitle} />
           <Image
             style={{

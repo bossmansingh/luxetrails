@@ -12,6 +12,7 @@ import CoverPage from "@/components/CoverPage";
 import DialogComponent from "@/components/Modal";
 import SingleImageAndTextLayout from "@/components/SingleImageAndTextLayout";
 import MainContainerHeader from "@/components/MainContainerHeader";
+import ItineraryContent from "@/components/ItineraryContent";
 
 const PdfComponent: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
@@ -49,6 +50,14 @@ const PdfComponent: React.FC = () => {
                 pageTitle={pageContent.highlight.pageTitle}
                 imageUrl={pageContent.highlight.imageUrl}
                 highlightText={pageContent.highlight.contentText}
+              />
+            </div>
+          )}
+          {pageContent?.itinerary && (
+            <div style={styles.section}>
+              <ItineraryContent
+                pageTitle={pageContent.itinerary.pageTitle}
+                daysContent={pageContent.itinerary.contentTexts}
               />
             </div>
           )}

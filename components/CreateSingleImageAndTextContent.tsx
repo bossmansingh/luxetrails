@@ -1,4 +1,4 @@
-import { styles } from "@/util/Constants";
+import { poppinsFont, styles } from "@/util/Constants";
 import { useState } from "react";
 
 const CreateSingleImageAndTextContent: React.FC<{
@@ -10,9 +10,13 @@ const CreateSingleImageAndTextContent: React.FC<{
   const [highlightText, setHighlightText] = useState("");
   return (
     <>
-      <h1>Enter Page Info</h1>
+      <h1 className={poppinsFont.className} style={poppinsFont.style}>
+        Enter Page Info
+      </h1>
       <input
+        className={poppinsFont.className}
         style={{
+          ...poppinsFont.style,
           width: "100%",
           height: "auto",
           marginTop: 20,
@@ -30,14 +34,22 @@ const CreateSingleImageAndTextContent: React.FC<{
         }}
       />
       <input
-        style={{ width: "100%", height: "30px", marginTop: 20 }}
+        className={poppinsFont.className}
+        style={{
+          ...poppinsFont.style,
+          width: "100%",
+          height: "30px",
+          marginTop: 20,
+        }}
         placeholder="Enter Page Title"
         type="text"
         value={pageTitle}
         onChange={(e) => setPageTitle(e.target.value)}
       />
       <textarea
+        className={poppinsFont.className}
         style={{
+          ...poppinsFont.style,
           width: "100%",
           minHeight: "120px",
           marginTop: 20,
@@ -49,7 +61,8 @@ const CreateSingleImageAndTextContent: React.FC<{
         onChange={(e) => setHighlightText(e.target.value)}
       />
       <button
-        style={styles.modalButton}
+        className={poppinsFont.className}
+        style={{ ...styles.modalButton, ...poppinsFont.style }}
         onClick={() => {
           onSave(pageTitle.toUpperCase(), imageUrl, highlightText);
           onClose();
@@ -57,7 +70,11 @@ const CreateSingleImageAndTextContent: React.FC<{
       >
         SAVE
       </button>
-      <button style={styles.modalButton} onClick={onClose}>
+      <button
+        className={poppinsFont.className}
+        style={{ ...styles.modalButton, ...poppinsFont.style }}
+        onClick={onClose}
+      >
         CLOSE
       </button>
     </>
