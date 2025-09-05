@@ -1,6 +1,14 @@
 import { poppinsFont, styles } from "@/util/Constants";
 import { useState } from "react";
 
+const inputTextStyle = {
+  ...poppinsFont.style,
+  width: "100%",
+  height: "40px",
+  marginTop: 10,
+  fontSize: 16,
+};
+
 const CreateCoverContent: React.FC<{
   onClose: () => void;
   onSave: (
@@ -19,12 +27,7 @@ const CreateCoverContent: React.FC<{
       </h1>
       <input
         className={poppinsFont.className}
-        style={{
-          ...poppinsFont.style,
-          width: "100%",
-          height: "30px",
-          marginTop: 20,
-        }}
+        style={inputTextStyle}
         placeholder="Enter title"
         type="text"
         value={title}
@@ -32,12 +35,7 @@ const CreateCoverContent: React.FC<{
       />
       <input
         className={poppinsFont.className}
-        style={{
-          ...poppinsFont.style,
-          width: "100%",
-          height: "30px",
-          marginTop: 20,
-        }}
+        style={inputTextStyle}
         placeholder="Price per person"
         type="number"
         value={pricePerPerson > 0 ? pricePerPerson : ""}
@@ -45,12 +43,7 @@ const CreateCoverContent: React.FC<{
       />
       <input
         className={poppinsFont.className}
-        style={{
-          ...poppinsFont.style,
-          width: "100%",
-          height: "30px",
-          marginTop: 20,
-        }}
+        style={inputTextStyle}
         placeholder="Number of nights"
         type="number"
         value={numberOfNights > 0 ? numberOfNights : ""}

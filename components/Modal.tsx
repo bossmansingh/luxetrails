@@ -3,6 +3,7 @@ import ReactModal from "react-modal";
 import CreateSingleImageAndTextContent from "@/components/CreateSingleImageAndTextContent";
 import CreateCoverContent from "@/components/CreateCoverContent";
 import CreateItineraryContent from "@/components/CreateItineraryContent";
+import CreateTermsConditionContent from "@/components/CreateTermsConditionContent";
 
 const dialogStyle: ReactModal.Styles = {
   content: {
@@ -101,7 +102,19 @@ const DialogComponent: React.FC<{
       content = <div>Inclusion/Exclusion Content</div>;
       break;
     case PageType.TERMS:
-      content = <div>Terms & Conditions Content</div>;
+      content = (
+        <CreateTermsConditionContent
+          onClose={onClose}
+          onSave={(contentText: string) => {
+            onSave({
+              ...pageContent,
+              termsCondition: {
+                contentText: contentText,
+              },
+            });
+          }}
+        />
+      );
       break;
     default:
       content = (

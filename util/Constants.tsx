@@ -23,21 +23,25 @@ export enum PageType {
   TERMS = "terms",
 }
 
-export type CoverPageContent = {
-  pageTitle: string;
-  ppCost: string;
-  duration: number;
-};
-
 export type SingleImageAndTextContent = {
   pageTitle: string;
   imageUrl: string;
   contentText: string;
 };
 
-export type ItineraryContent = {
+type CoverPageContent = {
+  pageTitle: string;
+  ppCost: string;
+  duration: number;
+};
+
+type ItineraryContent = {
   pageTitle: string;
   contentTexts: string[];
+};
+
+type TermsConditionContent = {
+  contentText: string;
 };
 
 export type PageContent = {
@@ -45,6 +49,7 @@ export type PageContent = {
   highlight?: SingleImageAndTextContent;
   dayPlan?: SingleImageAndTextContent[];
   itinerary?: ItineraryContent;
+  termsCondition?: TermsConditionContent;
 };
 
 export const pageTypes = [

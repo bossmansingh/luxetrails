@@ -13,6 +13,7 @@ import DialogComponent from "@/components/Modal";
 import SingleImageAndTextLayout from "@/components/SingleImageAndTextLayout";
 import MainContainerHeader from "@/components/MainContainerHeader";
 import ItineraryContent from "@/components/ItineraryContent";
+import TermsConditionContent from "./TermsConditionContent";
 
 const PdfComponent: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
@@ -58,6 +59,13 @@ const PdfComponent: React.FC = () => {
               <ItineraryContent
                 pageTitle={pageContent.itinerary.pageTitle}
                 daysContent={pageContent.itinerary.contentTexts}
+              />
+            </div>
+          )}
+          {pageContent?.termsCondition && (
+            <div style={styles.section}>
+              <TermsConditionContent
+                contentText={pageContent.termsCondition.contentText}
               />
             </div>
           )}
