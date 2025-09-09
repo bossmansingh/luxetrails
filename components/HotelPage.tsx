@@ -1,6 +1,4 @@
-import { HotelContent, poppinsFont, styles } from "@/util/Constants";
-import BackgroundLayer from "./BackgroundLayer";
-import SectionPageHeadline from "./SectionPageHeadline";
+import { HotelContent, poppinsFont } from "@/util/Constants";
 import Image from "next/image";
 
 const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
@@ -118,28 +116,19 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
     </div>
   );
 };
-const HotelPage: React.FC<{ pageTitle: string; hotels: HotelContent[] }> = ({
-  pageTitle,
-  hotels,
-}) => {
+const HotelPage: React.FC<{ hotels: HotelContent[] }> = ({ hotels }) => {
   return (
-    <div style={styles.sectionPage}>
-      <BackgroundLayer addWatermark />
-      <div style={styles.sectionPageContent}>
-        <SectionPageHeadline title={pageTitle} />
-        <div
-          style={{
-            marginTop: 60,
-            display: "flex",
-            flexDirection: "column",
-            color: "black",
-          }}
-        >
-          {hotels.map((value: HotelContent, index: number) => (
-            <HotelItem key={`hotel_${index}`} value={value} />
-          ))}
-        </div>
-      </div>
+    <div
+      style={{
+        marginTop: 60,
+        display: "flex",
+        flexDirection: "column",
+        color: "black",
+      }}
+    >
+      {hotels.map((value: HotelContent, index: number) => (
+        <HotelItem key={`hotel_${index}`} value={value} />
+      ))}
     </div>
   );
 };

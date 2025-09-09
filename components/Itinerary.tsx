@@ -1,6 +1,4 @@
-import { cinzelFont, poppinsFont, styles } from "@/util/Constants";
-import BackgroundLayer from "@/components/BackgroundLayer";
-import SectionPageHeadline from "@/components/SectionPageHeadline";
+import { cinzelFont, poppinsFont } from "@/util/Constants";
 import CalendarIcon from "@/public/calendar_icon.jpg";
 import Image from "next/image";
 
@@ -57,31 +55,24 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
 };
 
 const Itinerary: React.FC<{
-  pageTitle: string;
   daysContent: string[];
-}> = ({ pageTitle, daysContent }) => {
+}> = ({ daysContent }) => {
   return (
-    <div style={styles.sectionPage}>
-      <BackgroundLayer addWatermark />
-      <div style={styles.sectionPageContent}>
-        <SectionPageHeadline title={pageTitle} />
-        <div
-          style={{
-            marginTop: 60,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-          }}
-        >
-          {daysContent.map((value: string, index: number) => (
-            <CalendarRow
-              key={`${value}_${index}`}
-              index={index}
-              contentText={value}
-            />
-          ))}
-        </div>
-      </div>
+    <div
+      style={{
+        marginTop: 60,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+      }}
+    >
+      {daysContent.map((value: string, index: number) => (
+        <CalendarRow
+          key={`${value}_${index}`}
+          index={index}
+          contentText={value}
+        />
+      ))}
     </div>
   );
 };

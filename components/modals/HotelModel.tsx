@@ -1,4 +1,4 @@
-import { HotelContent, PageType, poppinsFont, styles } from "@/util/Constants";
+import { HotelContent, PageType, poppinsFont } from "@/util/Constants";
 import ModelTitle from "@/components/modals/ModelTitle";
 import { useEffect, useState } from "react";
 import ModelButtons from "./ModelButtons";

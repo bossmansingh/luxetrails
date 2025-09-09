@@ -8,6 +8,8 @@ import {
   ItineraryContent,
   PageContent,
   PageType,
+  poppinsFont,
+  ScopeService,
   SingleImageAndTextContent,
   styles,
   TermsConditionContent,
@@ -20,6 +22,8 @@ import MainContainerHeader from "@/components/MainContainerHeader";
 import Itinerary from "@/components/Itinerary";
 import TermsCondition from "./TermsCondition";
 import HotelPage from "./HotelPage";
+import BackgroundLayer from "./BackgroundLayer";
+import SectionPageHeadline from "./SectionPageHeadline";
 
 const savePDF = async (
   filename: string,
@@ -45,8 +49,24 @@ const savePDF = async (
 };
 
 const AddNewSection: React.FC<{
+  pageTitle: string;
+  addWatermark: boolean;
   content: ReactNode;
-}> = ({ content }) => <div style={styles.section}>{content}</div>;
+}> = ({ pageTitle, addWatermark, content }) => {
+  return addWatermark ? (
+    <div style={styles.section}>
+      <div style={styles.sectionPage}>
+        <BackgroundLayer addWatermark />
+        <div style={styles.sectionPageContent}>
+          <SectionPageHeadline title={pageTitle} />
+          {content}
+        </div>
+      </div>
+    </div>
+  ) : (
+    content
+  );
+};
 
 const CoverPageSection: React.FC<{
   coverPage?: CoverPageContent;
@@ -56,12 +76,13 @@ const CoverPageSection: React.FC<{
   useEffect(() => {
     if (!coverPage) return;
     var newPageCount = pageCount + 1;
-    console.log("CoverPageSection | Update Page count to ", newPageCount);
     updatePageCount(newPageCount);
   }, [coverPage]);
   return (
     coverPage && (
       <AddNewSection
+        addWatermark={false}
+        pageTitle={coverPage.pageTitle}
         content={
           <CoverPage
             title={coverPage.pageTitle}
@@ -82,15 +103,15 @@ const HighlightSection: React.FC<{
   useEffect(() => {
     if (!highlight) return;
     var newPageCount = pageCount + 1;
-    console.log("HighlightSection | Update Page count to ", newPageCount);
     updatePageCount(newPageCount);
   }, [highlight]);
   return (
     highlight && (
       <AddNewSection
+        addWatermark
+        pageTitle={highlight.pageTitle}
         content={
           <SingleImageAndTextLayout
-            pageTitle={highlight.pageTitle}
             imageUrl={highlight.imageUrl}
             highlightText={highlight.contentText}
           />
@@ -121,14 +142,15 @@ const HotelSection: React.FC<{
   useEffect(() => {
     if (pairedHotels.length <= 0) return;
     var newPageCount = pageCount + pairedHotels.length;
-    console.log("HotelSection | Update Page count to ", newPageCount);
     updatePageCount(newPageCount);
   }, [pairedHotels]);
   return pairedHotels.map((v, i) => {
     return (
       <AddNewSection
+        addWatermark
+        pageTitle="Hotels"
         key={`hotel_pair_${i}`}
-        content={<HotelPage pageTitle={"Hotels"} hotels={v} />}
+        content={<HotelPage hotels={v} />}
       />
     );
   });
@@ -142,18 +164,14 @@ const ItinerarySection: React.FC<{
   useEffect(() => {
     if (!itinerary) return;
     var newPageCount = pageCount + 1;
-    console.log("ItinerarySection | Update Page count to ", newPageCount);
     updatePageCount(newPageCount);
   }, [itinerary]);
   return (
     itinerary && (
       <AddNewSection
-        content={
-          <Itinerary
-            pageTitle={itinerary.pageTitle}
-            daysContent={itinerary.contentTexts}
-          />
-        }
+        addWatermark
+        pageTitle={itinerary.pageTitle}
+        content={<Itinerary daysContent={itinerary.contentTexts} />}
       />
     )
   );
@@ -167,23 +185,61 @@ const DayPlanSection: React.FC<{
   useEffect(() => {
     if (!dayPlan) return;
     var newPageCount = pageCount + 1;
-    console.log("DayPlanSection | Update Page count to ", newPageCount);
     updatePageCount(newPageCount);
   }, [dayPlan]);
   return (
     dayPlan &&
     dayPlan.map((value: SingleImageAndTextContent, index: number) => (
       <AddNewSection
+        addWatermark
         key={index}
+        pageTitle={value.pageTitle}
         content={
           <SingleImageAndTextLayout
-            pageTitle={value.pageTitle}
             imageUrl={value.imageUrl}
             highlightText={value.contentText}
           />
         }
       />
     ))
+  );
+};
+
+const ScopeOfServiceSection: React.FC<{
+  scopeService?: ScopeService;
+  pageCount: number;
+  updatePageCount: (newCount: number) => void;
+}> = ({ scopeService, pageCount, updatePageCount }) => {
+  useEffect(() => {
+    if (!scopeService) return;
+    var newPageCount = pageCount + 1;
+    updatePageCount(newPageCount);
+  }, [scopeService]);
+  return (
+    scopeService && (
+      <AddNewSection
+        addWatermark
+        pageTitle={scopeService.pageTitle}
+        content={
+          <div style={{ marginTop: 50 }}>
+            <span
+              className={poppinsFont.className}
+              style={{
+                ...poppinsFont.style,
+                whiteSpace: "pre-wrap",
+                display: "block",
+                textAlign: "justify",
+                color: "black",
+                fontSize: 18,
+                lineHeight: 1.75,
+              }}
+            >
+              {scopeService.contentText}
+            </span>
+          </div>
+        }
+      />
+    )
   );
 };
 
@@ -195,12 +251,13 @@ const TermsConditionSection: React.FC<{
   useEffect(() => {
     if (!termsCondition) return;
     var newPageCount = pageCount + 1;
-    console.log("TermsConditionSection | Update Page count to ", newPageCount);
     updatePageCount(newPageCount);
   }, [termsCondition]);
   return (
     termsCondition && (
       <AddNewSection
+        addWatermark
+        pageTitle="TERMS & CONDITIONS"
         content={<TermsCondition contentText={termsCondition.contentText} />}
       />
     )
@@ -213,10 +270,9 @@ const PdfComponent: React.FC = () => {
   const [pageContent, setPageContent] = useState<PageContent>({});
   const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
 
-  const showDilaog = () => setOpen(true);
   useEffect(() => {
     if (!currentPageType) return;
-    showDilaog();
+    setOpen(true);
   }, [currentPageType]);
   const onSavePDF = () => {
     var element: HTMLElement | null = document.getElementById("pdf-document");
@@ -226,15 +282,11 @@ const PdfComponent: React.FC = () => {
     const duration = coverPage.duration;
     savePDF(`${pageTitle} ${duration}N ${duration + 1}D`, pageCount, element);
   };
-  useEffect(() => {
-    console.log("pageCount: ", pageCount);
-  }, [pageCount]);
   return (
     <>
       <div style={styles.container}>
         <MainContainerHeader
           pageContent={pageContent}
-          showDilaog={showDilaog}
           setCurrentPageType={(e) => setCurrentPageType(e)}
           onSavePDF={onSavePDF}
         />
@@ -261,6 +313,11 @@ const PdfComponent: React.FC = () => {
           />
           <DayPlanSection
             dayPlan={pageContent.dayPlan}
+            pageCount={pageCount}
+            updatePageCount={setPageCount}
+          />
+          <ScopeOfServiceSection
+            scopeService={pageContent.scopeOfService}
             pageCount={pageCount}
             updatePageCount={setPageCount}
           />

@@ -1,6 +1,4 @@
 import {
-  CanvasHeight,
-  CanvasWidth,
   PageContent,
   PageType,
   pageTypes,
@@ -10,10 +8,9 @@ import {
 
 const MainContainerHeader: React.FC<{
   pageContent: PageContent;
-  showDilaog: () => void;
   setCurrentPageType: (currentPage: PageType | null) => void;
   onSavePDF: () => void;
-}> = ({ pageContent, showDilaog, setCurrentPageType, onSavePDF }) => {
+}> = ({ pageContent, setCurrentPageType, onSavePDF }) => {
   return (
     <div
       style={{
@@ -30,7 +27,7 @@ const MainContainerHeader: React.FC<{
           <button
             className={poppinsFont.className}
             style={(poppinsFont.style, styles.createCoverButton)}
-            onClick={showDilaog}
+            onClick={() => setCurrentPageType(PageType.COVER)}
           >
             Add Cover Page
           </button>
