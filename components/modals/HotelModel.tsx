@@ -140,6 +140,8 @@ const HotelInputItem: React.FC<{
           width: "100%",
           height: "40px",
           fontSize: 16,
+          paddingLeft: 12,
+          paddingRight: 12,
         }}
         placeholder={`Enter hotel ${index + 1} title`}
         type="text"
@@ -158,6 +160,8 @@ const HotelInputItem: React.FC<{
           width: "100%",
           height: "40px",
           fontSize: 16,
+          paddingLeft: 12,
+          paddingRight: 12,
         }}
         placeholder={`Enter hotel ${index + 1} subtitle`}
         type="text"

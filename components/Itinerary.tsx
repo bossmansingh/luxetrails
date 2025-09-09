@@ -1,4 +1,4 @@
-import { poppinsFont, styles } from "@/util/Constants";
+import { cinzelFont, poppinsFont, styles } from "@/util/Constants";
 import BackgroundLayer from "@/components/BackgroundLayer";
 import SectionPageHeadline from "@/components/SectionPageHeadline";
 import CalendarIcon from "@/public/calendar_icon.jpg";
@@ -21,13 +21,13 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
       <div style={{ position: "relative", display: "inline-block" }}>
         <Image src={CalendarIcon} alt="Calendar Icon" width={85} height={88} />
         <span
-          className={poppinsFont.className}
+          className={cinzelFont.className}
           style={{
-            ...poppinsFont.style,
+            ...cinzelFont.style,
             fontSize: 19,
-            fontWeight: 500,
+            fontWeight: 600,
             position: "absolute",
-            top: "58%",
+            top: "55%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             color: "#d4af37",
@@ -56,7 +56,7 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
   );
 };
 
-const ItineraryContent: React.FC<{
+const Itinerary: React.FC<{
   pageTitle: string;
   daysContent: string[];
 }> = ({ pageTitle, daysContent }) => {
@@ -86,4 +86,4 @@ const ItineraryContent: React.FC<{
   );
 };
 
-export default ItineraryContent;
+export default Itinerary;

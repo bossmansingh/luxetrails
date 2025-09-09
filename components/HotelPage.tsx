@@ -10,7 +10,7 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
-        paddingBottom: 22,
+        paddingBottom: 36,
       }}
     >
       <div
@@ -26,9 +26,11 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
           style={{
             width: "auto",
             height: "auto",
+            aspectRatio: 1,
             borderRadius: 10,
             paddingRight: 4,
             overflow: "clip",
+            objectFit: "cover",
           }}
           src={value.images.firstUrl}
           alt="Hotel First Image"
@@ -39,9 +41,11 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
           style={{
             width: "auto",
             height: "auto",
+            aspectRatio: 1,
             borderRadius: 10,
             paddingLeft: 4,
             overflow: "clip",
+            objectFit: "cover",
           }}
           src={value.images.secondUrl}
           alt="Hotel Second Image"
@@ -62,9 +66,11 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
             style={{
               width: "auto",
               height: "auto",
+              aspectRatio: 1,
               borderRadius: 10,
               paddingRight: 4,
               overflow: "clip",
+              objectFit: "cover",
             }}
             src={value.images.thirdUrl}
             alt="Hotel Third Image"
@@ -75,9 +81,11 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
             style={{
               width: "auto",
               height: "auto",
+              aspectRatio: 1,
               borderRadius: 10,
               paddingLeft: 4,
               overflow: "clip",
+              objectFit: "cover",
             }}
             src={value.images.fourthUrl}
             alt="Hotel Fourth Image"
@@ -91,13 +99,19 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
           marginTop: 10,
           fontSize: 22,
           fontWeight: 700,
+          textAlign: "center",
         }}
       >
         {value.title}
       </span>
       <span
         className={poppinsFont.className}
-        style={{ ...poppinsFont.style, fontSize: 20, fontWeight: 300 }}
+        style={{
+          ...poppinsFont.style,
+          fontSize: 20,
+          fontWeight: 300,
+          textAlign: "center",
+        }}
       >
         {value.subtitle}
       </span>

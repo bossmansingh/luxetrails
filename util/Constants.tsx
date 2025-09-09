@@ -16,12 +16,12 @@ export const BrandGreen = "#043C2B";
 export enum PageType {
   COVER = "cover",
   HIGHLIGHTS = "highlights",
-  ITINERARY = "itinerary",
   HOTEL = "hotel",
+  ITINERARY = "itinerary",
   DAYPLAN = "dayplan",
-  FLIGHT = "flight",
   INCLUSION_EXCLUSION = "inclusion_exclusion",
   TERMS = "terms",
+  FLIGHT = "flight",
 }
 
 export type SingleImageAndTextContent = {
@@ -30,18 +30,18 @@ export type SingleImageAndTextContent = {
   contentText: string;
 };
 
-type CoverPageContent = {
+export type CoverPageContent = {
   pageTitle: string;
   ppCost: string;
   duration: number;
 };
 
-type ItineraryContent = {
+export type ItineraryContent = {
   pageTitle: string;
   contentTexts: string[];
 };
 
-type TermsConditionContent = {
+export type TermsConditionContent = {
   contentText: string;
 };
 
@@ -70,12 +70,12 @@ export type PageContent = {
 export const pageTypes = [
   { label: "Cover", value: PageType.COVER },
   { label: "Highlights", value: PageType.HIGHLIGHTS },
-  { label: "Itinerary", value: PageType.ITINERARY },
   { label: "Hotel", value: PageType.HOTEL },
+  { label: "Itinerary", value: PageType.ITINERARY },
   { label: "Day Plan", value: PageType.DAYPLAN },
-  { label: "Flight", value: PageType.FLIGHT },
   { label: "Inclusion/Exclusion", value: PageType.INCLUSION_EXCLUSION },
   { label: "Terms & Conditions", value: PageType.TERMS },
+  { label: "Flight", value: PageType.FLIGHT },
 ];
 
 // Fonts

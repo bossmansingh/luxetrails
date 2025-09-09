@@ -1,5 +1,5 @@
 import { PageType, poppinsFont, styles } from "@/util/Constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModelTitle from "@/components/modals/ModelTitle";
 import ModelButtons from "./ModelButtons";
 
@@ -11,6 +11,11 @@ const SingleImageTextModel: React.FC<{
   const [pageTitle, setPageTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [highlightText, setHighlightText] = useState("");
+  useEffect(() => {
+    if (pageType === PageType.HIGHLIGHTS) {
+      setPageTitle("Highlights");
+    }
+  }, [pageType]);
   return (
     <>
       <ModelTitle pageType={pageType} />
@@ -40,7 +45,9 @@ const SingleImageTextModel: React.FC<{
           ...poppinsFont.style,
           width: "100%",
           height: "30px",
-          marginTop: 20,
+          marginTop: 10,
+          paddingLeft: 12,
+          paddingRight: 12,
         }}
         placeholder="Enter Page Title"
         type="text"
@@ -53,9 +60,9 @@ const SingleImageTextModel: React.FC<{
           ...poppinsFont.style,
           width: "100%",
           minHeight: "120px",
-          marginTop: 20,
+          marginTop: 10,
           fontSize: 14,
-          padding: 5,
+          padding: 12,
         }}
         placeholder="Highlight Text"
         value={highlightText}

@@ -50,11 +50,13 @@ const MainContainerHeader: React.FC<{
             }}
           >
             <option value="">--Add Page--</option>
-            {pageTypes.map((pageType) => (
-              <option key={pageType.value} value={pageType.value}>
-                {pageType.label}
-              </option>
-            ))}
+            {pageTypes
+              .filter((v) => v.value !== PageType.COVER)
+              .map((pageType) => (
+                <option key={pageType.value} value={pageType.value}>
+                  {pageType.label}
+                </option>
+              ))}
           </select>
         )}
       </div>

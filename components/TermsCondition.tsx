@@ -1,16 +1,27 @@
-import { BrandGreen, poppinsFont, styles } from "@/util/Constants";
+import {
+  BrandGreen,
+  PageType,
+  pageTypes,
+  poppinsFont,
+  styles,
+} from "@/util/Constants";
 import BackgroundLayer from "./BackgroundLayer";
 import SectionPageHeadline from "./SectionPageHeadline";
+import { useMemo } from "react";
 
-const TermsConditionContent: React.FC<{ contentText: string }> = ({
-  contentText,
-}) => {
+const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
+  var selectedPage = useMemo(
+    () => pageTypes.find((v) => v.value === PageType.TERMS),
+    []
+  );
   return (
     <>
       <div style={styles.sectionPage}>
         <BackgroundLayer addWatermark />
         <div style={styles.sectionPageContent}>
-          <SectionPageHeadline title={"TERMS & CONDITIONS"} />
+          <SectionPageHeadline
+            title={selectedPage?.label ?? "TERMS & CONDITIONS"}
+          />
           <span
             className={poppinsFont.className}
             style={{
@@ -33,4 +44,4 @@ const TermsConditionContent: React.FC<{ contentText: string }> = ({
   );
 };
 
-export default TermsConditionContent;
+export default TermsCondition;

@@ -21,6 +21,7 @@ const SingleImageAndTextLayout: React.FC<{
               height: "auto",
               borderRadius: 8,
               overflow: "clip",
+              objectFit: "cover",
             }}
             src={imageUrl}
             alt="Single Image"

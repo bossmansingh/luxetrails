@@ -9,6 +9,8 @@ const inputTextStyle = {
   height: "40px",
   marginTop: 10,
   fontSize: 16,
+  paddingLeft: 12,
+  paddingRight: 12,
 };
 
 const CoverModel: React.FC<{

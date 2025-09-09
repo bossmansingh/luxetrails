@@ -29,6 +29,8 @@ const ItineraryModel: React.FC<{
             height: "40px",
             marginTop: 10,
             fontSize: 16,
+            paddingLeft: 12,
+            paddingRight: 12,
           }}
           placeholder={`Enter night ${index + 1} info`}
           type="text"
