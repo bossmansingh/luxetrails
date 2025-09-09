@@ -19,14 +19,13 @@ const SingleImageAndTextLayout: React.FC<{
               marginTop: 50,
               width: "100%",
               height: "auto",
-              objectFit: "cover",
               borderRadius: 8,
+              overflow: "clip",
             }}
             src={imageUrl}
-            alt="Highlight Image"
+            alt="Single Image"
             width={300}
             height={300}
-            objectFit="cover"
           />
           <span
             className={poppinsFont.className}

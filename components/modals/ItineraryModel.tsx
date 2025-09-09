@@ -1,9 +1,11 @@
-import { poppinsFont, styles } from "@/util/Constants";
+import { PageType, poppinsFont, styles } from "@/util/Constants";
 import { useState } from "react";
+import ModelTitle from "./ModelTitle";
+import ModelButtons from "./ModelButtons";
 
-const CreateItineraryContent: React.FC<{
+const ItineraryModel: React.FC<{
   numberOfNights: number;
-  onSave: (pageTitle: string, contentTexts: string[]) => void;
+  onSave: (contentTexts: string[]) => void;
   onClose: () => void;
 }> = ({ numberOfNights, onSave, onClose }) => {
   const [nightValues, setNightValues] = useState<string[]>(
@@ -16,9 +18,7 @@ const CreateItineraryContent: React.FC<{
   };
   return (
     <>
-      <h1 className={poppinsFont.className} style={poppinsFont.style}>
-        Enter Itinerary Info
-      </h1>
+      <ModelTitle pageType={PageType.ITINERARY} />
       {Array.from({ length: numberOfNights }, (_, index) => (
         <input
           key={`night_${index}`}
@@ -36,28 +36,14 @@ const CreateItineraryContent: React.FC<{
           onChange={(e) => handleInputChange(index, e.target.value)}
         />
       ))}
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={() => {
-          onSave(
-            "ITINERARY",
-            nightValues.filter((value) => value.trim() !== "")
-          );
-          onClose();
-        }}
-      >
-        SAVE
-      </button>
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={onClose}
-      >
-        CLOSE
-      </button>
+      <ModelButtons
+        onClose={onClose}
+        onSave={() =>
+          onSave(nightValues.filter((value) => value.trim() !== ""))
+        }
+      />
     </>
   );
 };
 
-export default CreateItineraryContent;
+export default ItineraryModel;

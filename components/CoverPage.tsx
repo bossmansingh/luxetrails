@@ -43,13 +43,11 @@ const CoverPage: React.FC<{
             marginTop: 80,
             width: "auto",
             height: "auto",
-            objectFit: "contain",
           }}
           src={CompanyLogo}
           alt="Company logo"
           width={600}
           height={500}
-          objectFit="contain"
           priority
         />
         <p

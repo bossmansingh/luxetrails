@@ -1,9 +1,10 @@
-import { PageContent, PageType } from "@/util/Constants";
+import { HotelContent, PageContent, PageType } from "@/util/Constants";
 import ReactModal from "react-modal";
-import CreateSingleImageAndTextContent from "@/components/CreateSingleImageAndTextContent";
-import CreateCoverContent from "@/components/CreateCoverContent";
-import CreateItineraryContent from "@/components/CreateItineraryContent";
-import CreateTermsConditionContent from "@/components/CreateTermsConditionContent";
+import SingleImageTextModel from "@/components/modals/SingleImageTextModel";
+import CoverModel from "@/components/modals/CoverModel";
+import ItineraryModel from "@/components/modals/ItineraryModel";
+import TermsConditionModel from "@/components/modals/TermsConditionModel";
+import HotelModel from "./HotelModel";
 
 const dialogStyle: ReactModal.Styles = {
   content: {
@@ -32,7 +33,8 @@ const DialogComponent: React.FC<{
   switch (currentPageType) {
     case PageType.HIGHLIGHTS:
       content = (
-        <CreateSingleImageAndTextContent
+        <SingleImageTextModel
+          pageType={PageType.HIGHLIGHTS}
           onClose={onClose}
           onSave={(
             pageTitle: string,
@@ -53,13 +55,13 @@ const DialogComponent: React.FC<{
       break;
     case PageType.ITINERARY:
       content = (
-        <CreateItineraryContent
+        <ItineraryModel
           numberOfNights={pageContent.coverPage?.duration ?? 0}
-          onSave={(pageTitle: string, contentTexts: string[]) => {
+          onSave={(contentTexts: string[]) => {
             onSave({
               ...pageContent,
               itinerary: {
-                pageTitle: pageTitle,
+                pageTitle: "ITINERARY",
                 contentTexts: contentTexts,
               },
             });
@@ -69,11 +71,22 @@ const DialogComponent: React.FC<{
       );
       break;
     case PageType.HOTEL:
-      content = <div>Hotel Content</div>;
+      content = (
+        <HotelModel
+          onClose={onClose}
+          onSave={(hotels: HotelContent[]) => {
+            onSave({
+              ...pageContent,
+              hotels: [...hotels],
+            });
+          }}
+        />
+      );
       break;
     case PageType.DAYPLAN:
       content = (
-        <CreateSingleImageAndTextContent
+        <SingleImageTextModel
+          pageType={PageType.DAYPLAN}
           onClose={onClose}
           onSave={(
             pageTitle: string,
@@ -103,7 +116,7 @@ const DialogComponent: React.FC<{
       break;
     case PageType.TERMS:
       content = (
-        <CreateTermsConditionContent
+        <TermsConditionModel
           onClose={onClose}
           onSave={(contentText: string) => {
             onSave({
@@ -118,7 +131,7 @@ const DialogComponent: React.FC<{
       break;
     default:
       content = (
-        <CreateCoverContent
+        <CoverModel
           onClose={onClose}
           onSave={(
             title: string,

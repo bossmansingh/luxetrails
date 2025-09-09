@@ -1,5 +1,7 @@
-import { poppinsFont, styles } from "@/util/Constants";
+import { PageType, poppinsFont, styles } from "@/util/Constants";
 import { useState } from "react";
+import ModelTitle from "./ModelTitle";
+import ModelButtons from "./ModelButtons";
 
 const inputTextStyle = {
   ...poppinsFont.style,
@@ -9,7 +11,7 @@ const inputTextStyle = {
   fontSize: 16,
 };
 
-const CreateCoverContent: React.FC<{
+const CoverModel: React.FC<{
   onClose: () => void;
   onSave: (
     title: string,
@@ -22,9 +24,7 @@ const CreateCoverContent: React.FC<{
   const [numberOfNights, setNumberOfNights] = useState(0);
   return (
     <>
-      <h1 className={poppinsFont.className} style={poppinsFont.style}>
-        Enter Cover Page Info
-      </h1>
+      <ModelTitle pageType={PageType.COVER} />
       <input
         className={poppinsFont.className}
         style={inputTextStyle}
@@ -49,25 +49,12 @@ const CreateCoverContent: React.FC<{
         value={numberOfNights > 0 ? numberOfNights : ""}
         onChange={(e) => setNumberOfNights(Number(e.target.value))}
       />
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={() => {
-          onSave(title, pricePerPerson, numberOfNights);
-          onClose();
-        }}
-      >
-        SAVE
-      </button>
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={onClose}
-      >
-        CLOSE
-      </button>
+      <ModelButtons
+        onClose={onClose}
+        onSave={() => onSave(title, pricePerPerson, numberOfNights)}
+      />
     </>
   );
 };
 
-export default CreateCoverContent;
+export default CoverModel;

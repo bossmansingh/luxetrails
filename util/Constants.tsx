@@ -14,6 +14,7 @@ export const Domain = "www.theluxetrails.com";
 export const BrandGreen = "#043C2B";
 
 export enum PageType {
+  COVER = "cover",
   HIGHLIGHTS = "highlights",
   ITINERARY = "itinerary",
   HOTEL = "hotel",
@@ -44,15 +45,30 @@ type TermsConditionContent = {
   contentText: string;
 };
 
+type HotelImage = {
+  firstUrl: string;
+  secondUrl: string;
+  thirdUrl?: string;
+  fourthUrl?: string;
+};
+
+export type HotelContent = {
+  images: HotelImage;
+  title: string;
+  subtitle: string;
+};
+
 export type PageContent = {
   coverPage?: CoverPageContent;
   highlight?: SingleImageAndTextContent;
   dayPlan?: SingleImageAndTextContent[];
   itinerary?: ItineraryContent;
+  hotels?: HotelContent[];
   termsCondition?: TermsConditionContent;
 };
 
 export const pageTypes = [
+  { label: "Cover", value: PageType.COVER },
   { label: "Highlights", value: PageType.HIGHLIGHTS },
   { label: "Itinerary", value: PageType.ITINERARY },
   { label: "Hotel", value: PageType.HOTEL },
@@ -164,8 +180,6 @@ export const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 34,
     color: BrandGreen,
-    paddingTop: 8,
-    paddingBottom: 8,
   },
   domain: {
     fontSize: 20,

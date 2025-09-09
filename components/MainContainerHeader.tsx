@@ -10,32 +10,10 @@ import {
 
 const MainContainerHeader: React.FC<{
   pageContent: PageContent;
-  pageCount: number;
   showDilaog: () => void;
   setCurrentPageType: (currentPage: PageType | null) => void;
-}> = ({ pageContent, pageCount, showDilaog, setCurrentPageType }) => {
-  const downloadPDF =
-    pageContent &&
-    (async () => {
-      var element: HTMLElement | null = document.getElementById("pdf-document");
-      var html2pdf = await require("html2pdf.js");
-      var opt: html2pdf.Options = {
-        filename: pageContent.coverPage?.pageTitle ?? "document.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          width: CanvasWidth,
-          height: CanvasHeight * pageCount,
-        },
-        jsPDF: {
-          unit: "px",
-          hotfixes: ["px_scaling"],
-          orientation: "portrait",
-        },
-      };
-      element && html2pdf(element, opt);
-    });
-
+  onSavePDF: () => void;
+}> = ({ pageContent, showDilaog, setCurrentPageType, onSavePDF }) => {
   return (
     <div
       style={{
@@ -83,7 +61,7 @@ const MainContainerHeader: React.FC<{
       <button
         className={poppinsFont.className}
         style={(poppinsFont.style, styles.downloadButton)}
-        onClick={downloadPDF}
+        onClick={onSavePDF}
       >
         Download PDF
       </button>

@@ -1,0 +1,133 @@
+import { HotelContent, poppinsFont, styles } from "@/util/Constants";
+import BackgroundLayer from "./BackgroundLayer";
+import SectionPageHeadline from "./SectionPageHeadline";
+import Image from "next/image";
+
+const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        paddingBottom: 22,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Image
+          width={150}
+          height={150}
+          style={{
+            width: "auto",
+            height: "auto",
+            borderRadius: 10,
+            paddingRight: 4,
+            overflow: "clip",
+          }}
+          src={value.images.firstUrl}
+          alt="Hotel First Image"
+        />
+        <Image
+          width={150}
+          height={150}
+          style={{
+            width: "auto",
+            height: "auto",
+            borderRadius: 10,
+            paddingLeft: 4,
+            overflow: "clip",
+          }}
+          src={value.images.secondUrl}
+          alt="Hotel Second Image"
+        />
+      </div>
+      {value.images.thirdUrl && value.images.fourthUrl && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingTop: 8,
+          }}
+        >
+          <Image
+            width={150}
+            height={150}
+            style={{
+              width: "auto",
+              height: "auto",
+              borderRadius: 10,
+              paddingRight: 4,
+              overflow: "clip",
+            }}
+            src={value.images.thirdUrl}
+            alt="Hotel Third Image"
+          />
+          <Image
+            width={150}
+            height={150}
+            style={{
+              width: "auto",
+              height: "auto",
+              borderRadius: 10,
+              paddingLeft: 4,
+              overflow: "clip",
+            }}
+            src={value.images.fourthUrl}
+            alt="Hotel Fourth Image"
+          />
+        </div>
+      )}
+      <span
+        className={poppinsFont.className}
+        style={{
+          ...poppinsFont.style,
+          marginTop: 10,
+          fontSize: 22,
+          fontWeight: 700,
+        }}
+      >
+        {value.title}
+      </span>
+      <span
+        className={poppinsFont.className}
+        style={{ ...poppinsFont.style, fontSize: 20, fontWeight: 300 }}
+      >
+        {value.subtitle}
+      </span>
+    </div>
+  );
+};
+const HotelPage: React.FC<{ pageTitle: string; hotels: HotelContent[] }> = ({
+  pageTitle,
+  hotels,
+}) => {
+  return (
+    <div style={styles.sectionPage}>
+      <BackgroundLayer addWatermark />
+      <div style={styles.sectionPageContent}>
+        <SectionPageHeadline title={pageTitle} />
+        <div
+          style={{
+            marginTop: 60,
+            display: "flex",
+            flexDirection: "column",
+            color: "black",
+          }}
+        >
+          {hotels.map((value: HotelContent, index: number) => (
+            <HotelItem key={`hotel_${index}`} value={value} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HotelPage;

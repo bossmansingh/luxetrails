@@ -1,18 +1,19 @@
-import { poppinsFont, styles } from "@/util/Constants";
+import { PageType, poppinsFont, styles } from "@/util/Constants";
 import { useState } from "react";
+import ModelTitle from "@/components/modals/ModelTitle";
+import ModelButtons from "./ModelButtons";
 
-const CreateSingleImageAndTextContent: React.FC<{
+const SingleImageTextModel: React.FC<{
+  pageType: PageType;
   onSave: (pageTitle: string, imageUrl: string, highlightText: string) => void;
   onClose: () => void;
-}> = ({ onClose, onSave }) => {
+}> = ({ pageType, onClose, onSave }) => {
   const [pageTitle, setPageTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [highlightText, setHighlightText] = useState("");
   return (
     <>
-      <h1 className={poppinsFont.className} style={poppinsFont.style}>
-        Enter Page Info
-      </h1>
+      <ModelTitle pageType={pageType} />
       <input
         className={poppinsFont.className}
         style={{
@@ -60,25 +61,12 @@ const CreateSingleImageAndTextContent: React.FC<{
         value={highlightText}
         onChange={(e) => setHighlightText(e.target.value)}
       />
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={() => {
-          onSave(pageTitle.toUpperCase(), imageUrl, highlightText);
-          onClose();
-        }}
-      >
-        SAVE
-      </button>
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={onClose}
-      >
-        CLOSE
-      </button>
+      <ModelButtons
+        onClose={onClose}
+        onSave={() => onSave(pageTitle.toUpperCase(), imageUrl, highlightText)}
+      />
     </>
   );
 };
 
-export default CreateSingleImageAndTextContent;
+export default SingleImageTextModel;

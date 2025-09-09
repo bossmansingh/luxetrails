@@ -34,7 +34,6 @@ const BackgroundLayer: React.FC<{ addWatermark: boolean }> = ({
           }}
           src={WatermarkLogo}
           alt="Watermark logo"
-          objectFit="contain"
           priority
         />
       )}

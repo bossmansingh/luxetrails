@@ -1,5 +1,7 @@
-import { poppinsFont, styles } from "@/util/Constants";
+import { PageType, poppinsFont, styles } from "@/util/Constants";
 import { useState } from "react";
+import ModelTitle from "./ModelTitle";
+import ModelButtons from "./ModelButtons";
 
 const defaultTermsCondition = `• This package is for review only; rates and availability may change.
 • Prices are not guaranteed until flight details are shared or 50% payment is made.
@@ -8,16 +10,14 @@ const defaultTermsCondition = `• This package is for review only; rates and av
 • Final itinerary depends on real-time availability at the time of booking.
 • Post-confirmation changes may affect cost or availability.`;
 
-const CreateTermsConditionContent: React.FC<{
+const TermsConditionModel: React.FC<{
   onSave: (contentText: string) => void;
   onClose: () => void;
 }> = ({ onSave, onClose }) => {
   const [terms, setTerms] = useState(defaultTermsCondition);
   return (
     <>
-      <h1 className={poppinsFont.className} style={poppinsFont.style}>
-        Enter Terms & Condition
-      </h1>
+      <ModelTitle pageType={PageType.TERMS} />
       <textarea
         className={poppinsFont.className}
         style={{
@@ -32,25 +32,9 @@ const CreateTermsConditionContent: React.FC<{
         value={terms}
         onChange={(e) => setTerms(e.target.value)}
       />
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={() => {
-          onSave(terms);
-          onClose();
-        }}
-      >
-        SAVE
-      </button>
-      <button
-        className={poppinsFont.className}
-        style={{ ...styles.modalButton, ...poppinsFont.style }}
-        onClick={onClose}
-      >
-        CLOSE
-      </button>
+      <ModelButtons onClose={onClose} onSave={() => onSave(terms)} />
     </>
   );
 };
 
-export default CreateTermsConditionContent;
+export default TermsConditionModel;
