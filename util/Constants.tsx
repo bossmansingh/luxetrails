@@ -6,8 +6,9 @@ import {
   Poppins,
 } from "next/font/google";
 
-export const aspectRatio = 0.7070707071;
+const SupportEmail = "ops@theluxetrails.com";
 
+export const aspectRatio = 0.7070707071;
 export const CanvasWidth = 793.5;
 export const CanvasHeight = 1122;
 export const Domain = "www.theluxetrails.com";
@@ -38,7 +39,7 @@ export const DefaultHotelPolicyText = `• Hotel cancellation will be as per the
 • Hotel room allocation will be subject to availability and will be on a first come first serve basis.
 • Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date.`;
 export const DefaultAmendmentTitle = "Amendment of Booking by Guest";
-export const DefaultAmendmentText = `If you wish to amend or change your booking, you have to <b>operations@theluxetrails.com</b>. communicate your request to us in writing to <b>corporate@globetrot.co.in</b>  . Such requests for change or amendment will be accepted subject to availability. Please note that the amended or changed booking will be regarded as a new booking. In case the amendment is carried out within the cancellation period, then a cancellation charge shall apply as if a cancellation was made on the date the request for amendment or change is made. Please note the cancellation charges will be as per the airline and hotel policies.`;
+export const DefaultAmendmentText = `If you wish to amend or change your booking, write to us at <b>${SupportEmail}</b>. Such requests for change or amendment will be accepted subject to availability. Please note that the amended or changed booking will be regarded as a new booking. In case the amendment is carried out within the cancellation period, then a cancellation charge shall apply as if a cancellation was made on the date the request for amendment or change is made. Please note the cancellation charges will be as per the airline and hotel policies.`;
 
 export enum PageType {
   COVER = "cover",
