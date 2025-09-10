@@ -47,9 +47,8 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
           alignSelf: "center",
           height: "fit-content",
         }}
-      >
-        {contentText}
-      </span>
+        dangerouslySetInnerHTML={{ __html: contentText }}
+      />
     </div>
   );
 };

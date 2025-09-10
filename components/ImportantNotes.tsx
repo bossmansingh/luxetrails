@@ -37,17 +37,21 @@ export const ImportantNotesFirstPage: React.FC<{
         <span className={poppinsFont.className} style={titleStyle}>
           {airlinePolicyTitle}
         </span>
-        <span className={poppinsFont.className} style={textStyle}>
-          {airlinePolicyText}
-        </span>
+        <span
+          className={poppinsFont.className}
+          style={textStyle}
+          dangerouslySetInnerHTML={{ __html: airlinePolicyText }}
+        />
       </div>
       <div style={containerStyle}>
         <span className={poppinsFont.className} style={titleStyle}>
           {hotelPolicyTitle}
         </span>
-        <span className={poppinsFont.className} style={textStyle}>
-          {hotelPolicyText}
-        </span>
+        <span
+          className={poppinsFont.className}
+          style={textStyle}
+          dangerouslySetInnerHTML={{ __html: hotelPolicyText }}
+        />
       </div>
     </>
   );

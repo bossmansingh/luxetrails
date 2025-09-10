@@ -17,7 +17,7 @@ import {
   styles,
   TermsConditionModel,
   termsItem,
-  flightsItem,
+  aspectRatio,
 } from "@/util/Constants";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import CoverPage from "@/components/CoverPage";
@@ -33,8 +33,8 @@ import InclusionExclusion from "@/components/InclusionExclusion";
 import {
   ImportantNotesFirstPage,
   ImportantNotesSecondPage,
-} from "./ImportantNotes";
-import FlightPage from "./Flight";
+} from "@/components/ImportantNotes";
+import Image from "next/image";
 
 const savePDF = async (
   filename: string,
@@ -354,7 +354,20 @@ const FlightSection: React.FC<{
     flights &&
     flights.length > 0 &&
     flights.map((value, index) => (
-      <FlightPage key={`flight_section_${index}`} imageURL={value} />
+      <Image
+        key={`flight_section_${index}`}
+        style={{
+          width: "100%",
+          height: "auto",
+          objectFit: "fill",
+          overflow: "hidden",
+          aspectRatio: aspectRatio,
+        }}
+        width={100}
+        height={100}
+        src={value}
+        alt="Flight image"
+      />
     ))
   );
 };
