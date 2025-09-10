@@ -1,7 +1,6 @@
 import { PageType, poppinsFont } from "@/util/Constants";
 import { useEffect, useState } from "react";
-import ModalTitle from "@/components/modals/ModelTitle";
-import ModalButtons from "./ModelButtons";
+import ModalButtons from "@/components/modals/ModelButtons";
 
 const SingleImageTextModal: React.FC<{
   pageType: PageType;

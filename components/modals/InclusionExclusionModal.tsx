@@ -1,6 +1,6 @@
 import { poppinsFont } from "@/util/Constants";
 import { useState } from "react";
-import ModalButtons from "./ModelButtons";
+import ModalButtons from "@/components/modals/ModelButtons";
 
 const InclusionExclusionModal: React.FC<{
   onSave: (inclusion: string, exclusion: string) => void;

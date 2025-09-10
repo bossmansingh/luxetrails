@@ -1,5 +1,5 @@
 import { poppinsFont } from "@/util/Constants";
-import SectionPageHeadline from "./SectionPageHeadline";
+import SectionPageHeadline from "@/components//SectionPageHeadline";
 
 const InclusionExclusion: React.FC<{
   inclusion: string;

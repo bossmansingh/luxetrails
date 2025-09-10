@@ -1,6 +1,6 @@
 import { DefaultTermsCondition, PageType, poppinsFont } from "@/util/Constants";
 import { useState } from "react";
-import ModalButtons from "./ModelButtons";
+import ModalButtons from "@/components/modals/ModelButtons";
 
 const TermsConditionModal: React.FC<{
   onSave: (contentText: string) => void;

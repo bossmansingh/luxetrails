@@ -9,10 +9,10 @@ import SingleImageTextModal from "@/components/modals/SingleImageTextModal";
 import CoverModal from "@/components/modals/CoverModal";
 import ItineraryModal from "@/components/modals/ItineraryModal";
 import TermsConditionModal from "@/components/modals/TermsConditionModel";
-import HotelModal from "./HotelModal";
+import HotelModal from "@/components/modals/HotelModal";
 import { ReactNode, useEffect, useState } from "react";
-import InclusionExclusionModal from "./InclusionExclusionModal";
-import ModalTitle from "./ModelTitle";
+import InclusionExclusionModal from "@/components/modals/InclusionExclusionModal";
+import ModalTitle from "@/components/modals/ModelTitle";
 
 const dialogStyle: ReactModal.Styles = {
   content: {

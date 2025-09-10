@@ -21,11 +21,11 @@ import DialogComponent from "@/components/modals/BaseModal";
 import SingleImageAndTextLayout from "@/components/SingleImageText";
 import MainContainerHeader from "@/components/MainContainerHeader";
 import Itinerary from "@/components/Itinerary";
-import TermsCondition from "./TermsCondition";
-import HotelPage from "./HotelPage";
-import BackgroundLayer from "./BackgroundLayer";
-import SectionPageHeadline from "./SectionPageHeadline";
-import InclusionExclusion from "./InclusionExclusion";
+import TermsCondition from "@/components/TermsCondition";
+import HotelPage from "@/components/HotelPage";
+import BackgroundLayer from "@/components/BackgroundLayer";
+import SectionPageHeadline from "@/components/SectionPageHeadline";
+import InclusionExclusion from "@/components/InclusionExclusion";
 
 const savePDF = async (
   filename: string,

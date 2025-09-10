@@ -1,7 +1,6 @@
-import { PageType, poppinsFont } from "@/util/Constants";
+import { poppinsFont } from "@/util/Constants";
 import { useState } from "react";
-import ModalTitle from "./ModelTitle";
-import ModalButtons from "./ModelButtons";
+import ModalButtons from "@/components/modals/ModelButtons";
 
 const ItineraryModal: React.FC<{
   numberOfNights: number;

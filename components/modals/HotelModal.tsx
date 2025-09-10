@@ -1,7 +1,6 @@
-import { HotelContent, PageType, poppinsFont } from "@/util/Constants";
-import ModalTitle from "@/components/modals/ModelTitle";
+import { HotelContent, poppinsFont } from "@/util/Constants";
 import { useEffect, useState } from "react";
-import ModalButtons from "./ModelButtons";
+import ModalButtons from "@/components/modals/ModelButtons";
 
 const HotelInputItem: React.FC<{
   value: HotelContent;
