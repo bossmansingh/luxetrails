@@ -1,10 +1,9 @@
-import { poppinsFont } from "@/util/Constants";
+import { InclusionExclusionContent, poppinsFont } from "@/util/Constants";
 import SectionPageHeadline from "@/components//SectionPageHeadline";
 
 const InclusionExclusion: React.FC<{
-  inclusion: string;
-  exclusion: string;
-}> = ({ inclusion, exclusion }) => {
+  content: InclusionExclusionContent;
+}> = ({ content }) => {
   return (
     <>
       <span
@@ -23,7 +22,7 @@ const InclusionExclusion: React.FC<{
           lineHeight: 2,
         }}
       >
-        {inclusion}
+        {content.inclusion}
       </span>
       <div style={{ width: "100%", height: "100%" }}>
         <SectionPageHeadline
@@ -44,7 +43,7 @@ const InclusionExclusion: React.FC<{
             lineHeight: 2,
           }}
         >
-          {exclusion}
+          {content.exclusion}
         </span>
       </div>
     </>

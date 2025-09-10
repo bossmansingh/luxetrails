@@ -3,6 +3,14 @@ import {
   PageContent,
   PageType,
   DefaultScopeText,
+  scopeOfServiceItem,
+  importNotesItem,
+  DefaultAirlinePolicyTitle,
+  DefaultAirlinePolicyText,
+  DefaultHotelPolicyTitle,
+  DefaultHotelPolicyText,
+  DefaultAmendmentTitle,
+  DefaultAmendmentText,
 } from "@/util/Constants";
 import ReactModal from "react-modal";
 import SingleImageTextModal from "@/components/modals/SingleImageTextModal";
@@ -162,8 +170,23 @@ const DialogComponent: React.FC<{
         onSave({
           ...pageContent,
           scopeOfService: {
-            pageTitle: "Our Scope of Services",
+            pageTitle: scopeOfServiceItem.label,
             contentText: DefaultScopeText,
+          },
+        });
+        content = null;
+        break;
+      case PageType.IMPORTANT_NOTES:
+        onSave({
+          ...pageContent,
+          importantNotes: {
+            pageTitle: importNotesItem.label,
+            airlinePolicyTitle: DefaultAirlinePolicyTitle,
+            airlinePolicyText: DefaultAirlinePolicyText,
+            hotelPolicyTitle: DefaultHotelPolicyTitle,
+            hotelPolicyText: DefaultHotelPolicyText,
+            amendmentPolicyTitle: DefaultAmendmentTitle,
+            amendmentPolicyText: DefaultAmendmentText,
           },
         });
         content = null;

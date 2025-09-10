@@ -22,6 +22,23 @@ export const DefaultTermsCondition = `• This package is for review only; rates
 • We work with trusted partners, but do not hold inventory.
 • Final itinerary depends on real-time availability at the time of booking.
 • Post-confirmation changes may affect cost or availability.`;
+export const DefaultAirlinePolicyTitle = "Airline Cancellation Policy";
+export const DefaultAirlinePolicyText = `• Cancellation will be as per the airlines cancellation policy. If the flights are non-refundable, you will not get any refund for flights in the event of cancellation.
+• Refund will be done within 30 Workings days post deduction of cancellation charges by airlines (as per airline cancellation policy) and service charge of 5% on total value for cancellation and 2.5% for amendments by Tripfactory.
+• For infant bookings Date of Birth proof has to be presented at the time of checking-in.
+• Standard airline policy shall be applicable to all changes.
+• Please note one-way cancellations are not allowed for any flight.
+• Please note name changes are not permitted for any flight.
+• Due to the impact of COVID-19 worldwide, refunds will be processed in accordance with the latest airline policies. Please note that at the airline's discretion, refunds may be made in the form of airline vouchers. The final decision regarding the refund method will be made by the airline. Some airlines may charge processing fees for flight changes or cancellations made due to flight schedule changes. Actual fees charged will depend on the final decision by the airline.`;
+export const DefaultHotelPolicyTitle = "Hotel Cancellation Policy";
+export const DefaultHotelPolicyText = `• Hotel cancellation will be as per the hotel cancellation policy. If the hotels are non-refundable, you will not get any refund for hotels in the event of cancellation.
+• Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date, unless otherwise specified during the quotation stage in the "Points to Note" section. Some services handle different cancellation policies and they must be respected accordingly.
+• Entrance tickets of any kind are non-refundable from the moment of booking, unless specified otherwise.
+• There will be also a service charge of 5% on total value in case of cancellation of Land and 5% on total value for any amendments.
+• Hotel room allocation will be subject to availability and will be on a first come first serve basis.
+• Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date.`;
+export const DefaultAmendmentTitle = "Amendment of Booking by Guest";
+export const DefaultAmendmentText = `If you wish to amend or change your booking, you have to <b>operations@theluxetrails.com</b>. communicate your request to us in writing to <b>corporate@globetrot.co.in</b>  . Such requests for change or amendment will be accepted subject to availability. Please note that the amended or changed booking will be regarded as a new booking. In case the amendment is carried out within the cancellation period, then a cancellation charge shall apply as if a cancellation was made on the date the request for amendment or change is made. Please note the cancellation charges will be as per the airline and hotel policies.`;
 
 export enum PageType {
   COVER = "cover",
@@ -31,6 +48,7 @@ export enum PageType {
   DAYPLAN = "dayplan",
   INCLUSION_EXCLUSION = "inclusion_exclusion",
   SCOPE_OF_SERVICE = "scope_of_service",
+  IMPORTANT_NOTES = "important_notes",
   TERMS = "terms",
   FLIGHT = "flight",
 }
@@ -74,6 +92,16 @@ export type ScopeServiceContent = {
   contentText: string;
 };
 
+export type ImportantNotesContent = {
+  pageTitle: string;
+  airlinePolicyTitle: string;
+  airlinePolicyText: string;
+  hotelPolicyTitle: string;
+  hotelPolicyText: string;
+  amendmentPolicyTitle: string;
+  amendmentPolicyText: string;
+};
+
 export type InclusionExclusionContent = {
   inclusion: string;
   exclusion: string;
@@ -87,17 +115,44 @@ export type PageContent = {
   hotels?: HotelContent[];
   inclusionExclusion?: InclusionExclusionContent;
   scopeOfService?: ScopeServiceContent;
+  importantNotes?: ImportantNotesContent;
   termsCondition?: TermsConditionContent;
+};
+
+export const highlightItem = {
+  label: "Highlights",
+  value: PageType.HIGHLIGHTS,
+};
+
+export const hotelItem = {
+  label: "Hotels",
+  value: PageType.HOTEL,
+};
+
+export const scopeOfServiceItem = {
+  label: "Our Scope of Service",
+  value: PageType.SCOPE_OF_SERVICE,
+};
+
+export const importNotesItem = {
+  label: "Important Notes",
+  value: PageType.IMPORTANT_NOTES,
+};
+
+export const termsItem = {
+  label: "Terms & Conditions",
+  value: PageType.TERMS,
 };
 
 export const pageTypes = [
   { label: "Cover", value: PageType.COVER },
-  { label: "Highlights", value: PageType.HIGHLIGHTS },
-  { label: "Hotel", value: PageType.HOTEL },
+  highlightItem,
+  hotelItem,
   { label: "Itinerary", value: PageType.ITINERARY },
   { label: "Day Plan", value: PageType.DAYPLAN },
   { label: "Inclusion/Exclusion", value: PageType.INCLUSION_EXCLUSION },
-  { label: "Scope of Service", value: PageType.SCOPE_OF_SERVICE },
+  scopeOfServiceItem,
+  importNotesItem,
   { label: "Terms & Conditions", value: PageType.TERMS },
   { label: "Flight", value: PageType.FLIGHT },
 ];

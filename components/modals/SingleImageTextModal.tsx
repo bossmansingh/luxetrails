@@ -1,4 +1,4 @@
-import { PageType, poppinsFont } from "@/util/Constants";
+import { highlightItem, PageType, poppinsFont } from "@/util/Constants";
 import { useEffect, useState } from "react";
 import ModalButtons from "@/components/modals/ModelButtons";
 
@@ -12,7 +12,7 @@ const SingleImageTextModal: React.FC<{
   const [highlightText, setHighlightText] = useState("");
   useEffect(() => {
     if (pageType === PageType.HIGHLIGHTS) {
-      setPageTitle("Highlights");
+      setPageTitle(highlightItem.label);
     }
   }, [pageType]);
   return (

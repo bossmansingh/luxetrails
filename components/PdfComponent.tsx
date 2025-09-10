@@ -5,6 +5,8 @@ import {
   CanvasWidth,
   CoverPageContent,
   HotelContent,
+  hotelItem,
+  ImportantNotesContent,
   InclusionExclusionContent,
   ItineraryContent,
   PageContent,
@@ -14,6 +16,7 @@ import {
   SingleImageAndTextContent,
   styles,
   TermsConditionContent,
+  termsItem,
 } from "@/util/Constants";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import CoverPage from "@/components/CoverPage";
@@ -26,6 +29,10 @@ import HotelPage from "@/components/HotelPage";
 import BackgroundLayer from "@/components/BackgroundLayer";
 import SectionPageHeadline from "@/components/SectionPageHeadline";
 import InclusionExclusion from "@/components/InclusionExclusion";
+import {
+  ImportantNotesFirstPage,
+  ImportantNotesSecondPage,
+} from "./ImportantNotes";
 
 const savePDF = async (
   filename: string,
@@ -151,7 +158,7 @@ const HotelSection: React.FC<{
     return (
       <AddNewSection
         addWatermark
-        pageTitle="Hotels"
+        pageTitle={hotelItem.label}
         key={`hotel_pair_${i}`}
         content={<HotelPage hotels={v} />}
       />
@@ -223,12 +230,7 @@ const InclusionExclusionSection: React.FC<{
       <AddNewSection
         addWatermark
         pageTitle={"INCLUSION"}
-        content={
-          <InclusionExclusion
-            inclusion={inclusionExclusion.inclusion}
-            exclusion={inclusionExclusion.exclusion}
-          />
-        }
+        content={<InclusionExclusion content={inclusionExclusion} />}
       />
     )
   );
@@ -272,6 +274,46 @@ const ScopeOfServiceSection: React.FC<{
   );
 };
 
+const ImportantNotesSection: React.FC<{
+  importantNotes?: ImportantNotesContent;
+  pageCount: number;
+  updatePageCount: (newCount: number) => void;
+}> = ({ importantNotes, pageCount, updatePageCount }) => {
+  useEffect(() => {
+    if (!importantNotes) return;
+    var newPageCount = pageCount + 2;
+    updatePageCount(newPageCount);
+  }, [importantNotes]);
+  return (
+    importantNotes && (
+      <>
+        <AddNewSection
+          addWatermark
+          pageTitle={importantNotes.pageTitle}
+          content={
+            <ImportantNotesFirstPage
+              airlinePolicyTitle={importantNotes.airlinePolicyTitle}
+              airlinePolicyText={importantNotes.airlinePolicyText}
+              hotelPolicyTitle={importantNotes.hotelPolicyTitle}
+              hotelPolicyText={importantNotes.hotelPolicyText}
+            />
+          }
+        />
+        <AddNewSection
+          addWatermark
+          pageTitle={importantNotes.pageTitle}
+          content={
+            <ImportantNotesSecondPage
+              amendmentPolicyTitle={importantNotes.amendmentPolicyTitle}
+              amendmentPolicyText={importantNotes.amendmentPolicyText}
+            />
+          }
+        />
+      </>
+    )
+  );
+};
+
 const TermsConditionSection: React.FC<{
   termsCondition?: TermsConditionContent;
   pageCount: number;
@@ -286,7 +328,7 @@ const TermsConditionSection: React.FC<{
     termsCondition && (
       <AddNewSection
         addWatermark
-        pageTitle="TERMS & CONDITIONS"
+        pageTitle={termsItem.label}
         content={<TermsCondition contentText={termsCondition.contentText} />}
       />
     )
@@ -352,6 +394,11 @@ const PdfComponent: React.FC = () => {
           />
           <ScopeOfServiceSection
             scopeService={pageContent.scopeOfService}
+            pageCount={pageCount}
+            updatePageCount={setPageCount}
+          />
+          <ImportantNotesSection
+            importantNotes={pageContent.importantNotes}
             pageCount={pageCount}
             updatePageCount={setPageCount}
           />
