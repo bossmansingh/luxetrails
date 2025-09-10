@@ -1,12 +1,12 @@
-import { HotelContent, poppinsFont } from "@/util/Constants";
+import { HotelModel, poppinsFont } from "@/util/Constants";
 import { useEffect, useState } from "react";
 import ModalButtons from "@/components/modals/ModelButtons";
 
 const HotelInputItem: React.FC<{
-  value: HotelContent;
+  value: HotelModel;
   index: number;
   isSingleItem: boolean;
-  updateItem: (value: HotelContent) => void;
+  updateItem: (value: HotelModel) => void;
 }> = ({ value, index, isSingleItem, updateItem }) => {
   return (
     <div style={{ paddingBottom: 4 }}>
@@ -177,10 +177,10 @@ const HotelInputItem: React.FC<{
 };
 const HotelModal: React.FC<{
   onClose: () => void;
-  onSave: (hotels: HotelContent[]) => void;
+  onSave: (hotels: HotelModel[]) => void;
 }> = ({ onClose, onSave }) => {
   const [hotelCount, setHotelCount] = useState(1);
-  const [hotels, setHotels] = useState<HotelContent[]>([
+  const [hotels, setHotels] = useState<HotelModel[]>([
     { images: { firstUrl: "", secondUrl: "" }, title: "", subtitle: "" },
   ]);
   useEffect(() => {
@@ -188,7 +188,7 @@ const HotelModal: React.FC<{
     if (hotelCount > hotels.length) {
       setHotels(
         hotels.concat(
-          Array<HotelContent>(hotelCount - hotels.length).fill({
+          Array<HotelModel>(hotelCount - hotels.length).fill({
             images: { firstUrl: "", secondUrl: "" },
             title: "",
             subtitle: "",
@@ -237,7 +237,7 @@ const HotelModal: React.FC<{
               value={value}
               index={index}
               isSingleItem={hotels.length === 1}
-              updateItem={(updatedValue: HotelContent) => {
+              updateItem={(updatedValue: HotelModel) => {
                 var newValues = [...hotels];
                 newValues[index] = updatedValue;
                 setHotels(newValues);

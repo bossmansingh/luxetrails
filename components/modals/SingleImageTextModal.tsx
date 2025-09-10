@@ -68,6 +68,11 @@ const SingleImageTextModal: React.FC<{
         onChange={(e) => setHighlightText(e.target.value)}
       />
       <ModalButtons
+        saveDisabled={
+          pageTitle.length === 0 ||
+          imageUrl.length === 0 ||
+          highlightText.length === 0
+        }
         onClose={onClose}
         onSave={() => onSave(pageTitle.toUpperCase(), imageUrl, highlightText)}
       />

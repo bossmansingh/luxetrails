@@ -1,9 +1,8 @@
 import {
-  HotelContent,
-  PageContent,
+  HotelModel,
+  PageContentModel,
   PageType,
   DefaultScopeText,
-  scopeOfServiceItem,
   importNotesItem,
   DefaultAirlinePolicyTitle,
   DefaultAirlinePolicyText,
@@ -11,6 +10,9 @@ import {
   DefaultHotelPolicyText,
   DefaultAmendmentTitle,
   DefaultAmendmentText,
+  termsItem,
+  scopeOfServiceItem,
+  itineraryItem,
 } from "@/util/Constants";
 import ReactModal from "react-modal";
 import SingleImageTextModal from "@/components/modals/SingleImageTextModal";
@@ -21,6 +23,7 @@ import HotelModal from "@/components/modals/HotelModal";
 import { ReactNode, useEffect, useState } from "react";
 import InclusionExclusionModal from "@/components/modals/InclusionExclusionModal";
 import ModalTitle from "@/components/modals/ModelTitle";
+import FlightModel from "./FlightModel";
 
 const dialogStyle: ReactModal.Styles = {
   content: {
@@ -39,10 +42,10 @@ const dialogStyle: ReactModal.Styles = {
 };
 
 const DialogComponent: React.FC<{
-  pageContent: PageContent;
+  pageContent: PageContentModel;
   currentPageType: PageType | null;
   isOpen: boolean;
-  onSave: (pageContent: PageContent) => void;
+  onSave: (pageContent: PageContentModel) => void;
   onClose: () => void;
 }> = ({ pageContent, currentPageType, isOpen, onSave, onClose }) => {
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
@@ -95,12 +98,12 @@ const DialogComponent: React.FC<{
       case PageType.ITINERARY:
         content = (
           <ItineraryModal
-            numberOfNights={pageContent.coverPage?.duration ?? 0}
+            stayDuration={(pageContent.coverPage?.duration ?? 0) + 1}
             onSave={(contentTexts: string[]) => {
               onSave({
                 ...pageContent,
                 itinerary: {
-                  pageTitle: "ITINERARY",
+                  pageTitle: itineraryItem.label.toLocaleUpperCase(),
                   contentTexts: contentTexts,
                 },
               });
@@ -113,10 +116,10 @@ const DialogComponent: React.FC<{
         content = (
           <HotelModal
             onClose={onClose}
-            onSave={(hotels: HotelContent[]) => {
+            onSave={(hotels: HotelModel[]) => {
               onSave({
                 ...pageContent,
-                hotels: [...hotels],
+                hotels: hotels,
               });
             }}
           />
@@ -148,7 +151,17 @@ const DialogComponent: React.FC<{
         );
         break;
       case PageType.FLIGHT:
-        content = <div>Flight Content</div>;
+        content = (
+          <FlightModel
+            onClose={onClose}
+            onSave={(flights: string[]) => {
+              onSave({
+                ...pageContent,
+                flights: [...(pageContent.flights ?? []), ...flights],
+              });
+            }}
+          />
+        );
         break;
       case PageType.INCLUSION_EXCLUSION:
         content = (
@@ -199,6 +212,7 @@ const DialogComponent: React.FC<{
               onSave({
                 ...pageContent,
                 termsCondition: {
+                  pageTitle: termsItem.label,
                   contentText: contentText,
                 },
               });

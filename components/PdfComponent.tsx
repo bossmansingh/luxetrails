@@ -3,20 +3,21 @@
 import {
   CanvasHeight,
   CanvasWidth,
-  CoverPageContent,
-  HotelContent,
+  CoverPageModel,
+  HotelModel,
   hotelItem,
-  ImportantNotesContent,
-  InclusionExclusionContent,
-  ItineraryContent,
-  PageContent,
+  ImportantNotesModel,
+  InclusionExclusionModel,
+  ItineraryModel,
+  PageContentModel,
   PageType,
   poppinsFont,
-  ScopeServiceContent,
-  SingleImageAndTextContent,
+  ScopeServiceModel,
+  SingleImageAndTextModel,
   styles,
-  TermsConditionContent,
+  TermsConditionModel,
   termsItem,
+  flightsItem,
 } from "@/util/Constants";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import CoverPage from "@/components/CoverPage";
@@ -33,6 +34,7 @@ import {
   ImportantNotesFirstPage,
   ImportantNotesSecondPage,
 } from "./ImportantNotes";
+import FlightPage from "./Flight";
 
 const savePDF = async (
   filename: string,
@@ -78,7 +80,7 @@ const AddNewSection: React.FC<{
 };
 
 const CoverPageSection: React.FC<{
-  coverPage?: CoverPageContent;
+  coverPage?: CoverPageModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ coverPage, pageCount, updatePageCount }) => {
@@ -105,7 +107,7 @@ const CoverPageSection: React.FC<{
 };
 
 const HighlightSection: React.FC<{
-  highlight?: SingleImageAndTextContent;
+  highlight?: SingleImageAndTextModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ highlight, pageCount, updatePageCount }) => {
@@ -131,14 +133,14 @@ const HighlightSection: React.FC<{
 };
 
 const HotelSection: React.FC<{
-  hotels?: HotelContent[];
+  hotels?: HotelModel[];
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ hotels, pageCount, updatePageCount }) => {
   const pairedHotels = useMemo(
     () =>
       hotels &&
-      hotels.reduce((pairs: HotelContent[][], item, index) => {
+      hotels.reduce((pairs: HotelModel[][], item, index) => {
         if (index % 2 === 0) {
           pairs.push([item]);
         } else {
@@ -154,20 +156,22 @@ const HotelSection: React.FC<{
     var newPageCount = pageCount + pairedHotelCount;
     updatePageCount(newPageCount);
   }, [pairedHotels]);
-  return pairedHotels?.map((v, i) => {
-    return (
+  return (
+    pairedHotels &&
+    pairedHotels.length > 0 &&
+    pairedHotels.map((v, i) => (
       <AddNewSection
         addWatermark
         pageTitle={hotelItem.label}
         key={`hotel_pair_${i}`}
         content={<HotelPage hotels={v} />}
       />
-    );
-  });
+    ))
+  );
 };
 
 const ItinerarySection: React.FC<{
-  itinerary?: ItineraryContent;
+  itinerary?: ItineraryModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ itinerary, pageCount, updatePageCount }) => {
@@ -188,7 +192,7 @@ const ItinerarySection: React.FC<{
 };
 
 const DayPlanSection: React.FC<{
-  dayPlan?: SingleImageAndTextContent[];
+  dayPlan?: SingleImageAndTextModel[];
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ dayPlan, pageCount, updatePageCount }) => {
@@ -199,7 +203,8 @@ const DayPlanSection: React.FC<{
   }, [dayPlan]);
   return (
     dayPlan &&
-    dayPlan.map((value: SingleImageAndTextContent, index: number) => (
+    dayPlan.length > 0 &&
+    dayPlan.map((value: SingleImageAndTextModel, index: number) => (
       <AddNewSection
         addWatermark
         key={index}
@@ -216,7 +221,7 @@ const DayPlanSection: React.FC<{
 };
 
 const InclusionExclusionSection: React.FC<{
-  inclusionExclusion?: InclusionExclusionContent;
+  inclusionExclusion?: InclusionExclusionModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ inclusionExclusion, pageCount, updatePageCount }) => {
@@ -237,7 +242,7 @@ const InclusionExclusionSection: React.FC<{
 };
 
 const ScopeOfServiceSection: React.FC<{
-  scopeService?: ScopeServiceContent;
+  scopeService?: ScopeServiceModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ scopeService, pageCount, updatePageCount }) => {
@@ -275,7 +280,7 @@ const ScopeOfServiceSection: React.FC<{
 };
 
 const ImportantNotesSection: React.FC<{
-  importantNotes?: ImportantNotesContent;
+  importantNotes?: ImportantNotesModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ importantNotes, pageCount, updatePageCount }) => {
@@ -315,7 +320,7 @@ const ImportantNotesSection: React.FC<{
 };
 
 const TermsConditionSection: React.FC<{
-  termsCondition?: TermsConditionContent;
+  termsCondition?: TermsConditionModel;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ termsCondition, pageCount, updatePageCount }) => {
@@ -335,10 +340,29 @@ const TermsConditionSection: React.FC<{
   );
 };
 
+const FlightSection: React.FC<{
+  flights?: string[];
+  pageCount: number;
+  updatePageCount: (newCount: number) => void;
+}> = ({ flights, pageCount, updatePageCount }) => {
+  useEffect(() => {
+    if (!flights) return;
+    var newPageCount = pageCount + flights.length;
+    updatePageCount(newPageCount);
+  }, [flights]);
+  return (
+    flights &&
+    flights.length > 0 &&
+    flights.map((value, index) => (
+      <FlightPage key={`flight_section_${index}`} imageURL={value} />
+    ))
+  );
+};
+
 const PdfComponent: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
   const [isOpen, setOpen] = useState(false);
-  const [pageContent, setPageContent] = useState<PageContent>({});
+  const [pageContent, setPageContent] = useState<PageContentModel>({});
   const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
 
   useEffect(() => {
@@ -407,13 +431,18 @@ const PdfComponent: React.FC = () => {
             pageCount={pageCount}
             updatePageCount={setPageCount}
           />
+          <FlightSection
+            flights={pageContent.flights}
+            pageCount={pageCount}
+            updatePageCount={setPageCount}
+          />
         </div>
       </div>
       <DialogComponent
         pageContent={pageContent}
         currentPageType={currentPageType}
         isOpen={isOpen}
-        onSave={(newContent: PageContent) => {
+        onSave={(newContent: PageContentModel) => {
           setPageContent(newContent);
           scrollTo({
             behavior: "smooth",

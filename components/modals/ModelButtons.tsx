@@ -1,9 +1,10 @@
 import { poppinsFont, styles } from "@/util/Constants";
 
-const ModalButtons: React.FC<{ onClose: () => void; onSave: () => void }> = ({
-  onClose,
-  onSave,
-}) => {
+const ModalButtons: React.FC<{
+  saveDisabled?: boolean;
+  onClose: () => void;
+  onSave: () => void;
+}> = ({ saveDisabled, onClose, onSave }) => {
   return (
     <div
       style={{
@@ -14,6 +15,7 @@ const ModalButtons: React.FC<{ onClose: () => void; onSave: () => void }> = ({
     >
       <button
         className={poppinsFont.className}
+        disabled={saveDisabled}
         style={{ ...styles.modalButton, ...poppinsFont.style, marginRight: 8 }}
         onClick={() => {
           onSave();

@@ -6,7 +6,7 @@ import {
   Poppins,
 } from "next/font/google";
 
-const aspectRatio = 0.7070707071;
+export const aspectRatio = 0.7070707071;
 
 export const CanvasWidth = 793.5;
 export const CanvasHeight = 1122;
@@ -53,24 +53,25 @@ export enum PageType {
   FLIGHT = "flight",
 }
 
-export type SingleImageAndTextContent = {
+export type SingleImageAndTextModel = {
   pageTitle: string;
   imageUrl: string;
   contentText: string;
 };
 
-export type CoverPageContent = {
+export type CoverPageModel = {
   pageTitle: string;
   ppCost: string;
   duration: number;
 };
 
-export type ItineraryContent = {
+export type ItineraryModel = {
   pageTitle: string;
   contentTexts: string[];
 };
 
-export type TermsConditionContent = {
+export type TermsConditionModel = {
+  pageTitle: string;
   contentText: string;
 };
 
@@ -81,18 +82,18 @@ type HotelImage = {
   fourthUrl?: string;
 };
 
-export type HotelContent = {
+export type HotelModel = {
   images: HotelImage;
   title: string;
   subtitle: string;
 };
 
-export type ScopeServiceContent = {
+export type ScopeServiceModel = {
   pageTitle: string;
   contentText: string;
 };
 
-export type ImportantNotesContent = {
+export type ImportantNotesModel = {
   pageTitle: string;
   airlinePolicyTitle: string;
   airlinePolicyText: string;
@@ -102,21 +103,22 @@ export type ImportantNotesContent = {
   amendmentPolicyText: string;
 };
 
-export type InclusionExclusionContent = {
+export type InclusionExclusionModel = {
   inclusion: string;
   exclusion: string;
 };
 
-export type PageContent = {
-  coverPage?: CoverPageContent;
-  highlight?: SingleImageAndTextContent;
-  dayPlan?: SingleImageAndTextContent[];
-  itinerary?: ItineraryContent;
-  hotels?: HotelContent[];
-  inclusionExclusion?: InclusionExclusionContent;
-  scopeOfService?: ScopeServiceContent;
-  importantNotes?: ImportantNotesContent;
-  termsCondition?: TermsConditionContent;
+export type PageContentModel = {
+  coverPage?: CoverPageModel;
+  highlight?: SingleImageAndTextModel;
+  dayPlan?: SingleImageAndTextModel[];
+  itinerary?: ItineraryModel;
+  hotels?: HotelModel[];
+  inclusionExclusion?: InclusionExclusionModel;
+  scopeOfService?: ScopeServiceModel;
+  importantNotes?: ImportantNotesModel;
+  termsCondition?: TermsConditionModel;
+  flights?: string[];
 };
 
 export const highlightItem = {
@@ -127,6 +129,11 @@ export const highlightItem = {
 export const hotelItem = {
   label: "Hotels",
   value: PageType.HOTEL,
+};
+
+export const itineraryItem = {
+  label: "Itinerary",
+  value: PageType.ITINERARY,
 };
 
 export const scopeOfServiceItem = {
@@ -144,17 +151,22 @@ export const termsItem = {
   value: PageType.TERMS,
 };
 
+export const flightsItem = {
+  label: "Flight",
+  value: PageType.FLIGHT,
+};
+
 export const pageTypes = [
   { label: "Cover", value: PageType.COVER },
   highlightItem,
   hotelItem,
-  { label: "Itinerary", value: PageType.ITINERARY },
+  itineraryItem,
   { label: "Day Plan", value: PageType.DAYPLAN },
   { label: "Inclusion/Exclusion", value: PageType.INCLUSION_EXCLUSION },
   scopeOfServiceItem,
   importNotesItem,
   { label: "Terms & Conditions", value: PageType.TERMS },
-  { label: "Flight", value: PageType.FLIGHT },
+  flightsItem,
 ];
 
 // Fonts

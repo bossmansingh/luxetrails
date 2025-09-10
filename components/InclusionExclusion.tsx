@@ -1,8 +1,8 @@
-import { InclusionExclusionContent, poppinsFont } from "@/util/Constants";
+import { InclusionExclusionModel, poppinsFont } from "@/util/Constants";
 import SectionPageHeadline from "@/components//SectionPageHeadline";
 
 const InclusionExclusion: React.FC<{
-  content: InclusionExclusionContent;
+  content: InclusionExclusionModel;
 }> = ({ content }) => {
   return (
     <>

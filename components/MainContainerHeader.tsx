@@ -1,5 +1,5 @@
 import {
-  PageContent,
+  PageContentModel,
   PageType,
   pageTypes,
   poppinsFont,
@@ -7,7 +7,7 @@ import {
 } from "@/util/Constants";
 
 const MainContainerHeader: React.FC<{
-  pageContent: PageContent;
+  pageContent: PageContentModel;
   setCurrentPageType: (currentPage: PageType | null) => void;
   onSavePDF: () => void;
 }> = ({ pageContent, setCurrentPageType, onSavePDF }) => {

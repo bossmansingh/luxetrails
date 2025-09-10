@@ -3,10 +3,10 @@ import { useState } from "react";
 import ModalButtons from "@/components/modals/ModelButtons";
 
 const ItineraryModal: React.FC<{
-  numberOfNights: number;
+  stayDuration: number;
   onSave: (contentTexts: string[]) => void;
   onClose: () => void;
-}> = ({ numberOfNights, onSave, onClose }) => {
+}> = ({ stayDuration: numberOfNights, onSave, onClose }) => {
   const [nightValues, setNightValues] = useState<string[]>(
     Array(numberOfNights).fill("")
   );
@@ -30,7 +30,7 @@ const ItineraryModal: React.FC<{
             paddingLeft: 12,
             paddingRight: 12,
           }}
-          placeholder={`Enter night ${index + 1} info`}
+          placeholder={`Day ${index + 1} Schedule`}
           type="text"
           value={nightValues[index]}
           onChange={(e) => handleInputChange(index, e.target.value)}

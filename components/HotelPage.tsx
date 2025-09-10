@@ -1,7 +1,7 @@
-import { HotelContent, poppinsFont } from "@/util/Constants";
+import { HotelModel, poppinsFont } from "@/util/Constants";
 import Image from "next/image";
 
-const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
+const HotelItem: React.FC<{ value: HotelModel }> = ({ value }) => {
   return (
     <div
       style={{
@@ -116,7 +116,7 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
     </div>
   );
 };
-const HotelPage: React.FC<{ hotels: HotelContent[] }> = ({ hotels }) => {
+const HotelPage: React.FC<{ hotels: HotelModel[] }> = ({ hotels }) => {
   return (
     <div
       style={{
@@ -126,7 +126,7 @@ const HotelPage: React.FC<{ hotels: HotelContent[] }> = ({ hotels }) => {
         color: "black",
       }}
     >
-      {hotels.map((value: HotelContent, index: number) => (
+      {hotels.map((value: HotelModel, index: number) => (
         <HotelItem key={`hotel_${index}`} value={value} />
       ))}
     </div>

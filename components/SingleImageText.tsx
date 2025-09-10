@@ -33,9 +33,8 @@ const SingleImageAndTextLayout: React.FC<{
           fontSize: 18,
           lineHeight: 2,
         }}
-      >
-        {highlightText}
-      </span>
+        dangerouslySetInnerHTML={{ __html: highlightText }}
+      />
     </>
   );
 };
