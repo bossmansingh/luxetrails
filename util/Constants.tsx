@@ -12,10 +12,16 @@ export const CanvasWidth = 793.5;
 export const CanvasHeight = 1122;
 export const Domain = "www.theluxetrails.com";
 export const BrandGreen = "#043C2B";
-export const ScopeText = `We are holiday organizers only. We inspect and select the services to be provided to you. However, we do not own, operate or control any airline, shipping company, coach or coach company, hotel, transport, restaurant, kitchen caravan or any other facility or provider etc. that is engaged to provide you services during the course of your tour. Therefore, please carefully note that:
+export const DefaultScopeText = `We are holiday organizers only. We inspect and select the services to be provided to you. However, we do not own, operate or control any airline, shipping company, coach or coach company, hotel, transport, restaurant, kitchen caravan or any other facility or provider etc. that is engaged to provide you services during the course of your tour. Therefore, please carefully note that:
 	• You will need to adhere to the conditions, rules and regulations of each service provider. For instance, you will need to check the baggage rules of the airline, you will need to check the hotel rules to check what the mealtimes are, at which you should make yourself available. The company is not responsible / liable for the consequences if you breach such rules and regulations.
 	• If you cause any injury or damage affecting the service provider, then you may be liable to the service provider and if the service provider recovers any monies from us for such injury or damages, we shall separately charge you for the same.
 	• We cannot be held responsible / liable for any delay, deficiency, injury, death, loss or damage etc. occasioned due to act or default of such service providers, their employees or agents.`;
+export const DefaultTermsCondition = `• This package is for review only; rates and availability may change.
+• Prices are not guaranteed until flight details are shared or 50% payment is made.
+• Hotels and activities are not held without confirmation.
+• We work with trusted partners, but do not hold inventory.
+• Final itinerary depends on real-time availability at the time of booking.
+• Post-confirmation changes may affect cost or availability.`;
 
 export enum PageType {
   COVER = "cover",
@@ -63,9 +69,14 @@ export type HotelContent = {
   subtitle: string;
 };
 
-export type ScopeService = {
+export type ScopeServiceContent = {
   pageTitle: string;
   contentText: string;
+};
+
+export type InclusionExclusionContent = {
+  inclusion: string;
+  exclusion: string;
 };
 
 export type PageContent = {
@@ -74,7 +85,8 @@ export type PageContent = {
   dayPlan?: SingleImageAndTextContent[];
   itinerary?: ItineraryContent;
   hotels?: HotelContent[];
-  scopeOfService?: ScopeService;
+  inclusionExclusion?: InclusionExclusionContent;
+  scopeOfService?: ScopeServiceContent;
   termsCondition?: TermsConditionContent;
 };
 
@@ -117,12 +129,13 @@ export const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "fit-content",
-    alignContent: "center",
     display: "flex",
     flexDirection: "column",
+    color: "black",
   },
   page: {
     width: "100%",
+    maxWidth: CanvasWidth,
     flexDirection: "row",
     alignSelf: "center",
   },

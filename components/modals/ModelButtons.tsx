@@ -1,6 +1,6 @@
 import { poppinsFont, styles } from "@/util/Constants";
 
-const ModelButtons: React.FC<{ onClose: () => void; onSave: () => void }> = ({
+const ModalButtons: React.FC<{ onClose: () => void; onSave: () => void }> = ({
   onClose,
   onSave,
 }) => {
@@ -33,4 +33,4 @@ const ModelButtons: React.FC<{ onClose: () => void; onSave: () => void }> = ({
   );
 };
 
-export default ModelButtons;
+export default ModalButtons;

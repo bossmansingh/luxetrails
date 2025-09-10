@@ -1,7 +1,7 @@
 import { PageType, poppinsFont } from "@/util/Constants";
 import { useState } from "react";
-import ModelTitle from "./ModelTitle";
-import ModelButtons from "./ModelButtons";
+import ModalTitle from "./ModelTitle";
+import ModalButtons from "./ModelButtons";
 
 const inputTextStyle = {
   ...poppinsFont.style,
@@ -13,7 +13,7 @@ const inputTextStyle = {
   paddingRight: 12,
 };
 
-const CoverModel: React.FC<{
+const CoverModal: React.FC<{
   onClose: () => void;
   onSave: (
     title: string,
@@ -26,7 +26,6 @@ const CoverModel: React.FC<{
   const [numberOfNights, setNumberOfNights] = useState(0);
   return (
     <>
-      <ModelTitle pageType={PageType.COVER} />
       <input
         className={poppinsFont.className}
         style={inputTextStyle}
@@ -51,7 +50,7 @@ const CoverModel: React.FC<{
         value={numberOfNights > 0 ? numberOfNights : ""}
         onChange={(e) => setNumberOfNights(Number(e.target.value))}
       />
-      <ModelButtons
+      <ModalButtons
         onClose={onClose}
         onSave={() => onSave(title, pricePerPerson, numberOfNights)}
       />
@@ -59,4 +58,4 @@ const CoverModel: React.FC<{
   );
 };
 
-export default CoverModel;
+export default CoverModal;

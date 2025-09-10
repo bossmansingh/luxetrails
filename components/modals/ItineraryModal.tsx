@@ -1,9 +1,9 @@
 import { PageType, poppinsFont } from "@/util/Constants";
 import { useState } from "react";
-import ModelTitle from "./ModelTitle";
-import ModelButtons from "./ModelButtons";
+import ModalTitle from "./ModelTitle";
+import ModalButtons from "./ModelButtons";
 
-const ItineraryModel: React.FC<{
+const ItineraryModal: React.FC<{
   numberOfNights: number;
   onSave: (contentTexts: string[]) => void;
   onClose: () => void;
@@ -18,7 +18,6 @@ const ItineraryModel: React.FC<{
   };
   return (
     <>
-      <ModelTitle pageType={PageType.ITINERARY} />
       {Array.from({ length: numberOfNights }, (_, index) => (
         <input
           key={`night_${index}`}
@@ -38,7 +37,7 @@ const ItineraryModel: React.FC<{
           onChange={(e) => handleInputChange(index, e.target.value)}
         />
       ))}
-      <ModelButtons
+      <ModalButtons
         onClose={onClose}
         onSave={() =>
           onSave(nightValues.filter((value) => value.trim() !== ""))
@@ -48,4 +47,4 @@ const ItineraryModel: React.FC<{
   );
 };
 
-export default ItineraryModel;
+export default ItineraryModal;

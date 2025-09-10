@@ -1,9 +1,9 @@
 import { PageType, poppinsFont } from "@/util/Constants";
 import { useEffect, useState } from "react";
-import ModelTitle from "@/components/modals/ModelTitle";
-import ModelButtons from "./ModelButtons";
+import ModalTitle from "@/components/modals/ModelTitle";
+import ModalButtons from "./ModelButtons";
 
-const SingleImageTextModel: React.FC<{
+const SingleImageTextModal: React.FC<{
   pageType: PageType;
   onSave: (pageTitle: string, imageUrl: string, highlightText: string) => void;
   onClose: () => void;
@@ -18,7 +18,6 @@ const SingleImageTextModel: React.FC<{
   }, [pageType]);
   return (
     <>
-      <ModelTitle pageType={pageType} />
       <input
         className={poppinsFont.className}
         style={{
@@ -44,7 +43,8 @@ const SingleImageTextModel: React.FC<{
         style={{
           ...poppinsFont.style,
           width: "100%",
-          height: "30px",
+          height: "40px",
+          fontSize: 14,
           marginTop: 10,
           paddingLeft: 12,
           paddingRight: 12,
@@ -68,7 +68,7 @@ const SingleImageTextModel: React.FC<{
         value={highlightText}
         onChange={(e) => setHighlightText(e.target.value)}
       />
-      <ModelButtons
+      <ModalButtons
         onClose={onClose}
         onSave={() => onSave(pageTitle.toUpperCase(), imageUrl, highlightText)}
       />
@@ -76,4 +76,4 @@ const SingleImageTextModel: React.FC<{
   );
 };
 
-export default SingleImageTextModel;
+export default SingleImageTextModal;

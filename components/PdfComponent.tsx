@@ -5,11 +5,12 @@ import {
   CanvasWidth,
   CoverPageContent,
   HotelContent,
+  InclusionExclusionContent,
   ItineraryContent,
   PageContent,
   PageType,
   poppinsFont,
-  ScopeService,
+  ScopeServiceContent,
   SingleImageAndTextContent,
   styles,
   TermsConditionContent,
@@ -24,6 +25,7 @@ import TermsCondition from "./TermsCondition";
 import HotelPage from "./HotelPage";
 import BackgroundLayer from "./BackgroundLayer";
 import SectionPageHeadline from "./SectionPageHeadline";
+import InclusionExclusion from "./InclusionExclusion";
 
 const savePDF = async (
   filename: string,
@@ -126,9 +128,9 @@ const HotelSection: React.FC<{
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ hotels, pageCount, updatePageCount }) => {
-  if (!hotels) return;
   const pairedHotels = useMemo(
     () =>
+      hotels &&
       hotels.reduce((pairs: HotelContent[][], item, index) => {
         if (index % 2 === 0) {
           pairs.push([item]);
@@ -140,11 +142,12 @@ const HotelSection: React.FC<{
     [hotels]
   );
   useEffect(() => {
-    if (pairedHotels.length <= 0) return;
-    var newPageCount = pageCount + pairedHotels.length;
+    var pairedHotelCount = pairedHotels?.length ?? 0;
+    if (pairedHotelCount <= 0) return;
+    var newPageCount = pageCount + pairedHotelCount;
     updatePageCount(newPageCount);
   }, [pairedHotels]);
-  return pairedHotels.map((v, i) => {
+  return pairedHotels?.map((v, i) => {
     return (
       <AddNewSection
         addWatermark
@@ -205,8 +208,34 @@ const DayPlanSection: React.FC<{
   );
 };
 
+const InclusionExclusionSection: React.FC<{
+  inclusionExclusion?: InclusionExclusionContent;
+  pageCount: number;
+  updatePageCount: (newCount: number) => void;
+}> = ({ inclusionExclusion, pageCount, updatePageCount }) => {
+  useEffect(() => {
+    if (!inclusionExclusion) return;
+    var newPageCount = pageCount + 1;
+    updatePageCount(newPageCount);
+  }, [inclusionExclusion]);
+  return (
+    inclusionExclusion && (
+      <AddNewSection
+        addWatermark
+        pageTitle={"INCLUSION"}
+        content={
+          <InclusionExclusion
+            inclusion={inclusionExclusion.inclusion}
+            exclusion={inclusionExclusion.exclusion}
+          />
+        }
+      />
+    )
+  );
+};
+
 const ScopeOfServiceSection: React.FC<{
-  scopeService?: ScopeService;
+  scopeService?: ScopeServiceContent;
   pageCount: number;
   updatePageCount: (newCount: number) => void;
 }> = ({ scopeService, pageCount, updatePageCount }) => {
@@ -313,6 +342,11 @@ const PdfComponent: React.FC = () => {
           />
           <DayPlanSection
             dayPlan={pageContent.dayPlan}
+            pageCount={pageCount}
+            updatePageCount={setPageCount}
+          />
+          <InclusionExclusionSection
+            inclusionExclusion={pageContent.inclusionExclusion}
             pageCount={pageCount}
             updatePageCount={setPageCount}
           />

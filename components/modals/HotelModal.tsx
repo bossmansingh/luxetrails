@@ -1,7 +1,7 @@
 import { HotelContent, PageType, poppinsFont } from "@/util/Constants";
-import ModelTitle from "@/components/modals/ModelTitle";
+import ModalTitle from "@/components/modals/ModelTitle";
 import { useEffect, useState } from "react";
-import ModelButtons from "./ModelButtons";
+import ModalButtons from "./ModelButtons";
 
 const HotelInputItem: React.FC<{
   value: HotelContent;
@@ -176,7 +176,7 @@ const HotelInputItem: React.FC<{
     </div>
   );
 };
-const HotelModel: React.FC<{
+const HotelModal: React.FC<{
   onClose: () => void;
   onSave: (hotels: HotelContent[]) => void;
 }> = ({ onClose, onSave }) => {
@@ -202,7 +202,6 @@ const HotelModel: React.FC<{
   }, [hotelCount]);
   return (
     <>
-      <ModelTitle pageType={PageType.HOTEL} />
       <div style={{ width: "100%", display: "flex", paddingTop: 8 }}>
         <select
           className={poppinsFont.className}
@@ -248,9 +247,9 @@ const HotelModel: React.FC<{
           ))}
         </div>
       </div>
-      <ModelButtons onClose={onClose} onSave={() => onSave(hotels)} />
+      <ModalButtons onClose={onClose} onSave={() => onSave(hotels)} />
     </>
   );
 };
 
-export default HotelModel;
+export default HotelModal;

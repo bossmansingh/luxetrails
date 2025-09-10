@@ -13,7 +13,7 @@ const SingleImageAndTextLayout: React.FC<{
           width: "100%",
           height: "auto",
           borderRadius: 8,
-          overflow: "clip",
+          overflow: "hidden",
           objectFit: "cover",
         }}
         src={imageUrl}

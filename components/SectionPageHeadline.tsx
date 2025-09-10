@@ -1,4 +1,5 @@
 import { BrandGreen, cinzelFont, styles } from "@/util/Constants";
+import { CSSProperties } from "react";
 
 const HeaderLine: React.FC = () => {
   return (
@@ -12,13 +13,16 @@ const HeaderLine: React.FC = () => {
     />
   );
 };
-const SectionPageHeadline: React.FC<{ title: string }> = ({ title }) => {
+const SectionPageHeadline: React.FC<{
+  title: string;
+  customStyle?: CSSProperties;
+}> = ({ title, customStyle }) => {
   return (
-    <div>
+    <div style={customStyle}>
       <HeaderLine />
       <h1
         className={cinzelFont.className}
-        style={(cinzelFont.style, styles.headerTitle)}
+        style={{ ...cinzelFont.style, ...styles.headerTitle }}
       >
         {title}
       </h1>

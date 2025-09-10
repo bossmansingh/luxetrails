@@ -22,13 +22,13 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
           width={150}
           height={150}
           style={{
-            width: "auto",
+            width: "100%",
             height: "auto",
             aspectRatio: 1,
             borderRadius: 10,
             paddingRight: 4,
             overflow: "clip",
-            objectFit: "cover",
+            objectFit: "fill",
           }}
           src={value.images.firstUrl}
           alt="Hotel First Image"
@@ -37,13 +37,13 @@ const HotelItem: React.FC<{ value: HotelContent }> = ({ value }) => {
           width={150}
           height={150}
           style={{
-            width: "auto",
+            width: "100%",
             height: "auto",
             aspectRatio: 1,
             borderRadius: 10,
             paddingLeft: 4,
             overflow: "clip",
-            objectFit: "cover",
+            objectFit: "fill",
           }}
           src={value.images.secondUrl}
           alt="Hotel Second Image"

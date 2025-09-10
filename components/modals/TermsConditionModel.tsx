@@ -1,23 +1,14 @@
-import { PageType, poppinsFont } from "@/util/Constants";
+import { DefaultTermsCondition, PageType, poppinsFont } from "@/util/Constants";
 import { useState } from "react";
-import ModelTitle from "./ModelTitle";
-import ModelButtons from "./ModelButtons";
+import ModalButtons from "./ModelButtons";
 
-const defaultTermsCondition = `• This package is for review only; rates and availability may change.
-• Prices are not guaranteed until flight details are shared or 50% payment is made.
-• Hotels and activities are not held without confirmation.
-• We work with trusted partners, but do not hold inventory.
-• Final itinerary depends on real-time availability at the time of booking.
-• Post-confirmation changes may affect cost or availability.`;
-
-const TermsConditionModel: React.FC<{
+const TermsConditionModal: React.FC<{
   onSave: (contentText: string) => void;
   onClose: () => void;
 }> = ({ onSave, onClose }) => {
-  const [terms, setTerms] = useState(defaultTermsCondition);
+  const [terms, setTerms] = useState(DefaultTermsCondition);
   return (
     <>
-      <ModelTitle pageType={PageType.TERMS} />
       <textarea
         className={poppinsFont.className}
         style={{
@@ -32,9 +23,9 @@ const TermsConditionModel: React.FC<{
         value={terms}
         onChange={(e) => setTerms(e.target.value)}
       />
-      <ModelButtons onClose={onClose} onSave={() => onSave(terms)} />
+      <ModalButtons onClose={onClose} onSave={() => onSave(terms)} />
     </>
   );
 };
 
-export default TermsConditionModel;
+export default TermsConditionModal;

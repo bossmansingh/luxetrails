@@ -2,15 +2,17 @@ import {
   HotelContent,
   PageContent,
   PageType,
-  ScopeText,
+  DefaultScopeText,
 } from "@/util/Constants";
 import ReactModal from "react-modal";
-import SingleImageTextModel from "@/components/modals/SingleImageTextModel";
-import CoverModel from "@/components/modals/CoverModel";
-import ItineraryModel from "@/components/modals/ItineraryModel";
-import TermsConditionModel from "@/components/modals/TermsConditionModel";
-import HotelModel from "./HotelModel";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import SingleImageTextModal from "@/components/modals/SingleImageTextModal";
+import CoverModal from "@/components/modals/CoverModal";
+import ItineraryModal from "@/components/modals/ItineraryModal";
+import TermsConditionModal from "@/components/modals/TermsConditionModel";
+import HotelModal from "./HotelModal";
+import { ReactNode, useEffect, useState } from "react";
+import InclusionExclusionModal from "./InclusionExclusionModal";
+import ModalTitle from "./ModelTitle";
 
 const dialogStyle: ReactModal.Styles = {
   content: {
@@ -41,7 +43,7 @@ const DialogComponent: React.FC<{
     switch (currentPageType) {
       case PageType.COVER:
         content = (
-          <CoverModel
+          <CoverModal
             onClose={onClose}
             onSave={(
               title: string,
@@ -62,7 +64,7 @@ const DialogComponent: React.FC<{
         break;
       case PageType.HIGHLIGHTS:
         content = (
-          <SingleImageTextModel
+          <SingleImageTextModal
             pageType={PageType.HIGHLIGHTS}
             onClose={onClose}
             onSave={(
@@ -84,7 +86,7 @@ const DialogComponent: React.FC<{
         break;
       case PageType.ITINERARY:
         content = (
-          <ItineraryModel
+          <ItineraryModal
             numberOfNights={pageContent.coverPage?.duration ?? 0}
             onSave={(contentTexts: string[]) => {
               onSave({
@@ -101,7 +103,7 @@ const DialogComponent: React.FC<{
         break;
       case PageType.HOTEL:
         content = (
-          <HotelModel
+          <HotelModal
             onClose={onClose}
             onSave={(hotels: HotelContent[]) => {
               onSave({
@@ -114,7 +116,7 @@ const DialogComponent: React.FC<{
         break;
       case PageType.DAYPLAN:
         content = (
-          <SingleImageTextModel
+          <SingleImageTextModal
             pageType={PageType.DAYPLAN}
             onClose={onClose}
             onSave={(
@@ -141,21 +143,34 @@ const DialogComponent: React.FC<{
         content = <div>Flight Content</div>;
         break;
       case PageType.INCLUSION_EXCLUSION:
-        content = <div>Inclusion/Exclusion Content</div>;
+        content = (
+          <InclusionExclusionModal
+            onClose={onClose}
+            onSave={(inclusion: string, exclusion: string) => {
+              onSave({
+                ...pageContent,
+                inclusionExclusion: {
+                  inclusion: inclusion,
+                  exclusion: exclusion,
+                },
+              });
+            }}
+          />
+        );
         break;
       case PageType.SCOPE_OF_SERVICE:
         onSave({
           ...pageContent,
           scopeOfService: {
             pageTitle: "Our Scope of Services",
-            contentText: ScopeText,
+            contentText: DefaultScopeText,
           },
         });
         content = null;
         break;
       case PageType.TERMS:
         content = (
-          <TermsConditionModel
+          <TermsConditionModal
             onClose={onClose}
             onSave={(contentText: string) => {
               onSave({
@@ -175,7 +190,8 @@ const DialogComponent: React.FC<{
     setModalContent(content);
   }, [currentPageType]);
   return (
-    modalContent && (
+    modalContent &&
+    currentPageType && (
       <ReactModal
         style={dialogStyle}
         isOpen={isOpen}
@@ -190,6 +206,7 @@ const DialogComponent: React.FC<{
             flexDirection: "column",
           }}
         >
+          <ModalTitle pageType={currentPageType} />
           {modalContent}
         </div>
       </ReactModal>
