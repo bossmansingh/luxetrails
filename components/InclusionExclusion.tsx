@@ -1,5 +1,6 @@
 import { InclusionExclusionModel, poppinsFont } from "@/util/Constants";
 import SectionPageHeadline from "@/components//SectionPageHeadline";
+import parse from "html-react-parser";
 
 const textStyle = {
   ...poppinsFont.style,
@@ -19,21 +20,17 @@ const InclusionExclusion: React.FC<{
 }> = ({ content }) => {
   return (
     <>
-      <span
-        className={poppinsFont.className}
-        dangerouslySetInnerHTML={{ __html: content.inclusion }}
-        style={textStyle}
-      />
+      <span className={poppinsFont.className} style={textStyle}>
+        {parse(content.inclusion)}
+      </span>
       <div style={{ width: "100%", height: "100%" }}>
         <SectionPageHeadline
           title="EXCLUSIONS"
           customStyle={{ marginTop: 80 }}
         />
-        <span
-          className={poppinsFont.className}
-          dangerouslySetInnerHTML={{ __html: content.exclusion }}
-          style={textStyle}
-        />
+        <span className={poppinsFont.className} style={textStyle}>
+          {parse(content.exclusion)}
+        </span>
       </div>
     </>
   );

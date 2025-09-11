@@ -1,6 +1,7 @@
 import { cinzelFont, poppinsFont } from "@/util/Constants";
 import CalendarIcon from "@/public/calendar_icon.jpg";
 import Image from "next/image";
+import parse from "html-react-parser";
 
 const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
   index,
@@ -47,8 +48,9 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
           alignSelf: "center",
           height: "fit-content",
         }}
-        dangerouslySetInnerHTML={{ __html: contentText }}
-      />
+      >
+        {parse(contentText)}
+      </span>
     </div>
   );
 };

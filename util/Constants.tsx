@@ -39,7 +39,7 @@ export const DefaultHotelPolicyText = `• Hotel cancellation will be as per the
 • Hotel room allocation will be subject to availability and will be on a first come first serve basis.
 • Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date.`;
 export const DefaultAmendmentTitle = "Amendment of Booking by Guest";
-export const DefaultAmendmentText = `If you wish to amend or change your booking, write to us at <b>${SupportEmail}</b>. Such requests for change or amendment will be accepted subject to availability. Please note that the amended or changed booking will be regarded as a new booking. In case the amendment is carried out within the cancellation period, then a cancellation charge shall apply as if a cancellation was made on the date the request for amendment or change is made. Please note the cancellation charges will be as per the airline and hotel policies.`;
+export const DefaultAmendmentText = `If you wish to amend or change your booking, write to us at <strong>${SupportEmail}</strong>. Such requests for change or amendment will be accepted subject to availability. Please note that the amended or changed booking will be regarded as a new booking. In case the amendment is carried out within the cancellation period, then a cancellation charge shall apply as if a cancellation was made on the date the request for amendment or change is made. Please note the cancellation charges will be as per the airline and hotel policies.`;
 
 export enum PageType {
   COVER = "cover",
@@ -202,8 +202,7 @@ export const styles = StyleSheet.create({
     color: "black",
   },
   page: {
-    width: "100%",
-    maxWidth: CanvasWidth,
+    width: CanvasWidth,
     flexDirection: "row",
     alignSelf: "center",
   },

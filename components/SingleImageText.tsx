@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { poppinsFont } from "@/util/Constants";
+import parse from "html-react-parser";
 
 const SingleImageAndTextLayout: React.FC<{
   imageUrl: string;
@@ -33,8 +34,9 @@ const SingleImageAndTextLayout: React.FC<{
           fontSize: 18,
           lineHeight: 2,
         }}
-        dangerouslySetInnerHTML={{ __html: highlightText }}
-      />
+      >
+        {parse(highlightText)}
+      </span>
     </>
   );
 };

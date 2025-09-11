@@ -1,4 +1,5 @@
 import { BrandGreen, poppinsFont } from "@/util/Constants";
+import parse from "html-react-parser";
 
 const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
   return (
@@ -15,8 +16,9 @@ const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
         fontSize: 22,
         lineHeight: 2,
       }}
-      dangerouslySetInnerHTML={{ __html: contentText }}
-    />
+    >
+      {parse(contentText)}
+    </span>
   );
 };
 
