@@ -1,12 +1,9 @@
-import { BrandGreen, poppinsFont } from "@/util/Constants";
-import parse from "html-react-parser";
+import { BrandGreen, ParagraphText } from "@/util/Constants";
 
 const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
   return (
-    <span
-      className={poppinsFont.className}
+    <ParagraphText
       style={{
-        ...poppinsFont.style,
         whiteSpace: "pre-line",
         display: "block",
         fontWeight: 500,
@@ -16,9 +13,8 @@ const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
         fontSize: 22,
         lineHeight: 2,
       }}
-    >
-      {parse(contentText)}
-    </span>
+      text={contentText}
+    />
   );
 };
 

@@ -1,7 +1,6 @@
-import { cinzelFont, poppinsFont } from "@/util/Constants";
+import { ParagraphText } from "@/util/Constants";
 import CalendarIcon from "@/public/calendar_icon.jpg";
 import Image from "next/image";
-import parse from "html-react-parser";
 
 const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
   index,
@@ -19,10 +18,8 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
     >
       <div style={{ position: "relative", display: "inline-block" }}>
         <Image src={CalendarIcon} alt="Calendar Icon" width={85} height={88} />
-        <span
-          className={cinzelFont.className}
+        <ParagraphText
           style={{
-            ...cinzelFont.style,
             fontSize: 19,
             fontWeight: 600,
             position: "absolute",
@@ -32,14 +29,11 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
             color: "#d4af37",
             textAlign: "center",
           }}
-        >
-          Day {index + 1}
-        </span>
+          text={`Day ${index + 1}`}
+        />
       </div>
-      <span
-        className={poppinsFont.className}
+      <ParagraphText
         style={{
-          ...poppinsFont.style,
           fontWeight: 500,
           marginLeft: 10,
           fontSize: 22,
@@ -48,9 +42,8 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
           alignSelf: "center",
           height: "fit-content",
         }}
-      >
-        {parse(contentText)}
-      </span>
+        text={contentText}
+      />
     </div>
   );
 };

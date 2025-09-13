@@ -11,13 +11,13 @@ import {
   ItineraryModel,
   PageContentModel,
   PageType,
-  poppinsFont,
   ScopeServiceModel,
   SingleImageAndTextModel,
   styles,
   TermsConditionModel,
   termsItem,
   aspectRatio,
+  ParagraphText,
 } from "@/util/Constants";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import CoverPage from "@/components/CoverPage";
@@ -258,10 +258,8 @@ const ScopeOfServiceSection: React.FC<{
         pageTitle={scopeService.pageTitle}
         content={
           <div style={{ marginTop: 50 }}>
-            <span
-              className={poppinsFont.className}
+            <ParagraphText
               style={{
-                ...poppinsFont.style,
                 whiteSpace: "pre-wrap",
                 display: "block",
                 textAlign: "justify",
@@ -269,9 +267,8 @@ const ScopeOfServiceSection: React.FC<{
                 fontSize: 18,
                 lineHeight: 1.75,
               }}
-            >
-              {scopeService.contentText}
-            </span>
+              text={scopeService.contentText}
+            />
           </div>
         }
       />

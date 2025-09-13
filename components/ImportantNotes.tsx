@@ -1,6 +1,5 @@
-import { poppinsFont } from "@/util/Constants";
+import { ParagraphText, poppinsFont } from "@/util/Constants";
 import { CSSProperties } from "react";
-import parse from "html-react-parser";
 
 const containerStyle: CSSProperties = {
   marginTop: 20,
@@ -12,7 +11,6 @@ const titleStyle: CSSProperties = {
   fontSize: 16,
 };
 const textStyle: CSSProperties = {
-  ...poppinsFont.style,
   whiteSpace: "pre-wrap",
   display: "block",
   fontWeight: "500",
@@ -38,17 +36,13 @@ export const ImportantNotesFirstPage: React.FC<{
         <span className={poppinsFont.className} style={titleStyle}>
           {airlinePolicyTitle}
         </span>
-        <span className={poppinsFont.className} style={textStyle}>
-          {parse(airlinePolicyText)}
-        </span>
+        <ParagraphText style={textStyle} text={airlinePolicyText} />
       </div>
       <div style={containerStyle}>
         <span className={poppinsFont.className} style={titleStyle}>
           {hotelPolicyTitle}
         </span>
-        <span className={poppinsFont.className} style={textStyle}>
-          {parse(hotelPolicyText)}
-        </span>
+        <ParagraphText style={textStyle} text={hotelPolicyText} />
       </div>
     </>
   );
@@ -61,11 +55,9 @@ export const ImportantNotesSecondPage: React.FC<{
   return (
     <div style={containerStyle}>
       <span className={poppinsFont.className} style={titleStyle}>
-        {parse(amendmentPolicyTitle)}
+        {amendmentPolicyTitle}
       </span>
-      <span className={poppinsFont.className} style={textStyle}>
-        {parse(amendmentPolicyText)}
-      </span>
+      <ParagraphText style={textStyle} text={amendmentPolicyText} />
     </div>
   );
 };

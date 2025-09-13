@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { poppinsFont } from "@/util/Constants";
-import parse from "html-react-parser";
+import { ParagraphText } from "@/util/Constants";
 
 const SingleImageAndTextLayout: React.FC<{
   imageUrl: string;
@@ -22,10 +21,8 @@ const SingleImageAndTextLayout: React.FC<{
         width={300}
         height={300}
       />
-      <span
-        className={poppinsFont.className}
+      <ParagraphText
         style={{
-          ...poppinsFont.style,
           whiteSpace: "pre-wrap",
           display: "block",
           fontWeight: "500",
@@ -34,9 +31,8 @@ const SingleImageAndTextLayout: React.FC<{
           fontSize: 18,
           lineHeight: 2,
         }}
-      >
-        {parse(highlightText)}
-      </span>
+        text={highlightText}
+      />
     </>
   );
 };
