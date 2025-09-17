@@ -12,21 +12,27 @@ const MainContainerHeader: React.FC<{
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "rgb(0,0,0,0.25)",
+        backgroundColor: "rgb(0,0,0,0.5)",
         position: "fixed",
         zIndex: 2,
       }}
     >
       <button
         className={poppinsFont.className}
-        style={(poppinsFont.style, styles.downloadButton)}
+        style={{
+          ...poppinsFont.style,
+          ...styles.downloadButton,
+        }}
         onClick={isPreviewMode ? onEditPDF : onPreviewPDF}
       >
         {isPreviewMode ? "Edit PDF" : "Preview PDF"}
       </button>
       <button
         className={poppinsFont.className}
-        style={(poppinsFont.style, styles.downloadButton)}
+        style={{
+          ...poppinsFont.style,
+          ...styles.downloadButton,
+        }}
         onClick={onSavePDF}
       >
         Download PDF

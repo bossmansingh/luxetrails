@@ -1,4 +1,4 @@
-import { ParagraphText, poppinsFont } from "@/util/Constants";
+import { ParagraphText, poppinsFont, TextToPoints } from "@/util/Constants";
 import { CSSProperties } from "react";
 
 const containerStyle: CSSProperties = {
@@ -11,12 +11,9 @@ const titleStyle: CSSProperties = {
   fontSize: 16,
 };
 const textStyle: CSSProperties = {
-  whiteSpace: "pre-wrap",
-  display: "block",
-  fontWeight: "500",
   color: "black",
   fontSize: 14,
-  lineHeight: 2,
+  lineHeight: 1.5,
 };
 
 export const ImportantNotesFirstPage: React.FC<{
@@ -36,13 +33,13 @@ export const ImportantNotesFirstPage: React.FC<{
         <span className={poppinsFont.className} style={titleStyle}>
           {airlinePolicyTitle}
         </span>
-        <ParagraphText style={textStyle} text={airlinePolicyText} />
+        <TextToPoints style={textStyle} text={airlinePolicyText} />
       </div>
       <div style={containerStyle}>
         <span className={poppinsFont.className} style={titleStyle}>
           {hotelPolicyTitle}
         </span>
-        <ParagraphText style={textStyle} text={hotelPolicyText} />
+        <TextToPoints style={textStyle} text={hotelPolicyText} />
       </div>
     </>
   );
@@ -57,7 +54,8 @@ export const ImportantNotesSecondPage: React.FC<{
       <span className={poppinsFont.className} style={titleStyle}>
         {amendmentPolicyTitle}
       </span>
-      <ParagraphText style={textStyle} text={amendmentPolicyText} />
+      <br />
+      <ParagraphText style={{ ...textStyle }} text={amendmentPolicyText} />
     </div>
   );
 };

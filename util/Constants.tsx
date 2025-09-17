@@ -5,8 +5,7 @@ import {
   Playfair_Display,
   Poppins,
 } from "next/font/google";
-import { CSSProperties } from "react";
-import parse from "html-react-parser";
+import { CSSProperties, useMemo } from "react";
 
 const SupportEmail = "ops@theluxetrails.com";
 
@@ -16,30 +15,33 @@ export const CanvasHeight = 1122;
 export const Domain = "www.theluxetrails.com";
 export const BrandGreen = "#043C2B";
 export const DefaultScopeText = `We are holiday organizers only. We inspect and select the services to be provided to you. However, we do not own, operate or control any airline, shipping company, coach or coach company, hotel, transport, restaurant, kitchen caravan or any other facility or provider etc. that is engaged to provide you services during the course of your tour. Therefore, please carefully note that:
-	• You will need to adhere to the conditions, rules and regulations of each service provider. For instance, you will need to check the baggage rules of the airline, you will need to check the hotel rules to check what the mealtimes are, at which you should make yourself available. The company is not responsible / liable for the consequences if you breach such rules and regulations.
-	• If you cause any injury or damage affecting the service provider, then you may be liable to the service provider and if the service provider recovers any monies from us for such injury or damages, we shall separately charge you for the same.
-	• We cannot be held responsible / liable for any delay, deficiency, injury, death, loss or damage etc. occasioned due to act or default of such service providers, their employees or agents.`;
-export const DefaultTermsCondition = `• This package is for review only; rates and availability may change.
-• Prices are not guaranteed until flight details are shared or 50% payment is made.
-• Hotels and activities are not held without confirmation.
-• We work with trusted partners, but do not hold inventory.
-• Final itinerary depends on real-time availability at the time of booking.
-• Post-confirmation changes may affect cost or availability.`;
+You will need to adhere to the conditions, rules and regulations of each service provider. For instance, you will need to check the baggage rules of the airline, you will need to check the hotel rules to check what the mealtimes are, at which you should make yourself available. The company is not responsible / liable for the consequences if you breach such rules and regulations.
+If you cause any injury or damage affecting the service provider, then you may be liable to the service provider and if the service provider recovers any monies from us for such injury or damages, we shall separately charge you for the same.
+We cannot be held responsible / liable for any delay, deficiency, injury, death, loss or damage etc. occasioned due to act or default of such service providers, their employees or agents.`;
+export const DefaultTermsCondition = `
+This package is for review only; rates and availability may change.
+Prices are not guaranteed until flight details are shared or 50% payment is made.
+Hotels and activities are not held without confirmation.
+We work with trusted partners, but do not hold inventory.
+Final itinerary depends on real-time availability at the time of booking.
+Post-confirmation changes may affect cost or availability.`;
 export const DefaultAirlinePolicyTitle = "Airline Cancellation Policy";
-export const DefaultAirlinePolicyText = `• Cancellation will be as per the airlines cancellation policy. If the flights are non-refundable, you will not get any refund for flights in the event of cancellation.
-• Refund will be done within 30 Workings days post deduction of cancellation charges by airlines (as per airline cancellation policy) and service charge of 5% on total value for cancellation and 2.5% for amendments by Tripfactory.
-• For infant bookings Date of Birth proof has to be presented at the time of checking-in.
-• Standard airline policy shall be applicable to all changes.
-• Please note one-way cancellations are not allowed for any flight.
-• Please note name changes are not permitted for any flight.
-• Due to the impact of COVID-19 worldwide, refunds will be processed in accordance with the latest airline policies. Please note that at the airline's discretion, refunds may be made in the form of airline vouchers. The final decision regarding the refund method will be made by the airline. Some airlines may charge processing fees for flight changes or cancellations made due to flight schedule changes. Actual fees charged will depend on the final decision by the airline.`;
+export const DefaultAirlinePolicyText = `
+Cancellation will be as per the airlines cancellation policy. If the flights are non-refundable, you will not get any refund for flights in the event of cancellation.
+Refund will be done within 30 Workings days post deduction of cancellation charges by airlines (as per airline cancellation policy) and service charge of 5% on total value for cancellation and 2.5% for amendments by Tripfactory.
+For infant bookings Date of Birth proof has to be presented at the time of checking-in.
+Standard airline policy shall be applicable to all changes.
+Please note one-way cancellations are not allowed for any flight.
+Please note name changes are not permitted for any flight.
+Due to the impact of COVID-19 worldwide, refunds will be processed in accordance with the latest airline policies. Please note that at the airline's discretion, refunds may be made in the form of airline vouchers. The final decision regarding the refund method will be made by the airline. Some airlines may charge processing fees for flight changes or cancellations made due to flight schedule changes. Actual fees charged will depend on the final decision by the airline.`;
 export const DefaultHotelPolicyTitle = "Hotel Cancellation Policy";
-export const DefaultHotelPolicyText = `• Hotel cancellation will be as per the hotel cancellation policy. If the hotels are non-refundable, you will not get any refund for hotels in the event of cancellation.
-• Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date, unless otherwise specified during the quotation stage in the "Points to Note" section. Some services handle different cancellation policies and they must be respected accordingly.
-• Entrance tickets of any kind are non-refundable from the moment of booking, unless specified otherwise.
-• There will be also a service charge of 5% on total value in case of cancellation of Land and 5% on total value for any amendments.
-• Hotel room allocation will be subject to availability and will be on a first come first serve basis.
-• Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date.`;
+export const DefaultHotelPolicyText = `
+Hotel cancellation will be as per the hotel cancellation policy. If the hotels are non-refundable, you will not get any refund for hotels in the event of cancellation.
+Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date, unless otherwise specified during the quotation stage in the "Points to Note" section. Some services handle different cancellation policies and they must be respected accordingly.
+Entrance tickets of any kind are non-refundable from the moment of booking, unless specified otherwise.
+There will be also a service charge of 5% on total value in case of cancellation of Land and 5% on total value for any amendments.
+Hotel room allocation will be subject to availability and will be on a first come first serve basis.
+Any transfers or activities included in the trip will be non-refundable if cancelled within 3 days of the travel start date.`;
 export const DefaultAmendmentTitle = "Amendment of Booking by Guest";
 export const DefaultAmendmentText = `If you wish to amend or change your booking, write to us at **${SupportEmail}**. Such requests for change or amendment will be accepted subject to availability. Please note that the amended or changed booking will be regarded as a new booking. In case the amendment is carried out within the cancellation period, then a cancellation charge shall apply as if a cancellation was made on the date the request for amendment or change is made. Please note the cancellation charges will be as per the airline and hotel policies.`;
 
@@ -60,6 +62,7 @@ export type SingleImageAndTextModel = {
   pageTitle: string;
   imageUrl: string;
   contentText: string;
+  recommendationText?: string;
 };
 
 export type CoverPageModel = {
@@ -114,9 +117,9 @@ export type InclusionExclusionModel = {
 export type PageContentModel = {
   coverPage?: CoverPageModel;
   highlight?: SingleImageAndTextModel;
-  dayPlan?: SingleImageAndTextModel[];
-  itinerary?: ItineraryModel;
   hotels?: HotelModel[];
+  itinerary?: ItineraryModel;
+  dayPlan?: SingleImageAndTextModel[];
   inclusionExclusion?: InclusionExclusionModel;
   scopeOfService?: ScopeServiceModel;
   importantNotes?: ImportantNotesModel;
@@ -228,6 +231,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   downloadButton: {
+    width: "100%",
     justifySelf: "end",
     alignSelf: "flex-end",
     padding: 10,
@@ -308,15 +312,41 @@ export const TitleText: React.FC<{ text: string; style?: CSSProperties }> = ({
 
 export const ParagraphText: React.FC<{
   text: string;
-  style: CSSProperties;
+  style?: CSSProperties;
 }> = ({ text, style }) => {
   return (
     <span
       className={poppinsFont.className}
       style={{ ...poppinsFont.style, ...style }}
     >
-      {parse(renderMarkdown(text).toString())}
+      {renderMarkdown(text)}
     </span>
+  );
+};
+
+export const TextToPoints: React.FC<{
+  text: string;
+  style?: CSSProperties;
+}> = ({ text, style }) => {
+  const points = useMemo(() => {
+    return text.split("\n").filter((v) => v.length > 0);
+  }, [text]);
+  return (
+    <ul
+      className={poppinsFont.className}
+      style={{
+        ...poppinsFont.style,
+        color: "black",
+        padding: 24,
+        fontSize: 17,
+        lineHeight: 1.75,
+        ...style,
+      }}
+    >
+      {points.map((value, index) => (
+        <li key={`${value}_${index}`}>{renderMarkdown(value)}</li>
+      ))}
+    </ul>
   );
 };
 
@@ -327,10 +357,9 @@ export const ParagraphText: React.FC<{
  */
 export const renderMarkdown = (text: string) => {
   const parts = text.split(/(\*\*[^*]+\*\*)/);
-
   return parts.map((part, index) => {
     if (part.startsWith("**") && part.endsWith("**")) {
-      return parse(`${(<strong key={index}>{part.slice(2, -2)}</strong>)}`);
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
     }
     return part;
   });

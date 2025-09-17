@@ -18,6 +18,18 @@ import {
   termsItem,
   aspectRatio,
   ParagraphText,
+  DefaultScopeText,
+  scopeOfServiceItem,
+  TextToPoints,
+  DefaultAirlinePolicyTitle,
+  DefaultAirlinePolicyText,
+  DefaultHotelPolicyTitle,
+  DefaultHotelPolicyText,
+  DefaultAmendmentTitle,
+  DefaultAmendmentText,
+  importNotesItem,
+  DefaultTermsCondition,
+  flightsItem,
 } from "@/util/Constants";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import CoverPage from "@/components/CoverPage";
@@ -125,7 +137,7 @@ const HighlightSection: React.FC<{
         content={
           <SingleImageAndTextLayout
             imageUrl={highlight.imageUrl}
-            highlightText={highlight.contentText}
+            contentText={highlight.contentText}
           />
         }
       />
@@ -208,11 +220,12 @@ const DayPlanSection: React.FC<{
       <AddNewSection
         addWatermark
         key={index}
-        pageTitle={value.pageTitle}
+        pageTitle={`Day ${index + 1} - ${value.pageTitle}`}
         content={
           <SingleImageAndTextLayout
             imageUrl={value.imageUrl}
-            highlightText={value.contentText}
+            contentText={value.contentText}
+            recommendationText={value.recommendationText}
           />
         }
       />
@@ -258,15 +271,8 @@ const ScopeOfServiceSection: React.FC<{
         pageTitle={scopeService.pageTitle}
         content={
           <div style={{ marginTop: 50 }}>
-            <ParagraphText
-              style={{
-                whiteSpace: "pre-wrap",
-                display: "block",
-                textAlign: "justify",
-                color: "black",
-                fontSize: 18,
-                lineHeight: 1.75,
-              }}
+            <TextToPoints
+              style={{ fontSize: 16 }}
               text={scopeService.contentText}
             />
           </div>
@@ -351,19 +357,25 @@ const FlightSection: React.FC<{
     flights &&
     flights.length > 0 &&
     flights.map((value, index) => (
-      <Image
-        key={`flight_section_${index}`}
-        style={{
-          width: "100%",
-          height: "auto",
-          objectFit: "fill",
-          overflow: "hidden",
-          aspectRatio: aspectRatio,
-        }}
-        width={100}
-        height={100}
-        src={value}
-        alt="Flight image"
+      <AddNewSection
+        addWatermark
+        pageTitle={flightsItem.label}
+        content={
+          <Image
+            key={`flight_section_${index}`}
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "fill",
+              overflow: "hidden",
+              aspectRatio: aspectRatio,
+            }}
+            width={100}
+            height={100}
+            src={value}
+            alt="Flight image"
+          />
+        }
       />
     ))
   );

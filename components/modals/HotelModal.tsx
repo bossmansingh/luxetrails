@@ -175,6 +175,7 @@ const HotelInputItem: React.FC<{
     </div>
   );
 };
+
 const HotelModal: React.FC<{
   onClose: () => void;
   onSave: (hotels: HotelModel[]) => void;

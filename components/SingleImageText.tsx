@@ -1,15 +1,20 @@
 import Image from "next/image";
-import { poppinsFont, renderMarkdown } from "@/util/Constants";
-import { useMemo } from "react";
-import parse from "html-react-parser";
+import { poppinsFont, TextToPoints } from "@/util/Constants";
 
 const SingleImageAndTextLayout: React.FC<{
   imageUrl: string;
   contentText: string;
-}> = ({ imageUrl, contentText }) => {
-  const contentTextPoints = useMemo(() => {
-    return contentText.split("\n").filter((v) => v.length > 0);
-  }, [contentText]);
+  recommendationText?: string;
+}> = ({ imageUrl, contentText, recommendationText }) => {
+  // const contentTextPoints = useMemo(() => {
+  //   return contentText.split("\n").filter((v) => v.length > 0);
+  // }, [contentText]);
+  // const recommendationPoints = useMemo(() => {
+  //   return (
+  //     recommendationText &&
+  //     recommendationText.split("\n").filter((v) => v.length > 0)
+  //   );
+  // }, [recommendationText]);
   return (
     <>
       <Image
@@ -26,25 +31,23 @@ const SingleImageAndTextLayout: React.FC<{
         width={300}
         height={300}
       />
-      <ul
-        className={poppinsFont.className}
-        style={
-          (poppinsFont.style,
-          {
-            fontWeight: "500",
-            color: "black",
-            padding: 24,
-            fontSize: 18,
-            lineHeight: 3,
-          })
-        }
-      >
-        {contentTextPoints.map((value, index) => (
-          <li key={`${value}_${index}`}>
-            {parse(renderMarkdown(value).toString())}
-          </li>
-        ))}
-      </ul>
+      <TextToPoints text={contentText} />
+      {recommendationText && (
+        <>
+          <br />
+          <span
+            className={poppinsFont.className}
+            style={{
+              ...poppinsFont.style,
+              color: "black",
+              fontSize: 18,
+            }}
+          >
+            <strong>LuxeTrails Recommends</strong>
+          </span>
+          <TextToPoints text={recommendationText} />
+        </>
+      )}
     </>
   );
 };

@@ -1,5 +1,11 @@
-import { InclusionExclusionModel, ParagraphText } from "@/util/Constants";
+import {
+  InclusionExclusionModel,
+  poppinsFont,
+  renderMarkdown,
+  TextToPoints,
+} from "@/util/Constants";
 import SectionPageHeadline from "@/components//SectionPageHeadline";
+import { useMemo } from "react";
 
 const textStyle = {
   width: "100%",
@@ -13,18 +19,25 @@ const textStyle = {
   fontSize: 18,
   lineHeight: 2,
 };
+
 const InclusionExclusion: React.FC<{
   content: InclusionExclusionModel;
 }> = ({ content }) => {
+  const inclusionPoints = useMemo(() => {
+    return content.inclusion.split("\n").filter((v) => v.length > 0);
+  }, [content.inclusion]);
+  const exclusionPoints = useMemo(() => {
+    return content.exclusion.split("\n").filter((v) => v.length > 0);
+  }, [content.exclusion]);
   return (
     <>
-      <ParagraphText style={textStyle} text={content.inclusion} />
+      <TextToPoints text={content.inclusion} />
       <div style={{ width: "100%", height: "100%" }}>
         <SectionPageHeadline
           title="EXCLUSIONS"
           customStyle={{ marginTop: 80 }}
         />
-        <ParagraphText style={textStyle} text={content.exclusion} />
+        <TextToPoints text={content.exclusion} />
       </div>
     </>
   );

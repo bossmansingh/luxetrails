@@ -1,16 +1,13 @@
-import { BrandGreen, ParagraphText } from "@/util/Constants";
+import { BrandGreen, ParagraphText, TextToPoints } from "@/util/Constants";
 
 const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
   return (
-    <ParagraphText
+    <TextToPoints
       style={{
-        whiteSpace: "pre-line",
-        display: "block",
         fontWeight: 500,
         paddingTop: 24,
         paddingBottom: 24,
-        color: BrandGreen,
-        fontSize: 22,
+        fontSize: 18,
         lineHeight: 2,
       }}
       text={contentText}
