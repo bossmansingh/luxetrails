@@ -9,7 +9,7 @@ import CompanyLogo from "@/public/logo_gold.svg";
 
 const CoverPage: React.FC<{
   title: string;
-  ppCost: string;
+  ppCost: number;
   duration: number;
 }> = ({ title, ppCost, duration }) => {
   return (
@@ -30,7 +30,7 @@ const CoverPage: React.FC<{
             marginTop: 15,
           }}
         >
-          {ppCost} Per Person
+          {ppCost.toLocaleString("en-IN")} Per Person
         </p>
         <p
           className={poppinsFont.className}

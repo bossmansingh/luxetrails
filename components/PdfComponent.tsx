@@ -35,6 +35,7 @@ import {
   ImportantNotesSecondPage,
 } from "@/components/ImportantNotes";
 import Image from "next/image";
+import EditPDFContent from "@/components/EditPDFContent";
 
 const savePDF = async (
   filename: string,
@@ -368,16 +369,22 @@ const FlightSection: React.FC<{
   );
 };
 
+enum PageMode {
+  Edit = "edit",
+  Preview = "preview",
+}
 const PdfComponent: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
   const [isOpen, setOpen] = useState(false);
   const [pageContent, setPageContent] = useState<PageContentModel>({});
   const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
+  const [currentPageMode, setPageMode] = useState(PageMode.Edit);
 
   useEffect(() => {
     if (!currentPageType) return;
     setOpen(true);
   }, [currentPageType]);
+
   const onSavePDF = () => {
     var element: HTMLElement | null = document.getElementById("pdf-document");
     var coverPage = pageContent.coverPage;
@@ -386,66 +393,85 @@ const PdfComponent: React.FC = () => {
     const duration = coverPage.duration;
     savePDF(`${pageTitle} ${duration}N ${duration + 1}D`, pageCount, element);
   };
+
   return (
     <>
       <div style={styles.container}>
         <MainContainerHeader
-          pageContent={pageContent}
-          setCurrentPageType={(e) => setCurrentPageType(e)}
+          isPreviewMode={currentPageMode === PageMode.Preview}
           onSavePDF={onSavePDF}
+          onPreviewPDF={() => {
+            pageContent.coverPage && setPageMode(PageMode.Preview);
+          }}
+          onEditPDF={() => {
+            setPageMode(PageMode.Edit);
+          }}
         />
-        <div id="pdf-document" style={styles.page}>
-          <CoverPageSection
-            coverPage={pageContent.coverPage}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
+        {currentPageMode === PageMode.Edit ? (
+          <EditPDFContent
+            pageContent={pageContent}
+            onClose={() => {
+              setPageMode(PageMode.Preview);
+            }}
+            onSaveChanges={(newPageContent: PageContentModel) => {
+              setPageContent(newPageContent);
+              setPageMode(PageMode.Preview);
+            }}
           />
-          <HighlightSection
-            highlight={pageContent.highlight}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <HotelSection
-            hotels={pageContent.hotels}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <ItinerarySection
-            itinerary={pageContent.itinerary}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <DayPlanSection
-            dayPlan={pageContent.dayPlan}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <InclusionExclusionSection
-            inclusionExclusion={pageContent.inclusionExclusion}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <ScopeOfServiceSection
-            scopeService={pageContent.scopeOfService}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <ImportantNotesSection
-            importantNotes={pageContent.importantNotes}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <TermsConditionSection
-            termsCondition={pageContent.termsCondition}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-          <FlightSection
-            flights={pageContent.flights}
-            pageCount={pageCount}
-            updatePageCount={setPageCount}
-          />
-        </div>
+        ) : (
+          <div id="pdf-document" style={styles.page}>
+            <CoverPageSection
+              coverPage={pageContent.coverPage}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <HighlightSection
+              highlight={pageContent.highlight}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <HotelSection
+              hotels={pageContent.hotels}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <ItinerarySection
+              itinerary={pageContent.itinerary}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <DayPlanSection
+              dayPlan={pageContent.dayPlan}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <InclusionExclusionSection
+              inclusionExclusion={pageContent.inclusionExclusion}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <ScopeOfServiceSection
+              scopeService={pageContent.scopeOfService}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <ImportantNotesSection
+              importantNotes={pageContent.importantNotes}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <TermsConditionSection
+              termsCondition={pageContent.termsCondition}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+            <FlightSection
+              flights={pageContent.flights}
+              pageCount={pageCount}
+              updatePageCount={setPageCount}
+            />
+          </div>
+        )}
       </div>
       <DialogComponent
         pageContent={pageContent}

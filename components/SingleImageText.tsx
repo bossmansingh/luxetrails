@@ -1,10 +1,15 @@
 import Image from "next/image";
-import { ParagraphText } from "@/util/Constants";
+import { poppinsFont, renderMarkdown } from "@/util/Constants";
+import { useMemo } from "react";
+import parse from "html-react-parser";
 
 const SingleImageAndTextLayout: React.FC<{
   imageUrl: string;
-  highlightText: string;
-}> = ({ imageUrl, highlightText }) => {
+  contentText: string;
+}> = ({ imageUrl, contentText }) => {
+  const contentTextPoints = useMemo(() => {
+    return contentText.split("\n").filter((v) => v.length > 0);
+  }, [contentText]);
   return (
     <>
       <Image
@@ -21,18 +26,25 @@ const SingleImageAndTextLayout: React.FC<{
         width={300}
         height={300}
       />
-      <ParagraphText
-        style={{
-          whiteSpace: "pre-wrap",
-          display: "block",
-          fontWeight: "500",
-          padding: 24,
-          color: "black",
-          fontSize: 18,
-          lineHeight: 2,
-        }}
-        text={highlightText}
-      />
+      <ul
+        className={poppinsFont.className}
+        style={
+          (poppinsFont.style,
+          {
+            fontWeight: "500",
+            color: "black",
+            padding: 24,
+            fontSize: 18,
+            lineHeight: 3,
+          })
+        }
+      >
+        {contentTextPoints.map((value, index) => (
+          <li key={`${value}_${index}`}>
+            {parse(renderMarkdown(value).toString())}
+          </li>
+        ))}
+      </ul>
     </>
   );
 };

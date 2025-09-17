@@ -64,7 +64,7 @@ export type SingleImageAndTextModel = {
 
 export type CoverPageModel = {
   pageTitle: string;
-  ppCost: string;
+  ppCost: number;
   duration: number;
 };
 
@@ -289,7 +289,6 @@ export const styles = StyleSheet.create({
     border: "none",
     borderRadius: 5,
     cursor: "pointer",
-    marginTop: 20,
   },
 });
 
@@ -326,7 +325,7 @@ export const ParagraphText: React.FC<{
  * @param text text to be rendered with ** markdown for bold
  * @returns rendered text with bold font
  */
-const renderMarkdown = (text: string) => {
+export const renderMarkdown = (text: string) => {
   const parts = text.split(/(\*\*[^*]+\*\*)/);
 
   return parts.map((part, index) => {
