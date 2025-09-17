@@ -1,4 +1,4 @@
-import { ParagraphText } from "@/util/Constants";
+import { ParagraphText, TitleText } from "@/util/Constants";
 import CalendarIcon from "@/public/calendar_icon.jpg";
 import Image from "next/image";
 
@@ -18,7 +18,7 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
     >
       <div style={{ position: "relative", display: "inline-block" }}>
         <Image src={CalendarIcon} alt="Calendar Icon" width={85} height={88} />
-        <ParagraphText
+        <TitleText
           style={{
             fontSize: 19,
             fontWeight: 600,

@@ -198,8 +198,7 @@ const DayPlanSection: React.FC<{
 }> = ({ dayPlan, pageCount, updatePageCount }) => {
   useEffect(() => {
     if (!dayPlan) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
+    updatePageCount(pageCount + 1);
   }, [dayPlan]);
   return (
     dayPlan &&

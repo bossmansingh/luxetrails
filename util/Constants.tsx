@@ -293,6 +293,20 @@ export const styles = StyleSheet.create({
   },
 });
 
+export const TitleText: React.FC<{ text: string; style?: CSSProperties }> = ({
+  text,
+  style,
+}) => {
+  return (
+    <h1
+      className={cinzelFont.className}
+      style={{ ...cinzelFont.style, ...styles.headerTitle, ...style }}
+    >
+      {text}
+    </h1>
+  );
+};
+
 export const ParagraphText: React.FC<{
   text: string;
   style: CSSProperties;

@@ -157,7 +157,7 @@ const DialogComponent: React.FC<{
             onSave={(flights: string[]) => {
               onSave({
                 ...pageContent,
-                flights: [...(pageContent.flights ?? []), ...flights],
+                flights: flights,
               });
             }}
           />
