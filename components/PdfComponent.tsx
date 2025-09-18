@@ -10,7 +10,6 @@ import {
   InclusionExclusionModel,
   ItineraryModel,
   PageContentModel,
-  PageType,
   ScopeServiceModel,
   SingleImageAndTextModel,
   styles,
@@ -42,6 +41,7 @@ import {
 } from "@/components/ImportantNotes";
 import Image from "next/image";
 import EditPDFContent from "@/components/EditPDFContent";
+import Placeholder from "@/public/placeholder.jpg";
 
 const savePDF = async (
   filename: string,
@@ -319,7 +319,7 @@ const FlightSection: React.FC<{
             }}
             width={100}
             height={100}
-            src={value}
+            src={value.length > 0 ? value : Placeholder}
             alt="Flight image"
           />
         }
@@ -332,19 +332,13 @@ enum PageMode {
   Edit = "edit",
   Preview = "preview",
 }
+
 const PdfComponent: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
-  const [isOpen, setOpen] = useState(false);
   const [pageContent, setPageContent] = useState<PageContentModel>({
     isFullPDF: false,
   });
-  const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
   const [currentPageMode, setPageMode] = useState(PageMode.Edit);
-
-  useEffect(() => {
-    if (!currentPageType) return;
-    setOpen(true);
-  }, [currentPageType]);
 
   const onSavePDF = useCallback(() => {
     var element: HTMLElement | null = document.getElementById("pdf-document");

@@ -1,5 +1,6 @@
 import { HotelModel, poppinsFont } from "@/util/Constants";
 import Image from "next/image";
+import Placeholder from "@/public/placeholder.jpg";
 
 const HotelItem: React.FC<{ value: HotelModel }> = ({ value }) => {
   return (
@@ -30,7 +31,11 @@ const HotelItem: React.FC<{ value: HotelModel }> = ({ value }) => {
             overflow: "clip",
             objectFit: "fill",
           }}
-          src={value.images.firstUrl}
+          src={
+            value.images.firstUrl.length > 0
+              ? value.images.firstUrl
+              : Placeholder
+          }
           alt="Hotel First Image"
         />
         <Image
@@ -45,7 +50,11 @@ const HotelItem: React.FC<{ value: HotelModel }> = ({ value }) => {
             overflow: "clip",
             objectFit: "fill",
           }}
-          src={value.images.secondUrl}
+          src={
+            value.images.secondUrl.length > 0
+              ? value.images.secondUrl
+              : Placeholder
+          }
           alt="Hotel Second Image"
         />
       </div>
@@ -70,7 +79,11 @@ const HotelItem: React.FC<{ value: HotelModel }> = ({ value }) => {
               overflow: "clip",
               objectFit: "cover",
             }}
-            src={value.images.thirdUrl}
+            src={
+              value.images.thirdUrl.length > 0
+                ? value.images.thirdUrl
+                : Placeholder
+            }
             alt="Hotel Third Image"
           />
           <Image
@@ -85,7 +98,11 @@ const HotelItem: React.FC<{ value: HotelModel }> = ({ value }) => {
               overflow: "clip",
               objectFit: "cover",
             }}
-            src={value.images.fourthUrl}
+            src={
+              value.images.fourthUrl.length > 0
+                ? value.images.fourthUrl
+                : Placeholder
+            }
             alt="Hotel Fourth Image"
           />
         </div>

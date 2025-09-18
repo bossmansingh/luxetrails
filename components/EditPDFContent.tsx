@@ -659,7 +659,7 @@ const FlightsPageSection: React.FC<{
       )),
     [flightsContent]
   );
-  return <>{flightItems}</>;
+  return flightItems;
 };
 
 const CheckboxItem: React.FC<{

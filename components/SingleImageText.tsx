@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { poppinsFont, TextToPoints } from "@/util/Constants";
+import Placeholder from "@/public/placeholder.jpg";
 
 const SingleImageAndTextLayout: React.FC<{
   imageUrl: string;
@@ -17,7 +18,7 @@ const SingleImageAndTextLayout: React.FC<{
           overflow: "hidden",
           objectFit: "cover",
         }}
-        src={imageUrl}
+        src={imageUrl.length > 0 ? imageUrl : Placeholder}
         alt="Single Image"
         width={300}
         height={300}
