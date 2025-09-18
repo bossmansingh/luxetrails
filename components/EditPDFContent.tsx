@@ -136,7 +136,7 @@ const ImageView: React.FC<{
       }}
       type="file"
       onChange={(e) => {
-        var result = e.target.files?.item(0);
+        const result = e.target.files?.item(0);
         result && updateImage(URL.createObjectURL(result));
       }}
     />
@@ -417,7 +417,7 @@ const HotelPageSection: React.FC<{
               index={index}
               isSingleItem={hotelPageContent.length === 1}
               updateItem={(updatedValue: HotelModel) => {
-                var newValues = [...hotelPageContent];
+                const newValues = [...hotelPageContent];
                 newValues[index] = updatedValue;
                 setHotelPageContent(newValues);
               }}
@@ -572,7 +572,7 @@ const DayPlanPageSection: React.FC<{
         placeholder={`Day ${index + 1} Recommendation (optional)`}
         value={value.recommendationText}
         onChange={(e) => {
-          var newValue = e.target.value;
+          const newValue = e.target.value;
           handleInputChange(index, {
             ...value,
             recommendationText: newValue.length > 0 ? newValue : undefined,
@@ -643,10 +643,10 @@ const FlightsPageSection: React.FC<{
           imageURL={value}
           style={{ marginBottom: 10 }}
           updateImage={(imageURL: string) => {
-            var newValues = [...flightsContent];
+            const newValues = [...flightsContent];
             newValues[index] = imageURL;
-            var firstIndex = newValues.indexOf("");
-            var lastIndex = newValues.lastIndexOf("");
+            const firstIndex = newValues.indexOf("");
+            const lastIndex = newValues.lastIndexOf("");
             setFlightsContent(
               firstIndex === lastIndex && lastIndex === -1
                 ? newValues.concat("")

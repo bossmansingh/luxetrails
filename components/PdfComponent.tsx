@@ -48,8 +48,8 @@ const savePDF = async (
   pageCount: number,
   element: HTMLElement
 ) => {
-  var html2pdf = await require("html2pdf.js");
-  var opt: html2pdf.Options = {
+  const html2pdf = await require("html2pdf.js");
+  const opt: html2pdf.Options = {
     filename: filename,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
@@ -341,8 +341,8 @@ const PdfComponent: React.FC = () => {
   const [currentPageMode, setPageMode] = useState(PageMode.Edit);
 
   const onSavePDF = useCallback(() => {
-    var element: HTMLElement | null = document.getElementById("pdf-document");
-    var coverPage = pageContent.coverPage;
+    const element: HTMLElement | null = document.getElementById("pdf-document");
+    const coverPage = pageContent.coverPage;
     if (!element || !coverPage) return;
     const pageTitle = coverPage.pageTitle;
     const duration = coverPage.duration;
@@ -351,7 +351,7 @@ const PdfComponent: React.FC = () => {
   }, [pageContent.coverPage, pageCount]);
 
   useEffect(() => {
-    var pageCounter = 0;
+    let pageCounter = 0;
     if (pageContent.coverPage !== undefined) {
       ++pageCounter;
     }
@@ -359,7 +359,7 @@ const PdfComponent: React.FC = () => {
       ++pageCounter;
     }
     if (pageContent.hotels && pageContent.hotels.length > 0) {
-      var reducedList = pageContent.hotels.reduce(
+      const reducedList = pageContent.hotels.reduce(
         (pairs: HotelModel[][], item, index) => {
           if (index % 2 === 0) {
             pairs.push([item]);
