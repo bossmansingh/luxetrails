@@ -44,22 +44,15 @@ import EditPDFContent from "@/components/EditPDFContent";
 import Placeholder from "@/public/placeholder.jpg";
 import html2pdf from "html2pdf.js";
 
-const savePDF = (filename: string, pageCount: number, element: HTMLElement) => {
-  const opt: any = {
+const savePDF = async (
+  filename: string,
+  pageCount: number,
+  element: HTMLElement
+) => {
+  await html2pdf(element, {
     filename: filename,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      width: CanvasWidth,
-      height: CanvasHeight * pageCount,
-    },
-    jsPDF: {
-      unit: "px",
-      hotfixes: ["px_scaling"],
-      orientation: "portrait",
-    },
-  };
-  html2pdf(element, opt);
+    image: { type: "jpeg", quality: 0.95 },
+  });
 };
 
 const AddNewSection: React.FC<{
