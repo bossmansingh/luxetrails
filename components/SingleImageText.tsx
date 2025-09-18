@@ -6,15 +6,6 @@ const SingleImageAndTextLayout: React.FC<{
   contentText: string;
   recommendationText?: string;
 }> = ({ imageUrl, contentText, recommendationText }) => {
-  // const contentTextPoints = useMemo(() => {
-  //   return contentText.split("\n").filter((v) => v.length > 0);
-  // }, [contentText]);
-  // const recommendationPoints = useMemo(() => {
-  //   return (
-  //     recommendationText &&
-  //     recommendationText.split("\n").filter((v) => v.length > 0)
-  //   );
-  // }, [recommendationText]);
   return (
     <>
       <Image

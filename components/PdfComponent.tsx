@@ -17,21 +17,16 @@ import {
   TermsConditionModel,
   termsItem,
   aspectRatio,
-  ParagraphText,
-  DefaultScopeText,
-  scopeOfServiceItem,
   TextToPoints,
-  DefaultAirlinePolicyTitle,
-  DefaultAirlinePolicyText,
-  DefaultHotelPolicyTitle,
-  DefaultHotelPolicyText,
-  DefaultAmendmentTitle,
-  DefaultAmendmentText,
-  importNotesItem,
-  DefaultTermsCondition,
   flightsItem,
 } from "@/util/Constants";
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import CoverPage from "@/components/CoverPage";
 import DialogComponent from "@/components/modals/BaseModal";
 import SingleImageAndTextLayout from "@/components/SingleImageText";
@@ -94,14 +89,7 @@ const AddNewSection: React.FC<{
 
 const CoverPageSection: React.FC<{
   coverPage?: CoverPageModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ coverPage, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!coverPage) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
-  }, [coverPage]);
+}> = ({ coverPage }) => {
   return (
     coverPage && (
       <AddNewSection
@@ -121,14 +109,7 @@ const CoverPageSection: React.FC<{
 
 const HighlightSection: React.FC<{
   highlight?: SingleImageAndTextModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ highlight, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!highlight) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
-  }, [highlight]);
+}> = ({ highlight }) => {
   return (
     highlight && (
       <AddNewSection
@@ -147,9 +128,7 @@ const HighlightSection: React.FC<{
 
 const HotelSection: React.FC<{
   hotels?: HotelModel[];
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ hotels, pageCount, updatePageCount }) => {
+}> = ({ hotels }) => {
   const pairedHotels = useMemo(
     () =>
       hotels &&
@@ -163,12 +142,6 @@ const HotelSection: React.FC<{
       }, []),
     [hotels]
   );
-  useEffect(() => {
-    var pairedHotelCount = pairedHotels?.length ?? 0;
-    if (pairedHotelCount <= 0) return;
-    var newPageCount = pageCount + pairedHotelCount;
-    updatePageCount(newPageCount);
-  }, [pairedHotels]);
   return (
     pairedHotels &&
     pairedHotels.length > 0 &&
@@ -185,14 +158,7 @@ const HotelSection: React.FC<{
 
 const ItinerarySection: React.FC<{
   itinerary?: ItineraryModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ itinerary, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!itinerary) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
-  }, [itinerary]);
+}> = ({ itinerary }) => {
   return (
     itinerary && (
       <AddNewSection
@@ -206,13 +172,7 @@ const ItinerarySection: React.FC<{
 
 const DayPlanSection: React.FC<{
   dayPlan?: SingleImageAndTextModel[];
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ dayPlan, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!dayPlan) return;
-    updatePageCount(pageCount + 1);
-  }, [dayPlan]);
+}> = ({ dayPlan }) => {
   return (
     dayPlan &&
     dayPlan.length > 0 &&
@@ -235,14 +195,7 @@ const DayPlanSection: React.FC<{
 
 const InclusionExclusionSection: React.FC<{
   inclusionExclusion?: InclusionExclusionModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ inclusionExclusion, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!inclusionExclusion) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
-  }, [inclusionExclusion]);
+}> = ({ inclusionExclusion }) => {
   return (
     inclusionExclusion && (
       <AddNewSection
@@ -256,14 +209,7 @@ const InclusionExclusionSection: React.FC<{
 
 const ScopeOfServiceSection: React.FC<{
   scopeService?: ScopeServiceModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ scopeService, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!scopeService) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
-  }, [scopeService]);
+}> = ({ scopeService }) => {
   return (
     scopeService && (
       <AddNewSection
@@ -284,14 +230,7 @@ const ScopeOfServiceSection: React.FC<{
 
 const ImportantNotesSection: React.FC<{
   importantNotes?: ImportantNotesModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ importantNotes, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!importantNotes) return;
-    var newPageCount = pageCount + 2;
-    updatePageCount(newPageCount);
-  }, [importantNotes]);
+}> = ({ importantNotes }) => {
   return (
     importantNotes && (
       <>
@@ -324,14 +263,7 @@ const ImportantNotesSection: React.FC<{
 
 const TermsConditionSection: React.FC<{
   termsCondition?: TermsConditionModel;
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ termsCondition, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!termsCondition) return;
-    var newPageCount = pageCount + 1;
-    updatePageCount(newPageCount);
-  }, [termsCondition]);
+}> = ({ termsCondition }) => {
   return (
     termsCondition && (
       <AddNewSection
@@ -345,24 +277,17 @@ const TermsConditionSection: React.FC<{
 
 const FlightSection: React.FC<{
   flights?: string[];
-  pageCount: number;
-  updatePageCount: (newCount: number) => void;
-}> = ({ flights, pageCount, updatePageCount }) => {
-  useEffect(() => {
-    if (!flights) return;
-    var newPageCount = pageCount + flights.length;
-    updatePageCount(newPageCount);
-  }, [flights]);
+}> = ({ flights }) => {
   return (
     flights &&
     flights.length > 0 &&
     flights.map((value, index) => (
       <AddNewSection
+        key={`flight_section_${index}`}
         addWatermark
         pageTitle={flightsItem.label}
         content={
           <Image
-            key={`flight_section_${index}`}
             style={{
               width: "100%",
               height: "auto",
@@ -397,15 +322,61 @@ const PdfComponent: React.FC = () => {
     setOpen(true);
   }, [currentPageType]);
 
-  const onSavePDF = () => {
+  const onSavePDF = useCallback(() => {
     var element: HTMLElement | null = document.getElementById("pdf-document");
     var coverPage = pageContent.coverPage;
     if (!element || !coverPage) return;
     const pageTitle = coverPage.pageTitle;
     const duration = coverPage.duration;
-    savePDF(`${pageTitle} ${duration}N ${duration + 1}D`, pageCount, element);
-  };
+    const filename = `${pageTitle} ${duration}N ${duration + 1}D`;
+    savePDF(filename, pageCount, element);
+  }, [pageContent.coverPage, pageCount]);
 
+  useEffect(() => {
+    var pageCounter = 0;
+    if (pageContent.coverPage !== undefined) {
+      ++pageCounter;
+    }
+    if (pageContent.highlight !== undefined) {
+      ++pageCounter;
+    }
+    if (pageContent.hotels && pageContent.hotels.length > 0) {
+      var reducedList = pageContent.hotels.reduce(
+        (pairs: HotelModel[][], item, index) => {
+          if (index % 2 === 0) {
+            pairs.push([item]);
+          } else {
+            pairs[pairs.length - 1].push(item);
+          }
+          return pairs;
+        },
+        []
+      );
+      pageCounter = pageCounter + reducedList.length;
+    }
+    if (pageContent.itinerary !== undefined) {
+      ++pageCounter;
+    }
+    if (pageContent.dayPlan && pageContent.dayPlan.length > 0) {
+      pageCounter = pageCounter + pageContent.dayPlan.length;
+    }
+    if (pageContent.inclusionExclusion !== undefined) {
+      ++pageCounter;
+    }
+    if (pageContent.scopeOfService !== undefined) {
+      ++pageCounter;
+    }
+    if (pageContent.importantNotes !== undefined) {
+      pageCounter = pageCounter + 2;
+    }
+    if (pageContent.termsCondition !== undefined) {
+      ++pageCounter;
+    }
+    if (pageContent.flights && pageContent.flights.length > 0) {
+      pageCounter = pageCounter + pageContent.flights.length;
+    }
+    setPageCount(pageCounter);
+  }, [pageContent]);
   return (
     <>
       <div style={styles.container}>
@@ -432,56 +403,22 @@ const PdfComponent: React.FC = () => {
           />
         ) : (
           <div id="pdf-document" style={styles.page}>
-            <CoverPageSection
-              coverPage={pageContent.coverPage}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
-            <HighlightSection
-              highlight={pageContent.highlight}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
-            <HotelSection
-              hotels={pageContent.hotels}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
-            <ItinerarySection
-              itinerary={pageContent.itinerary}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
-            <DayPlanSection
-              dayPlan={pageContent.dayPlan}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
+            <CoverPageSection coverPage={pageContent.coverPage} />
+            <HighlightSection highlight={pageContent.highlight} />
+            <HotelSection hotels={pageContent.hotels} />
+            <ItinerarySection itinerary={pageContent.itinerary} />
+            <DayPlanSection dayPlan={pageContent.dayPlan} />
             <InclusionExclusionSection
               inclusionExclusion={pageContent.inclusionExclusion}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
             />
-            <ScopeOfServiceSection
-              scopeService={pageContent.scopeOfService}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
+            <ScopeOfServiceSection scopeService={pageContent.scopeOfService} />
             <ImportantNotesSection
               importantNotes={pageContent.importantNotes}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
             />
             <TermsConditionSection
               termsCondition={pageContent.termsCondition}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
             />
-            <FlightSection
-              flights={pageContent.flights}
-              pageCount={pageCount}
-              updatePageCount={setPageCount}
-            />
+            <FlightSection flights={pageContent.flights} />
           </div>
         )}
       </div>

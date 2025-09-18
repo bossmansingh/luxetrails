@@ -1,4 +1,4 @@
-import { BrandGreen, ParagraphText, TextToPoints } from "@/util/Constants";
+import { TextToPoints } from "@/util/Constants";
 
 const TermsCondition: React.FC<{ contentText: string }> = ({ contentText }) => {
   return (

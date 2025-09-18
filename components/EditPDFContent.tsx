@@ -1009,7 +1009,7 @@ const EditPDFContent: React.FC<{
             itinerary: itineraryPageContent,
             dayPlan: dayPlanPageContent,
             inclusionExclusion: inclusionExclusionContent,
-            flights: flightsContent,
+            flights: flightsContent.filter((v) => v.length > 0),
             scopeOfService: scopeServiceContent,
             importantNotes: importantNotesContent,
             termsCondition: termsContent,
