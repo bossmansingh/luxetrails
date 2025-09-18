@@ -13,6 +13,7 @@ export const aspectRatio = 0.7070707071;
 export const CanvasWidth = 793.5;
 export const CanvasHeight = 1122;
 export const Domain = "www.theluxetrails.com";
+export const BrandGolden = "#BE8724";
 export const BrandGreen = "#043C2B";
 export const DefaultScopeText = `We are holiday organizers only. We inspect and select the services to be provided to you. However, we do not own, operate or control any airline, shipping company, coach or coach company, hotel, transport, restaurant, kitchen caravan or any other facility or provider etc. that is engaged to provide you services during the course of your tour. Therefore, please carefully note that:
 You will need to adhere to the conditions, rules and regulations of each service provider. For instance, you will need to check the baggage rules of the airline, you will need to check the hotel rules to check what the mealtimes are, at which you should make yourself available. The company is not responsible / liable for the consequences if you breach such rules and regulations.
@@ -235,7 +236,7 @@ export const styles = StyleSheet.create({
     justifySelf: "end",
     alignSelf: "flex-end",
     padding: 10,
-    backgroundColor: "#BE8724",
+    backgroundColor: "BrandGolden",
     color: "white",
     border: "none",
     borderRadius: 5,
@@ -246,7 +247,7 @@ export const styles = StyleSheet.create({
   },
   createCoverButton: {
     padding: 10,
-    backgroundColor: "#BE8724",
+    backgroundColor: "BrandGolden",
     color: "white",
     border: "none",
     borderRadius: 5,
@@ -288,7 +289,7 @@ export const styles = StyleSheet.create({
   modalButton: {
     width: "100%",
     padding: 10,
-    backgroundColor: "#BE8724",
+    backgroundColor: "BrandGolden",
     color: "white",
     border: "none",
     borderRadius: 5,

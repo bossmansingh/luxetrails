@@ -28,7 +28,6 @@ import React, {
   useState,
 } from "react";
 import CoverPage from "@/components/CoverPage";
-import DialogComponent from "@/components/modals/BaseModal";
 import SingleImageAndTextLayout from "@/components/SingleImageText";
 import MainContainerHeader from "@/components/MainContainerHeader";
 import Itinerary from "@/components/Itinerary";
@@ -331,6 +330,40 @@ const PdfComponent: React.FC = () => {
     const filename = `${pageTitle} ${duration}N ${duration + 1}D`;
     savePDF(filename, pageCount, element);
   }, [pageContent.coverPage, pageCount]);
+  const downloadEnabled = useCallback(
+    () =>
+      pageContent.coverPage !== undefined &&
+      pageContent.coverPage.pageTitle.length > 0 &&
+      pageContent.coverPage.ppCost > 0 &&
+      pageContent.coverPage.duration > 0 &&
+      pageContent.highlight !== undefined &&
+      pageContent.highlight.pageTitle.length > 0 &&
+      pageContent.highlight.imageUrl.length > 0 &&
+      pageContent.highlight.contentText.length > 0 &&
+      pageContent.hotels !== undefined &&
+      pageContent.hotels.filter(
+        (v) =>
+          v.images.firstUrl.length > 0 &&
+          v.images.secondUrl.length > 0 &&
+          v.title.length > 0 &&
+          v.subtitle.length > 0
+      ).length > 0 &&
+      pageContent.itinerary !== undefined &&
+      pageContent.itinerary.pageTitle.length > 0 &&
+      pageContent.itinerary.contentTexts.filter((v) => v.length > 0).length >
+        0 &&
+      pageContent.dayPlan !== undefined &&
+      pageContent.dayPlan.filter(
+        (v) =>
+          v.pageTitle.length > 0 &&
+          v.imageUrl.length > 0 &&
+          v.contentText.length > 0
+      ).length > 0 &&
+      pageContent.inclusionExclusion !== undefined &&
+      pageContent.inclusionExclusion.inclusion.length > 0 &&
+      pageContent.inclusionExclusion.exclusion.length > 0,
+    [pageContent]
+  );
 
   useEffect(() => {
     var pageCounter = 0;
@@ -382,6 +415,7 @@ const PdfComponent: React.FC = () => {
       <div style={styles.container}>
         <MainContainerHeader
           isPreviewMode={currentPageMode === PageMode.Preview}
+          downloadEnabled={downloadEnabled()}
           onSavePDF={onSavePDF}
           onPreviewPDF={() => {
             pageContent.coverPage && setPageMode(PageMode.Preview);
@@ -422,23 +456,6 @@ const PdfComponent: React.FC = () => {
           </div>
         )}
       </div>
-      <DialogComponent
-        pageContent={pageContent}
-        currentPageType={currentPageType}
-        isOpen={isOpen}
-        onSave={(newContent: PageContentModel) => {
-          setPageContent(newContent);
-          scrollTo({
-            behavior: "smooth",
-            left: 0,
-            top: CanvasHeight * pageCount,
-          });
-        }}
-        onClose={() => {
-          setCurrentPageType(null);
-          setOpen(false);
-        }}
-      />
     </>
   );
 };
