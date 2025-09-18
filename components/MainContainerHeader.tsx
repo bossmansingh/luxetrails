@@ -1,18 +1,11 @@
-import { BrandGolden, poppinsFont, styles } from "@/util/Constants";
+import { poppinsFont, styles } from "@/util/Constants";
 
 const MainContainerHeader: React.FC<{
   isPreviewMode: boolean;
-  downloadEnabled: boolean;
   onSavePDF: () => void;
   onPreviewPDF: () => void;
   onEditPDF: () => void;
-}> = ({
-  isPreviewMode,
-  downloadEnabled,
-  onSavePDF,
-  onPreviewPDF,
-  onEditPDF,
-}) => {
+}> = ({ isPreviewMode, onSavePDF, onPreviewPDF, onEditPDF }) => {
   return (
     <div
       style={{
@@ -39,11 +32,8 @@ const MainContainerHeader: React.FC<{
         style={{
           ...poppinsFont.style,
           ...styles.downloadButton,
-          backgroundColor: downloadEnabled ? BrandGolden : "GrayText",
-          cursor: downloadEnabled ? "pointer" : "default",
         }}
         onClick={onSavePDF}
-        disabled={!downloadEnabled}
       >
         Download PDF
       </button>

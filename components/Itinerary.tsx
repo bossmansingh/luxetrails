@@ -50,7 +50,8 @@ const CalendarRow: React.FC<{ index: number; contentText: string }> = ({
 
 const Itinerary: React.FC<{
   daysContent: string[];
-}> = ({ daysContent }) => {
+  counter: number;
+}> = ({ daysContent, counter }) => {
   return (
     <div
       style={{
@@ -62,8 +63,8 @@ const Itinerary: React.FC<{
     >
       {daysContent.map((value: string, index: number) => (
         <CalendarRow
-          key={`${value}_${index}`}
-          index={index}
+          key={`${value}_${index + counter}`}
+          index={index + counter}
           contentText={value}
         />
       ))}

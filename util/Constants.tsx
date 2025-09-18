@@ -236,7 +236,7 @@ export const styles = StyleSheet.create({
     justifySelf: "end",
     alignSelf: "flex-end",
     padding: 10,
-    backgroundColor: "BrandGolden",
+    backgroundColor: BrandGolden,
     color: "white",
     border: "none",
     borderRadius: 5,
@@ -247,7 +247,7 @@ export const styles = StyleSheet.create({
   },
   createCoverButton: {
     padding: 10,
-    backgroundColor: "BrandGolden",
+    backgroundColor: BrandGolden,
     color: "white",
     border: "none",
     borderRadius: 5,
@@ -289,7 +289,7 @@ export const styles = StyleSheet.create({
   modalButton: {
     width: "100%",
     padding: 10,
-    backgroundColor: "BrandGolden",
+    backgroundColor: BrandGolden,
     color: "white",
     border: "none",
     borderRadius: 5,

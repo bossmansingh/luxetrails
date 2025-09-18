@@ -25,7 +25,14 @@ import {
   TitleText,
 } from "@/util/Constants";
 import Image from "next/image";
-import React, { CSSProperties, JSX, useEffect, useMemo, useState } from "react";
+import React, {
+  CSSProperties,
+  JSX,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 const inputTextStyle = {
   ...poppinsFont.style,
@@ -424,17 +431,20 @@ const ItineraryPageSection: React.FC<{
   itineraryPageContent: ItineraryModel;
   setItineraryPageContent: (newContent: ItineraryModel) => void;
 }> = ({ itineraryPageContent, setItineraryPageContent }) => {
-  const handleInputChange = (index: number, value: string) => {
-    const newValues = [...itineraryPageContent.contentTexts];
-    newValues[index] = value;
-    setItineraryPageContent({
-      ...itineraryPageContent,
-      contentTexts: newValues,
-    });
-  };
-  return (
-    <>
-      {itineraryPageContent.contentTexts.map((value, index) => (
+  const handleInputChange = useCallback(
+    (index: number, value: string) => {
+      const newValues = [...itineraryPageContent.contentTexts];
+      newValues[index] = value;
+      setItineraryPageContent({
+        ...itineraryPageContent,
+        contentTexts: newValues,
+      });
+    },
+    [itineraryPageContent.contentTexts]
+  );
+  const items = useMemo(
+    () =>
+      itineraryPageContent.contentTexts.map((value, index) => (
         <div
           key={`${value}_${index}`}
           style={{
@@ -472,9 +482,10 @@ const ItineraryPageSection: React.FC<{
             onChange={(e) => handleInputChange(index, e.target.value)}
           />
         </div>
-      ))}
-    </>
+      )),
+    [itineraryPageContent.contentTexts]
   );
+  return items;
 };
 
 const DayPlanPageSection: React.FC<{
