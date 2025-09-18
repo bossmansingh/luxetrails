@@ -42,14 +42,10 @@ import {
 import Image from "next/image";
 import EditPDFContent from "@/components/EditPDFContent";
 import Placeholder from "@/public/placeholder.jpg";
+import html2pdf from "html2pdf.js";
 
-const savePDF = async (
-  filename: string,
-  pageCount: number,
-  element: HTMLElement
-) => {
-  const html2pdf = await require("html2pdf.js");
-  const opt: html2pdf.Options = {
+const savePDF = (filename: string, pageCount: number, element: HTMLElement) => {
+  const opt: any = {
     filename: filename,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
