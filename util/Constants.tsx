@@ -116,6 +116,7 @@ export type InclusionExclusionModel = {
 };
 
 export type PageContentModel = {
+  isFullPDF: boolean;
   coverPage?: CoverPageModel;
   highlight?: SingleImageAndTextModel;
   hotels?: HotelModel[];

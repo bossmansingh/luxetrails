@@ -46,6 +46,8 @@ const buttonStyle = {
   ...styles.modalButton,
   ...poppinsFont.style,
 };
+const FullPDFValue = "Full PDF";
+const MiniPDFValue = "Mini PDF";
 
 const CardView: React.FC<{ titleText: string; content: JSX.Element }> = ({
   titleText,
@@ -666,7 +668,8 @@ const CheckboxItem: React.FC<{
   value: string;
   isChecked: boolean;
   updateItem: (value: string, checked: boolean) => void;
-}> = ({ id, name, value, isChecked, updateItem }) => {
+  style?: CSSProperties;
+}> = ({ id, name, value, isChecked, updateItem, style }) => {
   return (
     <div
       style={{
@@ -676,6 +679,7 @@ const CheckboxItem: React.FC<{
         gap: "10px",
         alignItems: "center",
         padding: 10,
+        ...style,
       }}
     >
       <input
@@ -697,43 +701,7 @@ const CheckboxItem: React.FC<{
     </div>
   );
 };
-const RemainingPageSection: React.FC<{
-  isScopeChecked: boolean;
-  isImportantNotesChecked: boolean;
-  isTermsChecked: boolean;
-  updateCheck: (newValue: string, checked: boolean) => void;
-}> = ({
-  isScopeChecked,
-  isImportantNotesChecked,
-  isTermsChecked,
-  updateCheck,
-}) => {
-  return (
-    <>
-      <CheckboxItem
-        id="scope_service"
-        name="Scope Service"
-        value={scopeOfServiceItem.label}
-        isChecked={isScopeChecked}
-        updateItem={updateCheck}
-      />
-      <CheckboxItem
-        id="important_notes"
-        name="Important Notes"
-        value={importNotesItem.label}
-        isChecked={isImportantNotesChecked}
-        updateItem={updateCheck}
-      />
-      <CheckboxItem
-        id="tos"
-        name="terms & conditions"
-        value={termsItem.label}
-        isChecked={isTermsChecked}
-        updateItem={updateCheck}
-      />
-    </>
-  );
-};
+
 const ButtonsContainer: React.FC<{
   onClose: () => void;
   onSaveChanges: () => void;
@@ -782,6 +750,7 @@ const EditPDFContent: React.FC<{
   onClose: () => void;
   onSaveChanges: (newPageContent: PageContentModel) => void;
 }> = ({ pageContent, onClose, onSaveChanges }) => {
+  const [isFullPDF, setIsFullPDF] = useState(pageContent?.isFullPDF ?? false);
   const [coverPageContent, setCoverPageContent] = useState<CoverPageModel>(
     pageContent.coverPage ?? {
       pageTitle: "",
@@ -819,15 +788,29 @@ const EditPDFContent: React.FC<{
   const [flightsContent, setFlightsContent] = useState<string[]>(
     pageContent.flights ?? [""]
   );
-  const [scopeServiceContent, setScopeServiceContent] = useState<
-    ScopeServiceModel | undefined
-  >(pageContent.scopeOfService);
-  const [importantNotesContent, setImportantNotesContent] = useState<
-    ImportantNotesModel | undefined
-  >(pageContent.importantNotes);
-  const [termsContent, setTermsContent] = useState<
-    TermsConditionModel | undefined
-  >(pageContent.termsCondition);
+  const [scopeServiceContent] = useState<ScopeServiceModel>(
+    pageContent.scopeOfService ?? {
+      pageTitle: scopeOfServiceItem.label,
+      contentText: DefaultScopeText,
+    }
+  );
+  const [importantNotesContent] = useState<ImportantNotesModel>(
+    pageContent.importantNotes ?? {
+      pageTitle: importNotesItem.label,
+      airlinePolicyTitle: DefaultAirlinePolicyTitle,
+      airlinePolicyText: DefaultAirlinePolicyText,
+      hotelPolicyTitle: DefaultHotelPolicyTitle,
+      hotelPolicyText: DefaultHotelPolicyText,
+      amendmentPolicyTitle: DefaultAmendmentTitle,
+      amendmentPolicyText: DefaultAmendmentText,
+    }
+  );
+  const [termsContent] = useState<TermsConditionModel>(
+    pageContent.termsCondition ?? {
+      pageTitle: termsItem.label,
+      contentText: DefaultTermsCondition,
+    }
+  );
 
   const items = useMemo(
     () => [
@@ -867,15 +850,17 @@ const EditPDFContent: React.FC<{
           />
         ),
       },
-      {
-        titleText: "Day Plan Page",
-        content: (
-          <DayPlanPageSection
-            dayPlanPageContent={dayPlanPageContent}
-            setDayPlanPageContent={setDayPlanPageContent}
-          />
-        ),
-      },
+      isFullPDF
+        ? {
+            titleText: "Day Plan Page",
+            content: (
+              <DayPlanPageSection
+                dayPlanPageContent={dayPlanPageContent}
+                setDayPlanPageContent={setDayPlanPageContent}
+              />
+            ),
+          }
+        : undefined,
       {
         titleText: "Inclusion/Exclusion Page",
         content: (
@@ -894,54 +879,9 @@ const EditPDFContent: React.FC<{
           />
         ),
       },
-      {
-        titleText: "Select Remaining Pages to Include",
-        content: (
-          <RemainingPageSection
-            isScopeChecked={scopeServiceContent !== undefined}
-            isImportantNotesChecked={importantNotesContent !== undefined}
-            isTermsChecked={termsContent !== undefined}
-            updateCheck={(newValue: string, checked: boolean) => {
-              if (newValue === scopeOfServiceItem.label) {
-                setScopeServiceContent(
-                  checked
-                    ? {
-                        pageTitle: scopeOfServiceItem.label,
-                        contentText: DefaultScopeText,
-                      }
-                    : undefined
-                );
-              } else if (newValue === importNotesItem.label) {
-                setImportantNotesContent(
-                  checked
-                    ? {
-                        pageTitle: importNotesItem.label,
-                        airlinePolicyTitle: DefaultAirlinePolicyTitle,
-                        airlinePolicyText: DefaultAirlinePolicyText,
-                        hotelPolicyTitle: DefaultHotelPolicyTitle,
-                        hotelPolicyText: DefaultHotelPolicyText,
-                        amendmentPolicyTitle: DefaultAmendmentTitle,
-                        amendmentPolicyText: DefaultAmendmentText,
-                      }
-                    : undefined
-                );
-              } else if (newValue === termsItem.label) {
-                setTermsContent(
-                  checked
-                    ? {
-                        pageTitle: termsItem.label,
-                        contentText: DefaultTermsCondition,
-                      }
-                    : undefined
-                );
-              } else {
-              }
-            }}
-          />
-        ),
-      },
     ],
     [
+      isFullPDF,
       coverPageContent,
       highlightPageContent,
       hotelPageContent,
@@ -954,6 +894,13 @@ const EditPDFContent: React.FC<{
       termsContent,
     ]
   );
+  const updatePDFTypeCheck = (value: string, checked: boolean) => {
+    if (value === FullPDFValue) {
+      setIsFullPDF(checked);
+    } else if (value === MiniPDFValue) {
+      setIsFullPDF(!checked);
+    }
+  };
 
   useEffect(() => {
     if (
@@ -1000,13 +947,48 @@ const EditPDFContent: React.FC<{
             flexDirection: "column",
           }}
         >
-          {items.map((value, index) => (
-            <CardView
-              key={`card_view_${index}`}
-              titleText={value.titleText}
-              content={value.content}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "center",
+            }}
+          >
+            <CheckboxItem
+              id="full_pdf_type"
+              name="Full PDF"
+              value={FullPDFValue}
+              isChecked={isFullPDF}
+              updateItem={updatePDFTypeCheck}
+              style={{
+                alignSelf: "center",
+                color: "white",
+                width: "fit-content",
+              }}
             />
-          ))}
+            <CheckboxItem
+              id="mini_type"
+              name="mini PDF"
+              value={MiniPDFValue}
+              isChecked={!isFullPDF}
+              updateItem={updatePDFTypeCheck}
+              style={{
+                alignSelf: "center",
+                color: "white",
+                width: "fit-content",
+              }}
+            />
+          </div>
+          {items
+            .filter((v) => v !== undefined)
+            .map((value, index) => (
+              <CardView
+                key={`card_view_${index}`}
+                titleText={value.titleText}
+                content={value.content}
+              />
+            ))}
         </div>
       </div>
       <ButtonsContainer
@@ -1014,16 +996,17 @@ const EditPDFContent: React.FC<{
         onSaveChanges={() =>
           onSaveChanges({
             ...pageContent,
+            isFullPDF: isFullPDF,
             coverPage: coverPageContent,
             highlight: highlightPageContent,
             hotels: hotelPageContent,
             itinerary: itineraryPageContent,
-            dayPlan: dayPlanPageContent,
+            dayPlan: isFullPDF ? dayPlanPageContent : undefined,
             inclusionExclusion: inclusionExclusionContent,
             flights: flightsContent.filter((v) => v.length > 0),
-            scopeOfService: scopeServiceContent,
-            importantNotes: importantNotesContent,
-            termsCondition: termsContent,
+            scopeOfService: isFullPDF ? scopeServiceContent : undefined,
+            importantNotes: isFullPDF ? importantNotesContent : undefined,
+            termsCondition: !isFullPDF ? termsContent : undefined,
           })
         }
       />

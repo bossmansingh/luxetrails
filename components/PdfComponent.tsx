@@ -335,7 +335,9 @@ enum PageMode {
 const PdfComponent: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
   const [isOpen, setOpen] = useState(false);
-  const [pageContent, setPageContent] = useState<PageContentModel>({});
+  const [pageContent, setPageContent] = useState<PageContentModel>({
+    isFullPDF: false,
+  });
   const [currentPageType, setCurrentPageType] = useState<PageType | null>(null);
   const [currentPageMode, setPageMode] = useState(PageMode.Edit);
 
