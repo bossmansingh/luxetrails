@@ -42,13 +42,14 @@ import {
 import Image from "next/image";
 import EditPDFContent from "@/components/EditPDFContent";
 import Placeholder from "@/public/placeholder.jpg";
-import html2pdf from "html2pdf.js";
 
 const savePDF = async (
   filename: string,
   pageCount: number,
   element: HTMLElement
 ) => {
+  if (typeof window === "undefined") return;
+  const html2pdf = (await import("html2pdf.js")).default;
   await html2pdf(element, {
     filename: filename,
     image: { type: "jpeg", quality: 0.95 },
